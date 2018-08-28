@@ -219,7 +219,7 @@ class ChildView extends Component {
         return this._childActivityToday(this.child.history[this.today]);
     };
 
-    _renderChildActivityHistory = (lang) => {
+    _renderChildActivityHistory = () => {
         return (
             <div>
                 <p>{'ActivityHistory'}</p>
