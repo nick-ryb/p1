@@ -1,0 +1,19 @@
+.languages {
+    height: 80px;
+    width:180px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: all 0.6s;
+    font-size: 13px;
+}
+.language{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.language:hover{
+    box-shadow: 0 0 1px 1px #cccccc;
+}
+.language:focus{
+    box-shadow: 0 0 1px 1px #cccccc;
+}

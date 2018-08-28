@@ -1,0 +1,28 @@
+.sleepRange{
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ccc;
+padding: 10px;
+    margin-bottom: 10px;
+}
+
+.agenda{
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.agenda span{
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
