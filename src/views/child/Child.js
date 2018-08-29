@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import * as moment from "moment";
+import _ from "lodash";
 import DocumentTitle from "react-document-title";
 import './Child.css';
 import {GlobalLanguage} from "../../App";
@@ -28,6 +29,29 @@ class ChildView extends Component {
             "kindergarten": 2,
             "group": 0,
             "parents": "[]",
+            "agenda2": [{
+                "_id": "558958e1435e91feeead410f",
+                "name": "babies",
+                "babies": {
+                    "group1": {
+                        "6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר",
+                        "8:30 - 11:00": "Сон - שינה",
+                        "11:30 - 12:00": "Прогулка + Игры - טיול ומשחק",
+                        "12:00 - 12:30": "Обед - ארוחת צהריים",
+                        "12:30 - 14:30": "Сон - שינה",
+                        "15:00": "Еда - אוכל",
+                        "16:00 - 16:30": "Фрукт/Ски - פרי או סקי"
+                    },
+                    "group2": {
+                        "6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר",
+                        "8:30 - 11:00": "Прогулка + Игры - טיול ומשחק",
+                        "11:00 - 11:30": "Обед - ארוחת צהריים",
+                        "11:30 - 14:00": "Сон - שינה",
+                        "15:00": "Еда - אוכל",
+                        "16:00 - 16:30": "Фрукт/Ски - פרי או סקי"
+                    }
+                }
+            }],
             "agenda": [
                 {
                     'name': 'babies',
@@ -68,83 +92,101 @@ class ChildView extends Component {
                 }
 
             ],
-            "history": {
-                "21/06/2015": {
-                    "came_in": false
+            "history": [
+                {
+                    "21/06/2015": {
+                        "came_in": false
+                    }
                 },
-                "22/06/2015": {
-                    "came_in": false
+                {
+                    "22/06/2015": {
+                        "came_in": false
+                    }
                 },
-                "23/06/2015": {
-                    "came_in": false
+                {
+                    "23/06/2015": {
+                        "came_in": false
+                    }
                 },
-                "24/06/2015": {
-                    "came_in": false
+                {
+                    "24/06/2015": {
+                        "came_in": false
+                    }
                 },
-                "28/08/2018": {
-                    "came_in": true,
-                    "activity": {
+                {
+                    "28/08/2018": {
+                        "came_in": true,
+                        "activity": {
+                            "sleep": [
+                                {
+                                    "from": "08:00",
+                                    "till": "09:00"
+                                },
+                                {
+                                    "from": "13:15",
+                                    "till": "14:45"
+                                }
+                            ],
+                            "food": [
+                                {
+                                    "09:10": "Молочная Каша"
+                                },
+                                {
+                                    "19:45": "Молочная Каша"
+                                }
+                            ],
+                            "poop": [
+                                {
+                                    "11:42": true
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "30/06/2015": {
+                        "came_in": true,
                         "sleep": [
                             {
                                 "from": "08:00",
                                 "till": "09:00"
-                            },
-                            {
-                                "from": "13:15",
-                                "till": "14:45"
                             }
                         ],
-                        "food": [
+                        "food": {
+                            "09:10": "Молочная Каша"
+                        },
+                        "poop": {
+                            "kaki": true
+                        }
+                    }
+                },
+                {
+                    "05/07/2015": {
+                        "came_in": true
+                    }
+                },
+                {
+                    "27/07/2015": {
+                        "came_in": true
+                    }
+                },
+                {
+                    "22/11/2015": {
+                        "came_in": true,
+                        "food": {
+                            "07:30": "Молочная Каша",
+                            "11:00": "суп",
+                            "15:30": "Каша + мясо"
+                        },
+                        "sleep": [
                             {
-                                "09:10": "Молочная Каша"
-                            },
-                            {
-                                "19:45": "Молочная Каша"
-                            }
-                        ],
-                        "poop": [
-                            {
-                                "11:42": true
+                                "from": "12:00",
+                                "till": "14:30"
                             }
                         ]
                     }
-                },
-                "30/06/2015": {
-                    "came_in": true,
-                    "sleep": [
-                        {
-                            "from": "08:00",
-                            "till": "09:00"
-                        }
-                    ],
-                    "food": {
-                        "09:10": "Молочная Каша"
-                    },
-                    "poop": {
-                        "kaki": true
-                    }
-                },
-                "05/07/2015": {
-                    "came_in": true
-                },
-                "27/07/2015": {
-                    "came_in": true
-                },
-                "22/11/2015": {
-                    "came_in": true,
-                    "food": {
-                        "07:30": "Молочная Каша",
-                        "11:00": "суп",
-                        "15:30": "Каша + мясо"
-                    },
-                    "sleep": [
-                        {
-                            "from": "12:00",
-                            "till": "14:30"
-                        }
-                    ]
                 }
-            }
+            ]
         };
         this.today = moment(new Date()).format('DD/MM/YYYY');
     }
@@ -220,11 +262,38 @@ class ChildView extends Component {
     };
 
     _renderChildActivityHistory = () => {
-        return (
-            <div>
-                <p>{'ActivityHistory'}</p>
-            </div>
-        );
+        const history = this.child.history;
+        return history.map((date, index) => {
+
+            const key = Object.keys(date)[0];
+            const obj = date[key];
+            const isCame = () => {
+                return <p>{obj.came_in.toString()}</p>;
+            };
+
+            const getFood = () => {
+                let food = [];
+                _.forEach(obj.food, (value, key) => {
+                    food.push(<p>{key}<span>{` ${value}`}</span></p>);
+                });
+                return food;
+            };
+
+
+            return (
+                <div>
+                    <p>{key}</p>
+                    <div>
+                        <p>{`isCame --> `}</p>
+                        {isCame()}
+                    </div>
+                    <div>
+                        <p>{`food --> `}</p>
+                        {getFood()}
+                    </div>
+                </div>
+            )
+        })
     };
 
     _renderChildPersonalInfo = (lang) => {

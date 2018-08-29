@@ -23,10 +23,10 @@ class ChildrenView extends Component {
                 "second_name": "Рыбакова",
                 "birth_day": "12/06/2013",
                 "address": {
-                    "city": "",
-                    "street": "",
-                    "house": "NaN",
-                    "apartment": "NaN"
+                    "city": "lod",
+                    "street": "friman",
+                    "house": "12",
+                    "apartment": "21"
                 },
                 "kindergarten": 2,
                 "group": 0,
