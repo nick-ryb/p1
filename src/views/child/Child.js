@@ -12,19 +12,17 @@ class ChildView extends Component {
         super();
 
         this.child = {
-            "_id": {
-                "$oid": "5585fe6e435e91feee7f4fee"
-            },
+            "_id": "5585fe6e435e91feee7f4fee",
             "tz": 338686876,
             "gender": "girl",
             "first_name": "Эмма",
             "second_name": "Рыбакова",
-            "birth_day": "12/06/2013",
+            "birth_day": "03/11/2013",
             "address": {
-                "city": "",
-                "street": "",
-                "house": "NaN",
-                "apartment": "NaN"
+                "city": "beer yaakov",
+                "street": "haalonim",
+                "house": "3",
+                "apartment": "15"
             },
             "kindergarten": 2,
             "group": 0,
@@ -182,6 +180,10 @@ class ChildView extends Component {
                             {
                                 "from": "12:00",
                                 "till": "14:30"
+                            },
+                            {
+                                "from": "16:00",
+                                "till": "18:30"
                             }
                         ]
                     }
@@ -267,6 +269,7 @@ class ChildView extends Component {
 
             const key = Object.keys(date)[0];
             const obj = date[key];
+
             const isCame = () => {
                 return <p>{obj.came_in.toString()}</p>;
             };
@@ -276,9 +279,29 @@ class ChildView extends Component {
                 _.forEach(obj.food, (value, key) => {
                     food.push(<p>{key}<span>{` ${value}`}</span></p>);
                 });
+                food.push(<p>---</p>)
                 return food;
             };
 
+            const getPoop = () => {
+                let poop = [];
+                _.forEach(obj.poop, (value, key) => {
+                    poop.push(<p>{key}<span>{` ${value}`}</span></p>);
+                });
+                poop.push(<p>---</p>)
+                return poop;
+            };
+
+            const getSleep = () => {
+                let sleep = [];
+                _.forEach(obj.sleep, (value, key) => {
+                    _.forEach(value, (v, k) => {
+                        sleep.push(<p>{k}<span>{` ${v}`}</span></p>);
+                    });
+                });
+                sleep.push(<p>---</p>)
+                return sleep;
+            };
 
             return (
                 <div>
@@ -291,15 +314,49 @@ class ChildView extends Component {
                         <p>{`food --> `}</p>
                         {getFood()}
                     </div>
+                    <div>
+                        <p>{`poop --> `}</p>
+                        {getPoop()}
+                    </div>
+                    <div>
+                        <p>{`sleep --> `}</p>
+                        {getSleep()}
+                    </div>
                 </div>
             )
         })
     };
 
     _renderChildPersonalInfo = (lang) => {
+        const {gender, first_name, second_name, birth_day, address, kindergarten, group, parents} = this.child;
+        // "gender": "girl",
+        //     "first_name": "Эмма",
+        //     "second_name": "Рыбакова",
+        //     "birth_day": "03/11/2013",
+        //     "address": {
+        //     "city": "beer yaakov",
+        //         "street": "haalonim",
+        //         "house": "3",
+        //         "apartment": "15"
+        // },
+        // "kindergarten": 2,
+        //     "group": 0,
+        //     "parents": "[]",
         return (
             <div>
                 <p>{'PersonalInfo'}</p>
+                <p>{'gender'}</p>
+                <p>{gender}</p>
+                <p>{'first_name'}</p>
+                <p>{first_name}</p>
+                <p>{'second_name'}</p>
+                <p>{second_name}</p>
+                <p>{'birth_day'}</p>
+                <p>{birth_day}</p>
+                <p>{'kindergarten'}</p>
+                <p>{kindergarten}</p>
+                <p>{'group'}</p>
+                <p>{group}</p>
             </div>
         );
     };
