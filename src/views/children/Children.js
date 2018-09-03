@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Icon} from "semantic-ui-react";
+import {Card, Icon} from "semantic-ui-react";
 import * as moment from 'moment';
 
 import './Children.css';
@@ -434,23 +434,50 @@ class ChildrenView extends Component {
     };
 
     _renderChildrenList = (lang) => {
-        return this.children.map((child, index) => {
-            const isBoy = child.gender === 'boy';
-            return (
-                <div key={child.tz}>
-                    <Icon
-                        name={isBoy ? 'male' : 'female'}
-                        color={isBoy ? 'blue' : 'pink'}
-                        size='big'
-                    />
-                    <p><LabelByLang string={'name'}/><span>{` : ${child.first_name} ${child.second_name}`}</span></p>
-                    <p>{this._childAge(child.birth_day, lang)}</p>
-                    <p>{this._isChildCameToday(child.history)}</p>
-                    <div>{this._childActivityToday(child.history[this.today], index)}</div>
-                    <div>{this._renderKinderGardenAgenda(child.agenda, index)}</div>
-                </div>
-            )
-        });
+        const colors = [
+            'red',
+            'orange',
+            'yellow',
+            'olive',
+            'green',
+            'teal',
+            'blue',
+            'violet',
+            'purple',
+            'pink',
+            'brown',
+            'grey',
+        ];
+        return (
+            <Card.Group itemsPerRow={3}>
+                {this.children.map((child, index) => {
+                    const isBoy = child.gender === 'boy';
+                    const colorIndex = index < colors.length ? index : index - colors.length;
+                    return (
+
+                        <Card
+                            color={colors[colorIndex]}
+                        >
+
+
+                        <div key={child.tz}>
+                            <Icon
+                                name={isBoy ? 'male' : 'female'}
+                                color={isBoy ? 'blue' : 'pink'}
+                                size='big'
+                            />
+                            <p><LabelByLang string={'name'}/><span>{` : ${child.first_name} ${child.second_name}`}</span></p>
+                            <p>{this._childAge(child.birth_day, lang)}</p>
+                            <p>{this._isChildCameToday(child.history)}</p>
+                            <div>{this._childActivityToday(child.history[this.today], index)}</div>
+                            {/*<div>{this._renderKinderGardenAgenda(child.agenda, index)}</div>*/}
+                        </div>
+                        </Card>
+                    )
+                })
+                }
+            </Card.Group>
+        );
     };
 
     _renderChildrenCurrentActivity = (lang) => {
@@ -478,7 +505,6 @@ class ChildrenView extends Component {
                 <GlobalLanguage.Consumer>
                     {lang => [
                         this._renderChildrenList(lang),
-                        this._renderChildrenCurrentActivity(lang),
                         <DocumentTitle title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>
                     ]}
                 </GlobalLanguage.Consumer>

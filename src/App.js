@@ -29,7 +29,7 @@ const Home = () =>
     </GlobalLanguage.Consumer>
 
 
-const BasicExample = (props) => {
+const AppContainer = (props) => {
 
     return (
         <div className='appContainer'>
@@ -93,7 +93,7 @@ class App extends Component {
     render() {
         return (
             <GlobalLanguage.Provider value={this.state.lang}>
-                <BasicExample changeLang={this._changeLang.bind(this)}/>
+                <AppContainer changeLang={this._changeLang.bind(this)}/>
             </GlobalLanguage.Provider>
         );
     }
