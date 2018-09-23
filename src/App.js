@@ -12,6 +12,7 @@ import getLabel from "./labels/labels";
 import * as Globals from "./GlobalConfig";
 import DocumentTitle from "react-document-title";
 import ChildView from "./views/child/Child";
+import CommonModal from "./components/common/CommonModal";
 
 export const GlobalLanguage = React.createContext();
 
@@ -76,7 +77,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lang: localStorage.getItem('lang') || 'heb'
+            lang: localStorage.getItem('lang') || 'heb',
+
         };
     }
 
@@ -93,7 +95,11 @@ class App extends Component {
     render() {
         return (
             <GlobalLanguage.Provider value={this.state.lang}>
-                <AppContainer changeLang={this._changeLang.bind(this)}/>
+                <AppContainer
+                    changeLang={this._changeLang.bind(this)}
+                    modal={this.modal}
+                />
+
             </GlobalLanguage.Provider>
         );
     }

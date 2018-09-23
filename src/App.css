@@ -1,3 +1,4 @@
+
 .App {
     text-align: center;
 }
@@ -39,6 +40,15 @@
 p {
     margin: 0;
     padding: 0;
+}
+
+button:not(':disabled'),
+button:not(.disabled){
+    cursor: pointer;
+}
+
+.ui.modal {
+    margin-top: 0 !important;
 }
 
 @keyframes App-logo-spin {

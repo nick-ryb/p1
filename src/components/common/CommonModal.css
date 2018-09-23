@@ -1,0 +1,17 @@
+.custom-overlay {
+    /*background: rgba(36, 123, 160, 0.7);*/
+}
+.custom-modal {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.custom-closeButton {
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all .5s;
+}
+.custom-closeButton:hover {
+    transform: scale(1.2);
+}

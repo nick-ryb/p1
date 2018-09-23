@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Icon} from "semantic-ui-react";
+import {Button, Card, Icon, Image, Modal} from "semantic-ui-react";
 import * as moment from 'moment';
 
 import './Children.css';
@@ -8,10 +8,14 @@ import * as Globals from "../../GlobalConfig";
 import DocumentTitle from "react-document-title";
 import {GlobalLanguage} from "../../App";
 import getLabel from "../../labels/labels";
+import CommonModal from "../../components/common/CommonModal";
 
 class ChildrenView extends Component {
     constructor() {
         super();
+        this.state = {
+            childName: ''
+        };
         this.children = [
             {
                 "_id": {
@@ -114,17 +118,30 @@ class ChildrenView extends Component {
                     },
                     "30/06/2015": {
                         "came_in": true,
-                        "sleep": [
-                            {
-                                "from": "08:00",
-                                "till": "09:00"
-                            }
-                        ],
-                        "food": {
-                            "09:10": "Молочная Каша"
-                        },
-                        "poop": {
-                            "kaki": true
+                        "activity": {
+                            "sleep": [
+                                {
+                                    "from": "08:00",
+                                    "till": "09:00"
+                                },
+                                {
+                                    "from": "13:15",
+                                    "till": "14:45"
+                                }
+                            ],
+                            "food": [
+                                {
+                                    "09:10": "Молочная Каша"
+                                },
+                                {
+                                    "19:45": "Молочная Каша"
+                                }
+                            ],
+                            "poop": [
+                                {
+                                    "11:42": true
+                                }
+                            ]
                         }
                     },
                     "05/07/2015": {
@@ -135,17 +152,31 @@ class ChildrenView extends Component {
                     },
                     "22/11/2015": {
                         "came_in": true,
-                        "food": {
-                            "07:30": "Молочная Каша",
-                            "11:00": "суп",
-                            "15:30": "Каша + мясо"
-                        },
-                        "sleep": [
-                            {
-                                "from": "12:00",
-                                "till": "14:30"
-                            }
-                        ]
+                        "activity": {
+                            "sleep": [
+                                {
+                                    "from": "08:00",
+                                    "till": "09:00"
+                                },
+                                {
+                                    "from": "13:15",
+                                    "till": "14:45"
+                                }
+                            ],
+                            "food": [
+                                {
+                                    "09:10": "Молочная Каша"
+                                },
+                                {
+                                    "19:45": "Молочная Каша"
+                                }
+                            ],
+                            "poop": [
+                                {
+                                    "11:42": true
+                                }
+                            ]
+                        }
                     }
                 }
             },
@@ -185,17 +216,30 @@ class ChildrenView extends Component {
                     },
                     "30/06/2015": {
                         "came_in": true,
-                        "sleep": [
-                            {
-                                "from": "08:00",
-                                "till": "09:00"
-                            }
-                        ],
-                        "food": {
-                            "09:10": "Молочная Каша"
-                        },
-                        "kaki": {
-                            "kaki": true
+                        "activity": {
+                            "sleep": [
+                                {
+                                    "from": "08:00",
+                                    "till": "09:00"
+                                },
+                                {
+                                    "from": "13:15",
+                                    "till": "14:45"
+                                }
+                            ],
+                            "food": [
+                                {
+                                    "09:10": "Молочная Каша"
+                                },
+                                {
+                                    "19:45": "Молочная Каша"
+                                }
+                            ],
+                            "poop": [
+                                {
+                                    "11:42": true
+                                }
+                            ]
                         }
                     },
                     "05/07/2015": {
@@ -206,17 +250,31 @@ class ChildrenView extends Component {
                     },
                     "22/11/2015": {
                         "came_in": true,
-                        "food": {
-                            "07:30": "Молочная Каша",
-                            "11:00": "суп",
-                            "15:30": "Каша + мясо"
-                        },
-                        "sleep": [
-                            {
-                                "from": "12:00",
-                                "till": "14:30"
-                            }
-                        ]
+                        "activity": {
+                            "sleep": [
+                                {
+                                    "from": "08:00",
+                                    "till": "09:00"
+                                },
+                                {
+                                    "from": "13:15",
+                                    "till": "14:45"
+                                }
+                            ],
+                            "food": [
+                                {
+                                    "09:10": "Молочная Каша"
+                                },
+                                {
+                                    "19:45": "Молочная Каша"
+                                }
+                            ],
+                            "poop": [
+                                {
+                                    "11:42": true
+                                }
+                            ]
+                        }
                     }
                 }
             },
@@ -230,14 +288,15 @@ class ChildrenView extends Component {
                 "second_name": "Рыбакова",
                 "birth_day": "03/11/2013",
                 "address": {
-                    "city": "",
-                    "street": "",
-                    "house": "NaN",
-                    "apartment": "NaN"
+                    "city": "beer yaakov",
+                    "street": "haalonim",
+                    "house": "3",
+                    "apartment": "15"
                 },
                 "kindergarten": 2,
                 "group": 0,
                 "parents": "[]",
+                "important_notice": "important_notice important_notice important_notice ",
                 "history": {
                     "21/06/2015": {
                         "came_in": false
@@ -251,22 +310,35 @@ class ChildrenView extends Component {
                     "24/06/2015": {
                         "came_in": false
                     },
-                    "25/06/2015": {
-                        "came_in": false
+                    "01/09/2018": {
+                        "came_in": true
                     },
-                    "30/06/2015": {
+                    "23/09/2018": {
                         "came_in": true,
-                        "sleep": [
-                            {
-                                "from": "08:00",
-                                "till": "09:00"
-                            }
-                        ],
-                        "food": {
-                            "09:10": "Молочная Каша"
-                        },
-                        "kaki": {
-                            "kaki": true
+                        "activity": {
+                            "sleep": [
+                                {
+                                    "from": "08:00",
+                                    "till": "09:00"
+                                },
+                                {
+                                    "from": "13:15",
+                                    "till": "14:45"
+                                }
+                            ],
+                            "food": [
+                                {
+                                    "09:10": "Молочная Каша"
+                                },
+                                {
+                                    "19:45": "Молочная Каша"
+                                }
+                            ],
+                            "poop": [
+                                {
+                                    "11:42": true
+                                }
+                            ]
                         }
                     },
                     "05/07/2015": {
@@ -277,17 +349,31 @@ class ChildrenView extends Component {
                     },
                     "22/11/2015": {
                         "came_in": true,
-                        "food": {
-                            "07:30": "Молочная Каша",
-                            "11:00": "суп",
-                            "15:30": "Каша + мясо"
-                        },
-                        "sleep": [
-                            {
-                                "from": "12:00",
-                                "till": "14:30"
-                            }
-                        ]
+                        "activity": {
+                            "sleep": [
+                                {
+                                    "from": "08:00",
+                                    "till": "09:00"
+                                },
+                                {
+                                    "from": "13:15",
+                                    "till": "14:45"
+                                }
+                            ],
+                            "food": [
+                                {
+                                    "09:10": "Молочная Каша"
+                                },
+                                {
+                                    "19:45": "Молочная Каша"
+                                }
+                            ],
+                            "poop": [
+                                {
+                                    "11:42": true
+                                }
+                            ]
+                        }
                     }
                 }
             }
@@ -330,67 +416,136 @@ class ChildrenView extends Component {
 
     _isChildCameToday = (info) => {
         const currentDayInfo = info[this.today];
-        const isChildCame = currentDayInfo && currentDayInfo.came_in;
-        return isChildCame ? 'came' : 'missing';
+        return currentDayInfo && currentDayInfo.came_in;
     };
 
-    _childActivityToday = (info, index) => {
-        if (!info || !info.activity)
-            return null;
+    _childActivityToday = (child, index, lang) => {
+        const childTodayActivity = child.history[this.today];
+        // if (!childTodayActivity || !childTodayActivity.activity)
+        //     return null;
 
-        const {sleep, poop, food} = info.activity;
+
+        const getTemplateForActivity = (title, children) => {
+            return (
+                <div key={`${title}@${child.second_name}`} className={'activity_wrap'}>
+                    <div className={'activity_content'}>
+                        <h4 className={'activityTitle'}
+                            style={{textOrientation: lang !== 'heb' ? 'upright' : 'unset'}}>{getLabel(lang, title)}</h4>
+                        <div className={'activityValues'}>
+                            {children()}
+                        </div>
+
+                    </div>
+                    <div className={'activity_actions'}
+                         onClick={(e) => {
+                             e.stopPropagation();
+                             console.log(e.target);
+                             console.log(title);
+                             console.log(childTodayActivity);
+                             console.log(child);
+                             this.onClick(title, child);
+                         }}>
+                        <Icon
+                            name='pencil'
+                        />
+                    </div>
+                </div>
+            )
+        };
 
         const getFood = () => {
-            if (!!food) {
-                return [
-                    <h3>{`FOOD`}</h3>,
-                    food.map((f, i) => {
-                        const keys = Object.keys(f);
-                        return (<p key={`food${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
-                    })
-                ]
-            } else {
-                return null;
-            }
+
+            return getTemplateForActivity('food',
+                () => {
+                    if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.food) {
+                        return childTodayActivity.activity.food.map((f, i) => {
+                            const keys = Object.keys(f);
+                            return (<span key={`food${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</span>)
+                        })
+                    } else {
+                        return null;
+                    }
+                });
         };
         const getPoop = () => {
-            if (!!poop) {
-                return [
-                    <h3>{`POOP`}</h3>,
-                    poop.map((f, i) => {
-                        const keys = Object.keys(f);
-                        return (<p key={`poop${index}${i}`}>{`${keys[0]}`}</p>)
-                    })
-                ]
-            } else {
-                return null;
-            }
+            return getTemplateForActivity('poop',
+                () => {
+                    if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.poop) {
+                        return childTodayActivity.activity.poop.map((f, i) => {
+                            const keys = Object.keys(f);
+                            return (<p key={`poop${index}${i}`}>{`${keys[0]}`}</p>)
+                        })
+                    } else {
+                        return null;
+                    }
+                });
+            //
+            //     poop.map((f, i) => {
+            //     const keys = Object.keys(f);
+            //     if (!!childTodayActivity.activity && !!childTodayActivity.activity.poop) {
+            //         return (<p key={`poop${index}${i}`}>{`${keys[0]}`}</p>)
+            //     } else {
+            //         return null;
+            //     }
+            // }))
+
         };
         const getSleep = () => {
-            if (!!sleep) {
-                return [
-                    <h3>{`SLEEP`}</h3>,
-                    sleep.map((f, i) => {
-                        const keys = Object.keys(f);
-                        if (keys.length > 1) {
-                            return (
-                                <div className={'sleepRange'}>
-                                    {
-                                        keys.map((key, i) => {
-                                            const objKey = f[key];
-                                            return (<p key={`sleep${index}${i}`}>{`${key} ${objKey}`}</p>)
-                                        })
-                                    }
-                                </div>
-                            )
-                        } else {
-                            return (<p key={`sleep${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
-                        }
-                    })
-                ]
-            } else {
-                return null;
-            }
+            return getTemplateForActivity('sleep',
+                () => {
+                    if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.sleep) {
+                        return childTodayActivity.activity.sleep.map((f, i) => {
+                            const keys = Object.keys(f);
+                            if (keys.length > 1) {
+                                return (
+                                    <div key={`sleep${index}${i}wrap`}>
+                                        {
+                                            keys.map((key, i) => {
+                                                const objKey = f[key];
+                                                return (
+                                                    <span
+                                                        key={`sleep${index}${i}`}>{`${getLabel(lang, key)} ${objKey}  `}</span>)
+                                            })
+                                        }
+                                    </div>
+                                )
+                            } else if (keys.length === 1) {
+                                return (<p key={`sleep${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
+                            } else if (keys.length === 0) {
+                                return (<p key={`sleep${index}${i}`}>{'sdsd'}</p>)
+                            }
+                        })
+                    } else {
+                        return null;
+                    }
+                });
+
+            //     sleep.map((f, i) => {
+            //     const keys = Object.keys(f);
+            //     if (!!childTodayActivity.activity && !!childTodayActivity.activity.sleep) {
+            //         if (keys.length > 1) {
+            //             return (
+            //                 <div>
+            //                     {
+            //                         keys.map((key, i) => {
+            //                             const objKey = f[key];
+            //                             return (
+            //                                 <span
+            //                                     key={`sleep${index}${i}`}>{`${getLabel(lang, key)} ${objKey}  `}</span>)
+            //                         })
+            //                     }
+            //                 </div>
+            //             )
+            //         } else if (keys.length === 1) {
+            //             return (<p key={`sleep${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
+            //         } else if (keys.length === 0) {
+            //             return (<p key={`sleep${index}${i}`}>{'sdsd'}</p>)
+            //         }
+            //     } else {
+            //         return null;
+            //     }
+            // }))
+
         };
 
         return [
@@ -449,29 +604,75 @@ class ChildrenView extends Component {
             'grey',
         ];
         return (
-            <Card.Group itemsPerRow={3}>
+            <Card.Group key={"ChildrenList"} style={{justifyContent: 'center'}}>
                 {this.children.map((child, index) => {
                     const isBoy = child.gender === 'boy';
                     const colorIndex = index < colors.length ? index : index - colors.length;
+                    const imageSrc = isBoy ? 'https://react.semantic-ui.com/images/avatar/large/steve.jpg' : 'https://react.semantic-ui.com/images/avatar/large/molly.png';
                     return (
 
                         <Card
+                            key={`child_${index}`}
                             color={colors[colorIndex]}
                         >
 
+                            <Card.Content>
+                                <Image size='huge' floated='right' avatar src={imageSrc}/>
+                                <Card.Header onClick={() => { alert('555') }}>
+                                <span className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
+                                    <span  data-tooltip="Add users to your feed" data-position={'top'}>
 
-                        <div key={child.tz}>
-                            <Icon
-                                name={isBoy ? 'male' : 'female'}
-                                color={isBoy ? 'blue' : 'pink'}
-                                size='big'
-                            />
-                            <p><LabelByLang string={'name'}/><span>{` : ${child.first_name} ${child.second_name}`}</span></p>
-                            <p>{this._childAge(child.birth_day, lang)}</p>
-                            <p>{this._isChildCameToday(child.history)}</p>
-                            <div>{this._childActivityToday(child.history[this.today], index)}</div>
-                            {/*<div>{this._renderKinderGardenAgenda(child.agenda, index)}</div>*/}
-                        </div>
+                                <Icon  className={'header_name_more_details icon link'} name="info circle icon" title={'click the name for more info'}/>
+                                    </span>
+                                </Card.Header>
+                                <Card.Meta>{this._childAge(child.birth_day, lang)}</Card.Meta>
+                                {child.important_notice && <Card.Description>
+                                    {getLabel(lang, 'attention')}: <strong>{child.important_notice}</strong>
+                                </Card.Description>}
+                            </Card.Content>
+                            <Card.Content extra>
+                                <div className={'activities'}>
+                                    {this._childActivityToday(child, index, lang)}
+                                </div>
+                            </Card.Content>
+                            <Card.Content extra>
+                                <div className='ui two buttons'>
+                                    <Button
+                                        // positive
+                                        positive={this._isChildCameToday(child.history)}
+                                        // primary={this._isChildCameToday(child.history)}
+                                        // basic={!this._isChildCameToday(child.history)}
+                                        onClick={() => {
+                                            console.log('came child:', child)
+                                        }}
+                                    >
+                                        {getLabel(lang, 'came')}
+                                    </Button>
+                                    <Button
+                                        // negative
+                                        negative={!this._isChildCameToday(child.history)}
+                                        // primary={!this._isChildCameToday(child.history)}
+                                        // basic={this._isChildCameToday(child.history)}
+                                        onClick={() => {
+                                            console.log('missing child:', child)
+                                        }}
+                                    >
+                                        {getLabel(lang, 'missing')}
+                                    </Button>
+                                </div>
+                            </Card.Content>
+                            {/*<div key={child.tz}>*/}
+                            {/*<Icon*/}
+                            {/*name={isBoy ? 'male' : 'female'}*/}
+                            {/*color={isBoy ? 'blue' : 'pink'}*/}
+                            {/*size='big'*/}
+                            {/*/>*/}
+                            {/*<p><LabelByLang string={'name'}/><span>{` : ${child.first_name} ${child.second_name}`}</span></p>*/}
+                            {/*<p>{this._childAge(child.birth_day, lang)}</p>*/}
+                            {/*<p>{this._isChildCameToday(child.history)}</p>*/}
+                            {/*<div>{this._childActivityToday(child.history[this.today], index)}</div>*/}
+                            {/*/!*<div>{this._renderKinderGardenAgenda(child.agenda, index)}</div>*!/*/}
+                            {/*</div>*/}
                         </Card>
                     )
                 })
@@ -499,13 +700,32 @@ class ChildrenView extends Component {
         });
     };
 
+    onClick = (name, child) => {
+        this.setState({childName: child.first_name}, () => {
+            this.modal.onOpenModal() // do stuff
+        });
+    };
+
     render() {
         return (
             <div>
                 <GlobalLanguage.Consumer>
                     {lang => [
                         this._renderChildrenList(lang),
-                        <DocumentTitle title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>
+                        <DocumentTitle title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
+                        <CommonModal
+                            key={'gfdg'}
+                            onRef={(ref) => {
+                                this.modal = ref
+                            }}
+                            children={
+                                <div>
+                                    <h1>{this.state.childName}</h1>
+                                    <p>Simple centered modal </p>
+
+                                </div>
+                            }
+                        />
                     ]}
                 </GlobalLanguage.Consumer>
             </div>

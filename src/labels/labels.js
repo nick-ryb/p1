@@ -10,13 +10,20 @@ const englishLabels = () => {
         name: 'name',
         agenda2: 'agenda',
         checkbox: 'Checkbox',
-        kkk: 'kkk',
-            day: 'day',
-            days: 'days',
-            month: 'month',
-            months: 'months',
-            year: 'year',
-            years: 'years',
+        day: 'day',
+        days: 'days',
+        month: 'month',
+        months: 'months',
+        year: 'year',
+        years: 'years',
+        came: 'came',
+        missing: 'missing',
+        food:'food',
+        sleep:'sleep',
+        poop:'poop',
+        attention:'attention',
+        from:'from',
+        till:'till',
     };
 };
 
@@ -32,13 +39,20 @@ const russianLabels = () => {
         name: 'imya',
         agenda2: 'Распорядок дня',
         checkbox: 'rus checkbox',
-        kkk: 'rus kkk',
-            day: 'den',
-            days: 'dni',
-            month: 'mesyac',
-            months: 'mesyacov',
-            year: 'god',
-            years: 'goda',
+        day: 'den',
+        days: 'dni',
+        month: 'mesyac',
+        months: 'mesyacov',
+        year: 'god',
+        years: 'goda',
+        came: 'prishel',
+        missing: 'otsutsvuet',
+        food:'eda',
+        sleep:'son',
+        poop:'stul',
+        attention:'vnimanie',
+        from:'s',
+        till:'do',
     };
 };
 
@@ -54,18 +68,25 @@ const hebrewLabels = () => {
         name: 'שם',
         agenda2: 'סדר יום',
         checkbox: 'צק בוקס',
-        kkk: 'קקק',
-            day: 'יום',
-            days: 'ימים',
-            month: 'חודש',
-            months: 'חודשים',
-            year: 'שנה',
-            years: 'שנים',
+        day: 'יום',
+        days: 'ימים',
+        month: 'חודש',
+        months: 'חודשים',
+        year: 'שנה',
+        years: 'שנים',
+        came: 'הגיע',
+        missing: 'נעדר',
+        food:'אוכל',
+        sleep:'שינה',
+        poop:'שירותים',
+        attention:'תשומת לב',
+        from:'מ',
+        till:'עד',
     };
 };
 
 const getLabel = (lang, label) => {
-    console.log('getLabel lang: ', lang, ' label: ', label);
+    // console.log('getLabel lang: ', lang, ' label: ', label);
     const noString = 'label: "' + label + '" not found in ' + lang;
     let string = '';
     switch (lang) {
