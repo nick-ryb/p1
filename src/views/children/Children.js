@@ -379,7 +379,6 @@ class ChildrenView extends Component {
             }
         ];
         this.today = moment(new Date()).format('DD/MM/YYYY');
-
     }
 
     componentDidMount() {
@@ -618,12 +617,13 @@ class ChildrenView extends Component {
 
                             <Card.Content>
                                 <Image size='huge' floated='right' avatar src={imageSrc}/>
-                                <Card.Header onClick={() => { alert('555') }}>
-                                <span className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
-                                    <span  data-tooltip="Add users to your feed" data-position={'top'}>
+                                <Card.Header onClick={() => {
+                                    alert('555')
+                                }}>
+                                    <span className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
 
-                                <Icon  className={'header_name_more_details icon link'} name="info circle icon" title={'click the name for more info'}/>
-                                    </span>
+                                    <Icon className={'header_name_more_details icon link'} name="info circle icon"
+                                          title={'click the name for more info'}/>
                                 </Card.Header>
                                 <Card.Meta>{this._childAge(child.birth_day, lang)}</Card.Meta>
                                 {child.important_notice && <Card.Description>

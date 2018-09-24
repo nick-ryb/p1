@@ -4,19 +4,19 @@
     backface-visibility: hidden;
 }
 
-.ui.card:hover > .content > .header{
+.ui.card:hover > .content > .header {
     cursor: pointer;
 }
 
-.ui.card:hover > .content> .header > .header_name{
+.ui.card:hover > .content > .header > .header_name {
     text-decoration: underline;
 }
 
-.ui.card:hover > .content> .header > .header_name_more_details{
+.ui.card:hover > .content > .header > .header_name_more_details {
     visibility: visible;
 }
 
-.header_name_more_details{
+.header_name_more_details {
     visibility: hidden;
     font-size: 10px;
 }
@@ -60,6 +60,7 @@
     margin: 0;
     text-transform: uppercase;
     text-align: center;
+    color: #000000;
 }
 
 .activityValues {
@@ -68,6 +69,10 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.activityValues span, .activityValues p {
+    color: #000;
 }
 
 .activity_actions {
