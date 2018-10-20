@@ -1,17 +1,100 @@
 .custom-overlay {
-    /*background: rgba(36, 123, 160, 0.7);*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
+.custom-modal-header {
+    background: #ccc;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    min-height: 50px;
+    /*padding-left: 45px;*/
+    /*padding-right: 45px;*/
+}
+
+.custom-modal-header h3{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
 .custom-modal {
-    padding-left: 30px;
-    padding-right: 30px;
+    min-width: 300px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    /*flex: 1;*/
+    background-color: #fff;
 }
+
+.custom-modal.mobile {
+    max-height: 70vh;
+}
+
+.custom-modal-body {
+    flex: 1;
+    /*display: flex;*/
+    /*height: 100%;*/
+    overflow-y: auto;
+}
+
+.pickerOpen .custom-modal-body{
+    overflow: visible;
+}
+
+.custom-modal-body-content {
+    display: flex;
+    flex-direction: column;
+    /*overflow: auto;*/
+    padding: 20px;
+    /*flex: 1;*/
+}
+
 .custom-closeButton {
-    right: 5px;
-    top: 5px;
+    right: 0;
+    top: 0;
     cursor: pointer;
+
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.custom-closeButton .custom-closeButton-icon {
+    margin: 0;
     transform: scale(1);
     transition: all .5s;
 }
-.custom-closeButton:hover {
+.custom-closeButton:hover .custom-closeButton-icon {
     transform: scale(1.2);
+}
+
+.example-enter {
+    opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+    opacity: 1;
+}
+
+.example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
 }

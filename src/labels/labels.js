@@ -1,3 +1,5 @@
+import React from "react";
+
 const englishLabels = () => {
     return {
         sadik: "Kinder Garden",
@@ -24,6 +26,8 @@ const englishLabels = () => {
         attention:'attention',
         from:'from',
         till:'till',
+        child_history: 'Statistics',
+        general_server_error:'error in information server',
     };
 };
 
@@ -53,6 +57,8 @@ const russianLabels = () => {
         attention:'vnimanie',
         from:'s',
         till:'do',
+        child_history:'statistika',
+        general_server_error:'oshibka v servere, poprobuite pozhe',
     };
 };
 
@@ -82,6 +88,8 @@ const hebrewLabels = () => {
         attention:'תשומת לב',
         from:'מ',
         till:'עד',
+        child_history: 'היסטוריה',
+        general_server_error:'אופס, יש שגיאה בשרותים, אנא נסו מאוחר יותר',
     };
 };
 

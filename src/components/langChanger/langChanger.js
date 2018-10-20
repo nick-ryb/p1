@@ -1,51 +1,66 @@
 import React, {Component} from "react";
+import {Flag} from "semantic-ui-react";
+import _ from "lodash";
 import './LangChanger.css';
 import {GlobalLanguage} from "../../App";
-import {Select} from "semantic-ui-react";
 
 class LangChanger extends Component {
     constructor(props) {
         super();
-        this.state = {
-            lang: props.lang
-        }
     }
 
     _changeLang = (e) => {
-        console.log('CHANGING LANG TO: ',e);
         if (this.props.lang !== e) {
-            this.props.changeLang(e);
+            this.props.changeLang && this.props.changeLang(e);
         }
     };
 
     _getLanguagesObj = () => {
-        const obj = [
-            {key: 'rus', value: 'rus', flag: 'ru', text: 'Russian'},
-            {key: 'eng', value: 'eng', flag: 'us', text: 'English'},
-            {key: 'heb', value: 'heb', flag: 'il', text: 'Hebrew'},
-        ];
-
-        return obj;
+        // return [
+        //     {key: 'rus', value: 'rus', flag: 'ru', text: 'Russian'},
+        //     {key: 'eng', value: 'eng', flag: 'us', text: 'English'},
+        //     {key: 'heb', value: 'heb', flag: 'il', text: 'Hebrew'},
+        // ];
+        return [
+            {value: 'eng', label: 'English', flag: 'us'},
+            {value: 'heb', label: 'עברית', flag: 'il'},
+            {value: 'rus', label: 'ruskii', flag: 'ru'},
+        ]
     };
 
     render() {
-
         return (
             <GlobalLanguage.Consumer>
                 {lang => {
-                    // this.setState({lang});
+                    const languages = this._getLanguagesObj();
+
+                    //move active language to be the first language
+                    const activeLang = _.remove(languages, function(n) {
+                        return n.value === lang;
+                    });
+                    languages.unshift(activeLang[0]);
+
+                    let flags = [];
+
+                    _.forEach(languages, (obj) => {
+                        flags.push(
+                            <Flag
+                                name={obj.flag}
+                                onClick={() => {
+                                    this._changeLang(obj.value);
+                                }}
+                                title={obj.label}
+                                style={{cursor: 'pointer'}}
+                            />
+                        );
+                    });
+
                     return (
-                        <Select
-                            placeholder='Select your language'
-                            options={this._getLanguagesObj()}
-                            onChange={(e, a) => {
-                                console.log('LANG CHANGED TO: ', a.value);
-                                this._changeLang(a.value);
-                            }}
-                            
-                            defaultValue={lang}
-                        />
-                    )
+                        <div className={'language_flags'}>
+                            {flags}
+                        </div>
+                    );
+
                 }}
             </GlobalLanguage.Consumer>
         )

@@ -12,7 +12,7 @@ import getLabel from "./labels/labels";
 import * as Globals from "./GlobalConfig";
 import DocumentTitle from "react-document-title";
 import ChildView from "./views/child/Child";
-import CommonModal from "./components/common/CommonModal";
+import HistoryView from "./views/history/History";
 
 export const GlobalLanguage = React.createContext();
 
@@ -56,6 +56,7 @@ const AppContainer = (props) => {
                                 <li><Link to="/Login">{getLabel(lang, 'Login')}</Link></li>
                                 <li><Link to="/Children">{getLabel(lang, 'Children')}</Link></li>
                                 <li><Link to="/Child">{getLabel(lang, 'Child')}</Link></li>
+                                <li><Link to="/Child/History">{getLabel(lang, 'child_history')}</Link></li>
                             </ul>
                         }
                     </GlobalLanguage.Consumer>
@@ -63,9 +64,10 @@ const AppContainer = (props) => {
                     <hr/>
 
                     <Route exact path="/" component={Home}/>
-                    <Route path="/Login" component={LoginView}/>
-                    <Route path="/Children" component={ChildrenView}/>
-                    <Route path="/Child" component={ChildView}/>
+                    <Route exact path="/Login" component={LoginView}/>
+                    <Route exact path="/Children" component={ChildrenView}/>
+                    <Route exact path="/Child" component={ChildView}/>
+                    <Route exact path="/Child/History" component={HistoryView}/>
                 </div>
             </Router>
         </div>
@@ -89,7 +91,7 @@ class App extends Component {
     };
 
     componentDidMount() {
-        console.log(process.env.NODE_ENV);
+        // console.log(process.env.NODE_ENV);
     }
 
     render() {

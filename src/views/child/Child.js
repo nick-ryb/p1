@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as moment from "moment";
-import _ from "lodash";
 import DocumentTitle from "react-document-title";
+import {Link} from "react-router-dom";
 import './Child.css';
 import {GlobalLanguage} from "../../App";
 import * as Globals from "../../GlobalConfig";
@@ -12,8 +12,10 @@ class ChildView extends Component {
         super();
 
         this.child = {
-            "_id": "5585fe6e435e91feee7f4fee",
-            "tz": 338686876,
+            "_id": {
+                "$oid": "5585fe6e435e91feee7f4fee"
+            },
+            "tz": 338686872,
             "gender": "girl",
             "first_name": "Эмма",
             "second_name": "Рыбакова",
@@ -27,173 +29,93 @@ class ChildView extends Component {
             "kindergarten": 2,
             "group": 0,
             "parents": "[]",
-            "agenda2": [{
-                "_id": "558958e1435e91feeead410f",
-                "name": "babies",
-                "babies": {
-                    "group1": {
-                        "6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר",
-                        "8:30 - 11:00": "Сон - שינה",
-                        "11:30 - 12:00": "Прогулка + Игры - טיול ומשחק",
-                        "12:00 - 12:30": "Обед - ארוחת צהריים",
-                        "12:30 - 14:30": "Сон - שינה",
-                        "15:00": "Еда - אוכל",
-                        "16:00 - 16:30": "Фрукт/Ски - פרי או סקי"
-                    },
-                    "group2": {
-                        "6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר",
-                        "8:30 - 11:00": "Прогулка + Игры - טיול ומשחק",
-                        "11:00 - 11:30": "Обед - ארוחת צהריים",
-                        "11:30 - 14:00": "Сон - שינה",
-                        "15:00": "Еда - אוכל",
-                        "16:00 - 16:30": "Фрукт/Ски - פרי או סקי"
-                    }
-                }
-            }],
-            "agenda": [
-                {
-                    'name': 'babies',
-                    'schedule': [
-                        [
-                            {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
-                            {"8:30 - 11:00": "Сон - שינה"},
-                            {"11:30 - 12:00": "Прогулка + Игры - טיול ומשחק"},
-                            {"12:00 - 12:30": "Обед - ארוחת צהריים"},
-                            {"12:30 - 14:30": "Сон - שינה"},
-                            {"15:00": "Еда - אוכל"},
-                            {"16:00 - 16:30": "Фрукт/Ски - פרי או סקי"}
-                        ],
-                        [
-                            {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
-                            {"8:30 - 11:00": "Прогулка + Игры - טיול ומשחק"},
-                            {"11:00 - 11:30": "Обед - ארוחת צהריים"},
-                            {"11:30 - 14:00": "Сон - שינה"},
-                            {"15:00": "Еда - אוכל"},
-                            {"16:00 - 16:30": "Фрукт/Ски - פרי או סקי"}
-                        ]
-                    ]
+            "personal_notes": ["personal_note personal_note personal_note "],
+            "general_notes": ["general_note general_note general_note "],
+            "history": [{
+                "21/06/2015": {
+                    "came_in": false
                 },
-                {
-                    'name': 'todlers',
-                    'schedule': [
-                        [
-                            {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
-                            {"8:30 - 09:30": "Мифгаш бокер и кружки - מפגש בוקר והפעלות"},
-                            {"09:30 - 10:15": "Прогулка + Игры - טיול ומשחק"},
-                            {"10:30 - 11:30": "Обед и подготовка к сну - ארוחת צהריים והכנה לשינה"},
-                            {"12:00 - 14:00": "Сон - שינה"},
-                            {"14:00 - 14:30": "Подем - השכמה"},
-                            {"15:00": "Прогулка + Игры - טיול ומשחק"},
-                            {"16:00 - 16:30": "Игры в групе и чтение книг - משחקים בקבוצה וקריאת ספרים"}
-                        ]
-                    ]
-                }
-
-            ],
-            "history": [
-                {
-                    "21/06/2015": {
-                        "came_in": false
-                    }
+                "22/06/2015": {
+                    "came_in": false
                 },
-                {
-                    "22/06/2015": {
-                        "came_in": false
-                    }
+                "23/06/2015": {
+                    "came_in": false
                 },
-                {
-                    "23/06/2015": {
-                        "came_in": false
-                    }
+                "24/06/2015": {
+                    "came_in": false
                 },
-                {
-                    "24/06/2015": {
-                        "came_in": false
-                    }
+                "01/09/2018": {
+                    "came_in": true
                 },
-                {
-                    "28/08/2018": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
+                "20/10/2018": {
+                    "came_in": true,
+                    "activity": {
+                        "sleep": [
+                            [
+                                "08:00",
+                                "09:00"
                             ],
-                            "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
-                            ],
-                            "poop": [
-                                {
-                                    "11:42": true
-                                }
+                            [
+                                "13:15",
+                                "14:45"
                             ]
-                        }
+                        ],
+                        "food": [
+                            {
+                                "09:10": "Молочная Каша"
+                            },
+                            {
+                                "19:45": "Молочная Каша"
+                            }
+                        ],
+                        "poop": [
+                            {
+                                "11:42": true
+                            }
+                        ]
                     }
                 },
-                {
-                    "30/06/2015": {
-                        "came_in": true,
+                "05/07/2015": {
+                    "came_in": true
+                },
+                "27/07/2015": {
+                    "came_in": true
+                },
+                "22/11/2015": {
+                    "came_in": true,
+                    "activity": {
                         "sleep": [
                             {
                                 "from": "08:00",
                                 "till": "09:00"
-                            }
-                        ],
-                        "food": {
-                            "09:10": "Молочная Каша"
-                        },
-                        "poop": {
-                            "kaki": true
-                        }
-                    }
-                },
-                {
-                    "05/07/2015": {
-                        "came_in": true
-                    }
-                },
-                {
-                    "27/07/2015": {
-                        "came_in": true
-                    }
-                },
-                {
-                    "22/11/2015": {
-                        "came_in": true,
-                        "food": {
-                            "07:30": "Молочная Каша",
-                            "11:00": "суп",
-                            "15:30": "Каша + мясо"
-                        },
-                        "sleep": [
-                            {
-                                "from": "12:00",
-                                "till": "14:30"
                             },
                             {
-                                "from": "16:00",
-                                "till": "18:30"
+                                "from": "13:15",
+                                "till": "14:45"
+                            }
+                        ],
+                        "food": [
+                            {
+                                "09:10": "Молочная Каша"
+                            },
+                            {
+                                "19:45": "Молочная Каша"
+                            }
+                        ],
+                        "poop": [
+                            {
+                                "11:42": true
                             }
                         ]
                     }
                 }
-            ]
+            }]
         };
+
         this.today = moment(new Date()).format('DD/MM/YYYY');
     }
 
-    _childActivityToday = (info) => {
+    _childActivityToday = (info, lang) => {
         if (!info || !info.activity)
             return null;
 
@@ -201,134 +123,79 @@ class ChildView extends Component {
 
         const getFood = () => {
             if (!!food) {
-                return [
-                    <h3>{`FOOD`}</h3>,
-                    food.map((f, i) => {
-                        const keys = Object.keys(f);
-                        return (<p key={`food${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
-                    })
-                ]
+                return (
+                    <div className={'activity'}>
+                        <h3>{getLabel(lang, 'food')}</h3>
+                        <div className={'sleepRange'}>
+                            {food.map((f, i) => {
+                                const keys = Object.keys(f);
+                                return (<p key={`food${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
+                            })}
+                        </div>
+                    </div>
+                )
             } else {
                 return null;
             }
         };
         const getPoop = () => {
             if (!!poop) {
-                return [
-                    <h3>{`POOP`}</h3>,
-                    poop.map((f, i) => {
-                        const keys = Object.keys(f);
-                        return (<p key={`poop${i}`}>{`${keys[0]}`}</p>)
-                    })
-                ]
+                return (
+                    <div className={'activity'}>
+                        <h3>{getLabel(lang, 'poop')}</h3>
+                        <div className={'sleepRange'}>
+                            {poop.map((f, i) => {
+                                const keys = Object.keys(f);
+                                return (<p key={`poop${i}`}>{`${keys[0]}`}</p>)
+                            })}
+                        </div>
+                    </div>
+                )
             } else {
                 return null;
             }
         };
         const getSleep = () => {
             if (!!sleep) {
-                return [
-                    <h3>{`SLEEP`}</h3>,
-                    sleep.map((f, i) => {
-                        const keys = Object.keys(f);
-                        if (keys.length > 1) {
-                            return (
-                                <div className={'sleepRange'}>
-                                    {
-                                        keys.map((key, i) => {
-                                            const objKey = f[key];
-                                            return (<p key={`sleep${i}`}>{`${key} ${objKey}`}</p>)
-                                        })
-                                    }
-                                </div>
-                            )
-                        } else {
-                            return (<p key={`sleep${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
-                        }
-                    })
-                ]
+                return (
+                    <div className={'activity'}>
+                        <h3>{getLabel(lang, 'sleep')}</h3>
+                        <div className={'sleepRangesList'}>
+                            {sleep.map((f, i) => {
+                                return (
+                                    <div className={'sleepRange'}>
+                                        <span key={`sleep${i}from`}>{`${getLabel(lang, 'from')} ${f[0]} `}</span>
+                                        <span key={`sleep${i}till`}>{` ${getLabel(lang, 'till')} ${f[1]}`}</span>
+                                    </div>
+                                )
+                            })
+                            }
+                        </div>
+                    </div>
+                )
             } else {
                 return null;
             }
         };
 
         return [
+            getSleep(),
             getFood(),
             getPoop(),
-            getSleep()
         ];
     };
 
     _renderChildActivityView = (lang) => {
-        return this._childActivityToday(this.child.history[this.today]);
-    };
-
-    _renderChildActivityHistory = () => {
-        const history = this.child.history;
-        return history.map((date, index) => {
-
-            const key = Object.keys(date)[0];
-            const obj = date[key];
-
-            const isCame = () => {
-                return <p>{obj.came_in.toString()}</p>;
-            };
-
-            const getFood = () => {
-                let food = [];
-                _.forEach(obj.food, (value, key) => {
-                    food.push(<p>{key}<span>{` ${value}`}</span></p>);
-                });
-                food.push(<p>---</p>)
-                return food;
-            };
-
-            const getPoop = () => {
-                let poop = [];
-                _.forEach(obj.poop, (value, key) => {
-                    poop.push(<p>{key}<span>{` ${value}`}</span></p>);
-                });
-                poop.push(<p>---</p>)
-                return poop;
-            };
-
-            const getSleep = () => {
-                let sleep = [];
-                _.forEach(obj.sleep, (value, key) => {
-                    _.forEach(value, (v, k) => {
-                        sleep.push(<p>{k}<span>{` ${v}`}</span></p>);
-                    });
-                });
-                sleep.push(<p>---</p>)
-                return sleep;
-            };
-
-            return (
-                <div>
-                    <p>{key}</p>
-                    <div>
-                        <p>{`isCame --> `}</p>
-                        {isCame()}
-                    </div>
-                    <div>
-                        <p>{`food --> `}</p>
-                        {getFood()}
-                    </div>
-                    <div>
-                        <p>{`poop --> `}</p>
-                        {getPoop()}
-                    </div>
-                    <div>
-                        <p>{`sleep --> `}</p>
-                        {getSleep()}
-                    </div>
-                </div>
-            )
-        })
+        const todayActivity = this.child.history[0][this.today];
+        return (
+            <div className={'current_activities_view'}>
+                {todayActivity ? this._childActivityToday(todayActivity, lang) : <p>{getLabel(lang,'general_server_error')}</p>}
+            </div>
+        );
     };
 
     _renderChildPersonalInfo = (lang) => {
-        const {gender, first_name, second_name, birth_day, address, kindergarten, group, parents} = this.child;
+        const {gender, first_name, second_name, birth_day, kindergarten, group,} = this.child;
         // "gender": "girl",
         //     "first_name": "Эмма",
         //     "second_name": "Рыбакова",
@@ -362,24 +229,38 @@ class ChildView extends Component {
     };
 
     _renderNotesForChild = (lang) => {
+        if (this.child.personal_notes) {
+            return (
+                <div className={'current_Notes_view'}>
+                    <p>{this.child.personal_notes[0]}</p>
+                    <p>{this.child.general_notes[0]}</p>
+                </div>
+            );
+        } else {
+            return null
+        }
+    };
+
+    _renderChildHistoryButton = (lang) => {
         return (
-            <div>
-                <p>{'NotesForChild'}</p>
-            </div>
+            <Link className='link' to="/Child/History">
+                {getLabel(lang, 'child_history')}
+            </Link>
         );
+
     };
 
     render() {
         return (
-            <div>
+            <div className={'child_current_view'}>
                 <GlobalLanguage.Consumer>
                     {lang => [
-                        this._renderChildActivityView(lang),
-                        this._renderChildActivityHistory(lang),
-                        this._renderChildPersonalInfo(lang),
                         this._renderNotesForChild(lang),
+                        this._renderChildActivityView(lang),
+                        this._renderChildHistoryButton(lang),
+                        // {this._renderChildPersonalInfo(lang)}
                         <DocumentTitle
-                            title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Child')}(${this.child.first_name})`}/>
+                            title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Child')}`}/>
                     ]}
                 </GlobalLanguage.Consumer>
             </div>

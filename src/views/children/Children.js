@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Card, Icon, Image, Modal} from "semantic-ui-react";
+import {Button, Card, Icon, Image} from "semantic-ui-react";
 import * as moment from 'moment';
 
 import './Children.css';
@@ -9,12 +9,16 @@ import DocumentTitle from "react-document-title";
 import {GlobalLanguage} from "../../App";
 import getLabel from "../../labels/labels";
 import CommonModal from "../../components/common/CommonModal";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class ChildrenView extends Component {
     constructor() {
         super();
         this.state = {
-            childName: ''
+            childActivityTitle: '',
+            childObj: {},
+            childActivityObj: {},
+            currentModal: null
         };
         this.children = [
             {
@@ -296,7 +300,8 @@ class ChildrenView extends Component {
                 "kindergarten": 2,
                 "group": 0,
                 "parents": "[]",
-                "important_notice": "important_notice important_notice important_notice ",
+                "personal_notes": ["personal_notes personal_notes personal_notes "],
+                "general_notes": ["general_notes general_notes general_notes "],
                 "history": {
                     "21/06/2015": {
                         "came_in": false
@@ -313,18 +318,18 @@ class ChildrenView extends Component {
                     "01/09/2018": {
                         "came_in": true
                     },
-                    "23/09/2018": {
+                    "20/10/2018": {
                         "came_in": true,
                         "activity": {
                             "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
+                                [
+                                    "08:00",
+                                    "09:00"
+                                ],
+                                [
+                                    "13:15",
+                                    "14:45"
+                                ]
                             ],
                             "food": [
                                 {
@@ -378,6 +383,16 @@ class ChildrenView extends Component {
                 }
             }
         ];
+        //"sleep": [
+        //                             [
+        //                                 "08:00",
+        //                                 "09:00"
+        //                             ],
+        //                             [
+        //                                 "13:15",
+        //                                 "14:45"
+        //                             ]
+        //                         ]
         this.today = moment(new Date()).format('DD/MM/YYYY');
     }
 
@@ -403,7 +418,7 @@ class ChildrenView extends Component {
             // age = age.toString().split('.');
             // const years = age[0];
             // const months = age[1] && _.at(age[1], 0);
-            const isBirthDaySoon = out[1] && parseInt(out[1]) >= 11;
+            // const isBirthDaySoon = out[1] && parseInt(out[1]) >= 11;
 
 
             return (out[0] + ' ' + getLabel(lang, 'years') + ' ' + out[1] + ' ' + getLabel(lang, 'months') + ' (' + birthDay + ')');
@@ -426,10 +441,13 @@ class ChildrenView extends Component {
 
         const getTemplateForActivity = (title, children) => {
             return (
-                <div key={`${title}@${child.second_name}`} className={'activity_wrap'}>
+                <div key={`${title}@${child.second_name}`} className={`activity_wrap ${title}_activity`}>
                     <div className={'activity_content'}>
                         <h4 className={'activityTitle'}
-                            style={{textOrientation: lang !== 'heb' ? 'upright' : 'unset'}}>{getLabel(lang, title)}</h4>
+                            style={{textOrientation: lang !== 'heb' ? 'upright' : 'unset'}}
+                        >
+                            {getLabel(lang, title)}
+                        </h4>
                         <div className={'activityValues'}>
                             {children()}
                         </div>
@@ -442,7 +460,7 @@ class ChildrenView extends Component {
                              console.log(title);
                              console.log(childTodayActivity);
                              console.log(child);
-                             this.onClick(title, child);
+                             this.onClick(child, title, childTodayActivity.activity[title]);
                          }}>
                         <Icon
                             name='pencil'
@@ -492,59 +510,21 @@ class ChildrenView extends Component {
         const getSleep = () => {
             return getTemplateForActivity('sleep',
                 () => {
+
                     if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.sleep) {
                         return childTodayActivity.activity.sleep.map((f, i) => {
-                            const keys = Object.keys(f);
-                            if (keys.length > 1) {
-                                return (
-                                    <div key={`sleep${index}${i}wrap`}>
-                                        {
-                                            keys.map((key, i) => {
-                                                const objKey = f[key];
-                                                return (
-                                                    <span
-                                                        key={`sleep${index}${i}`}>{`${getLabel(lang, key)} ${objKey}  `}</span>)
-                                            })
-                                        }
-                                    </div>
-                                )
-                            } else if (keys.length === 1) {
-                                return (<p key={`sleep${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
-                            } else if (keys.length === 0) {
-                                return (<p key={`sleep${index}${i}`}>{'sdsd'}</p>)
-                            }
+                            return (
+                                <div key={`sleep${index}${i}wrap`}>
+                                    <span key={`sleep${index}${i}from`}>{`${getLabel(lang, 'from')} ${f[0]} `}</span>
+                                    <span key={`sleep${index}${i}from`}>{` ${getLabel(lang, 'till')} ${f[1]}`}</span>
+
+                                </div>
+                            )
                         })
                     } else {
                         return null;
                     }
                 });
-
-            //     sleep.map((f, i) => {
-            //     const keys = Object.keys(f);
-            //     if (!!childTodayActivity.activity && !!childTodayActivity.activity.sleep) {
-            //         if (keys.length > 1) {
-            //             return (
-            //                 <div>
-            //                     {
-            //                         keys.map((key, i) => {
-            //                             const objKey = f[key];
-            //                             return (
-            //                                 <span
-            //                                     key={`sleep${index}${i}`}>{`${getLabel(lang, key)} ${objKey}  `}</span>)
-            //                         })
-            //                     }
-            //                 </div>
-            //             )
-            //         } else if (keys.length === 1) {
-            //             return (<p key={`sleep${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</p>)
-            //         } else if (keys.length === 0) {
-            //             return (<p key={`sleep${index}${i}`}>{'sdsd'}</p>)
-            //         }
-            //     } else {
-            //         return null;
-            //     }
-            // }))
-
         };
 
         return [
@@ -567,12 +547,12 @@ class ChildrenView extends Component {
         console.log('LabelByLang name', <LabelByLang string={'name'}/>);
         console.log('agenda', agenda);
 
-        agenda.map((agendaForGroup, j) => {
+        agenda.forEach((agendaForGroup, j) => {
 
-            agendaForGroup.schedule.map((schedule, k) => {
+            agendaForGroup.schedule.forEach((schedule, k) => {
                 console.log('schedule', schedule);
 
-                schedule.map((obj, i) => {
+                schedule.forEach((obj, i) => {
                     const key = Object.keys(obj);
                     list.push(
                         <div className={'agenda'} key={`${key[0]}_${childIndex}_${j}_${k}_${i}`}>
@@ -603,7 +583,8 @@ class ChildrenView extends Component {
             'grey',
         ];
         return (
-            <Card.Group key={"ChildrenList"} style={{justifyContent: 'center'}}>
+            <Card.Group key={"ChildrenList"} itemsPerRow={3} centered={true}
+                        style={{justifyContent: 'center', maxWidth: '1000px'}}>
                 {this.children.map((child, index) => {
                     const isBoy = child.gender === 'boy';
                     const colorIndex = index < colors.length ? index : index - colors.length;
@@ -618,16 +599,16 @@ class ChildrenView extends Component {
                             <Card.Content>
                                 <Image size='huge' floated='right' avatar src={imageSrc}/>
                                 <Card.Header onClick={() => {
-                                    alert('555')
+                                    this.props.history.push('/child', {'childTz': child.tz})
                                 }}>
                                     <span className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
 
-                                    <Icon className={'header_name_more_details icon link'} name="info circle icon"
+                                    <Icon className={'header_name_more_details icon link'} name="info circle"
                                           title={'click the name for more info'}/>
                                 </Card.Header>
                                 <Card.Meta>{this._childAge(child.birth_day, lang)}</Card.Meta>
-                                {child.important_notice && <Card.Description>
-                                    {getLabel(lang, 'attention')}: <strong>{child.important_notice}</strong>
+                                {child.personal_notes && <Card.Description>
+                                    {getLabel(lang, 'attention')}: <strong>{child.personal_notes[0]}</strong>
                                 </Card.Description>}
                             </Card.Content>
                             <Card.Content extra>
@@ -638,10 +619,7 @@ class ChildrenView extends Component {
                             <Card.Content extra>
                                 <div className='ui two buttons'>
                                     <Button
-                                        // positive
                                         positive={this._isChildCameToday(child.history)}
-                                        // primary={this._isChildCameToday(child.history)}
-                                        // basic={!this._isChildCameToday(child.history)}
                                         onClick={() => {
                                             console.log('came child:', child)
                                         }}
@@ -649,10 +627,7 @@ class ChildrenView extends Component {
                                         {getLabel(lang, 'came')}
                                     </Button>
                                     <Button
-                                        // negative
                                         negative={!this._isChildCameToday(child.history)}
-                                        // primary={!this._isChildCameToday(child.history)}
-                                        // basic={this._isChildCameToday(child.history)}
                                         onClick={() => {
                                             console.log('missing child:', child)
                                         }}
@@ -661,18 +636,6 @@ class ChildrenView extends Component {
                                     </Button>
                                 </div>
                             </Card.Content>
-                            {/*<div key={child.tz}>*/}
-                            {/*<Icon*/}
-                            {/*name={isBoy ? 'male' : 'female'}*/}
-                            {/*color={isBoy ? 'blue' : 'pink'}*/}
-                            {/*size='big'*/}
-                            {/*/>*/}
-                            {/*<p><LabelByLang string={'name'}/><span>{` : ${child.first_name} ${child.second_name}`}</span></p>*/}
-                            {/*<p>{this._childAge(child.birth_day, lang)}</p>*/}
-                            {/*<p>{this._isChildCameToday(child.history)}</p>*/}
-                            {/*<div>{this._childActivityToday(child.history[this.today], index)}</div>*/}
-                            {/*/!*<div>{this._renderKinderGardenAgenda(child.agenda, index)}</div>*!/*/}
-                            {/*</div>*/}
                         </Card>
                     )
                 })
@@ -700,32 +663,76 @@ class ChildrenView extends Component {
         });
     };
 
-    onClick = (name, child) => {
-        this.setState({childName: child.first_name}, () => {
-            this.modal.onOpenModal() // do stuff
+    onClick = (child, title, activityObj) => {
+        this.setState({
+            childObj: child,
+            childActivityObj: activityObj,
+            childActivityTitle: title,
+            currentModal: 'UPDATE_SLEEP'
+        }, () => {
+            // this.modal.onOpenModal() // do stuff
         });
+    };
+
+    get ddf() {
+        return this.ttt;
+    }
+
+    renderModal = () => {
+        if (this.state.currentModal) {
+            document.body.style.overflow = "hidden";
+            console.log('hidden1');
+
+            return (
+                <CommonModal
+                    key={'ChildrenActivityEditPopup'}
+                    child={this.state.childObj}
+                    childActivityObj={this.state.childActivityObj}
+                    onRef={(ref) => {
+                        this.modal = ref
+                    }}
+                    currentModal={this.state.currentModal}
+                    hideModal={() => {
+                        console.log('initial1');
+                        document.body.style.overflow = "initial";
+                        this.setState({currentModal: null})
+                    }}
+                    onOpen={() => {
+                    }}
+                    onClose={() => {
+                    }}
+                    children={
+                        <div>
+                            <h1>{this.state.childObj.first_name}</h1>
+                            <p>{this.state.childActivityTitle}</p>
+
+                        </div>
+                    }
+                />
+            );
+        }
+        else {
+            console.log('initial2');
+            document.body.style.overflow = "initial";
+            return null;
+        }
     };
 
     render() {
         return (
-            <div>
+            <div className={'childrenListWrapper'}>
                 <GlobalLanguage.Consumer>
                     {lang => [
                         this._renderChildrenList(lang),
-                        <DocumentTitle title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
-                        <CommonModal
-                            key={'gfdg'}
-                            onRef={(ref) => {
-                                this.modal = ref
-                            }}
-                            children={
-                                <div>
-                                    <h1>{this.state.childName}</h1>
-                                    <p>Simple centered modal </p>
+                        <DocumentTitle key={"ChildrenDocumentTitle"}
+                                       title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
+                        <ReactCSSTransitionGroup
+                            transitionName="example"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={300}>
+                            {this.renderModal()}
+                        </ReactCSSTransitionGroup>
 
-                                </div>
-                            }
-                        />
                     ]}
                 </GlobalLanguage.Consumer>
             </div>
@@ -736,3 +743,25 @@ class ChildrenView extends Component {
 ChildrenView.defaultProps = {};
 
 export default ChildrenView;
+
+const getName = (person) => person.name;
+const uppercase = (string) => string.toUpperCase();
+const get6Characters = (string) => string.substring(0, 6);
+const reverse = (string) => string
+    .split('')
+    .reverse()
+    .join('');
+
+const pipe = (...functions) => (value) => {
+    return functions
+        .reduce((currentValue, currentFunction) => {
+            return currentFunction(currentValue);
+        }, value)
+};
+
+console.log(pipe(
+    getName,
+    uppercase,
+    get6Characters,
+    reverse
+)({name: 'Buckethead'}))

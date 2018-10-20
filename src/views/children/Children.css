@@ -4,6 +4,10 @@
     backface-visibility: hidden;
 }
 
+.ui.card{
+    min-width: 300px;
+}
+
 .ui.card:hover > .content > .header {
     cursor: pointer;
 }
@@ -44,6 +48,25 @@
     transition: all 1s;
     transform: translateX(0);
     -webkit-font-smoothing: antialiased;
+}
+.activity_wrap.food_activity {
+    box-shadow: 0 0 2px 0 #ba25cc;
+}
+.activity_wrap.poop_activity {
+    box-shadow: 0 0 2px 0 #2e7acc;
+}
+.activity_wrap.sleep_activity {
+    box-shadow: 0 0 2px 0 #0ecc42;
+}
+
+.activity_wrap > .activity_content {
+    background-color: #ffffff14;
+}
+
+.childrenListWrapper{
+    display: flex;
+    flex: 1;
+    justify-content: center;
 }
 
 .activity_wrap {
@@ -87,7 +110,7 @@
     padding-right: 10px;
     border-radius: 0 5px 5px 0;
     background-color: #000000b3;
-    transform: translateX(100%);
+    transform: translateX(110%);
     transition: all .6s;
     color: #fff;
     align-items: center;
@@ -106,6 +129,7 @@
 
 .activity_wrap:hover > .activity_content {
     transform: translateX(-36px);
+    border-radius: 5px 0 0 5px;
 }
 
 .agenda {
