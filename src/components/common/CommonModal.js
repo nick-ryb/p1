@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import Modal from 'react-responsive-modal';
+import React from 'react';
 import './CommonModal.css';
 
 import UpdateSleepModal from '../Modals/UpdateSleepModal';

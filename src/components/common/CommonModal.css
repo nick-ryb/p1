@@ -72,6 +72,10 @@
     align-items: center;
     justify-content: center;
 }
+.custom-closeButton.rtl{
+    right: auto;
+    left: 0;
+}
 .custom-closeButton .custom-closeButton-icon {
     margin: 0;
     transform: scale(1);

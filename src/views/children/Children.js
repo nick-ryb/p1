@@ -318,7 +318,7 @@ class ChildrenView extends Component {
                     "01/09/2018": {
                         "came_in": true
                     },
-                    "20/10/2018": {
+                    "22/10/2018": {
                         "came_in": true,
                         "activity": {
                             "sleep": [
@@ -383,16 +383,7 @@ class ChildrenView extends Component {
                 }
             }
         ];
-        //"sleep": [
-        //                             [
-        //                                 "08:00",
-        //                                 "09:00"
-        //                             ],
-        //                             [
-        //                                 "13:15",
-        //                                 "14:45"
-        //                             ]
-        //                         ]
+
         this.today = moment(new Date()).format('DD/MM/YYYY');
     }
 
@@ -510,14 +501,12 @@ class ChildrenView extends Component {
         const getSleep = () => {
             return getTemplateForActivity('sleep',
                 () => {
-
                     if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.sleep) {
                         return childTodayActivity.activity.sleep.map((f, i) => {
                             return (
-                                <div key={`sleep${index}${i}wrap`}>
-                                    <span key={`sleep${index}${i}from`}>{`${getLabel(lang, 'from')} ${f[0]} `}</span>
-                                    <span key={`sleep${index}${i}from`}>{` ${getLabel(lang, 'till')} ${f[1]}`}</span>
-
+                                <div key={`sleep${child.second_name} ${i}`}>
+                                    <span>{`${getLabel(lang, 'from')} ${f[0]} `}</span>
+                                    <span>{` ${getLabel(lang, 'till')} ${f[1]}`}</span>
                                 </div>
                             )
                         })
@@ -720,10 +709,10 @@ class ChildrenView extends Component {
 
     render() {
         return (
-            <div className={'childrenListWrapper'}>
-                <GlobalLanguage.Consumer>
-                    {lang => [
-                        this._renderChildrenList(lang),
+            <GlobalLanguage.Consumer>
+                {lang => (
+                    <div className={'childrenListWrapper'}>
+                        {this._renderChildrenList(lang)}
                         <DocumentTitle key={"ChildrenDocumentTitle"}
                                        title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
                         <ReactCSSTransitionGroup
@@ -732,10 +721,9 @@ class ChildrenView extends Component {
                             transitionLeaveTimeout={300}>
                             {this.renderModal()}
                         </ReactCSSTransitionGroup>
-
-                    ]}
-                </GlobalLanguage.Consumer>
-            </div>
+                    </div>
+                )}
+            </GlobalLanguage.Consumer>
         );
     }
 }
@@ -743,25 +731,3 @@ class ChildrenView extends Component {
 ChildrenView.defaultProps = {};
 
 export default ChildrenView;
-
-const getName = (person) => person.name;
-const uppercase = (string) => string.toUpperCase();
-const get6Characters = (string) => string.substring(0, 6);
-const reverse = (string) => string
-    .split('')
-    .reverse()
-    .join('');
-
-const pipe = (...functions) => (value) => {
-    return functions
-        .reduce((currentValue, currentFunction) => {
-            return currentFunction(currentValue);
-        }, value)
-};
-
-console.log(pipe(
-    getName,
-    uppercase,
-    get6Characters,
-    reverse
-)({name: 'Buckethead'}))

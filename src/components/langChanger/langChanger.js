@@ -45,6 +45,7 @@ class LangChanger extends Component {
                     _.forEach(languages, (obj) => {
                         flags.push(
                             <Flag
+                                key={obj.value}
                                 name={obj.flag}
                                 onClick={() => {
                                     this._changeLang(obj.value);

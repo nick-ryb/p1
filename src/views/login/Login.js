@@ -91,7 +91,7 @@ class LoginView extends Component {
                                 />
                             </Form.Field>
                             <Form.Field required>
-                                <label>Password</label>
+                                <label>{getLabel(lang, 'password')}</label>
                                 <Input
                                     name='pass'
                                     label={getLabel(lang, 'password')} labelPosition='left'
@@ -102,9 +102,9 @@ class LoginView extends Component {
                                 />
                             </Form.Field>
                             <Form.Field>
-                                <Checkbox label={getLabel(lang, 'checkbox')}/>
+                                <Checkbox label={getLabel(lang, 'login_checkbox_text')}/>
                             </Form.Field>
-                            <Button primary type='submit'>{getLabel(lang, 'submit')}</Button>
+                            <Button primary type='submit'>{getLabel(lang, 'submit_login')}</Button>
                         </Form>
                     </div>,
                     <DocumentTitle title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Login')}`}/>

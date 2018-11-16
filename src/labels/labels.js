@@ -1,5 +1,3 @@
-import React from "react";
-
 const englishLabels = () => {
     return {
         sadik: "Kinder Garden",
@@ -11,7 +9,7 @@ const englishLabels = () => {
         password: 'password',
         name: 'name',
         agenda2: 'agenda',
-        checkbox: 'Checkbox',
+        login_checkbox_text: 'Checkbox',
         day: 'day',
         days: 'days',
         month: 'month',
@@ -28,37 +26,41 @@ const englishLabels = () => {
         till:'till',
         child_history: 'Statistics',
         general_server_error:'error in information server',
+        save_changes: 'save changes',
+        submit_login: 'login'
     };
 };
 
 const russianLabels = () => {
     return {
-        sadik: "Sadik",
-        Login: "Vxod",
-        Children: "Deti",
-        Child: "Rebionok",
-        HomePage: "Domashniaya stranica",
-        id: 'teudat zehut',
-        password: 'parol',
-        name: 'imya',
+        sadik: "садик",
+        Login: "вход",
+        Children: "дети",
+        Child: "ребенок",
+        HomePage: "домашняя страница",
+        id: 'теудат зеут',
+        password: 'пароль',
+        name: 'имя',
         agenda2: 'Распорядок дня',
-        checkbox: 'rus checkbox',
-        day: 'den',
-        days: 'dni',
-        month: 'mesyac',
-        months: 'mesyacov',
-        year: 'god',
-        years: 'goda',
-        came: 'prishel',
-        missing: 'otsutsvuet',
-        food:'eda',
-        sleep:'son',
-        poop:'stul',
-        attention:'vnimanie',
-        from:'s',
-        till:'do',
-        child_history:'statistika',
+        login_checkbox_text: 'rus checkbox',
+        day: 'день',
+        days: 'дни',
+        month: 'месяц',
+        months: 'месяцов',
+        year: 'год',
+        years: 'года',
+        came: 'пришел',
+        missing: 'отсутствует',
+        food:'еда',
+        sleep:'сон',
+        poop:'стул',
+        attention:'внимание',
+        from:'с',
+        till:'до',
+        child_history:'статистика',
         general_server_error:'oshibka v servere, poprobuite pozhe',
+        save_changes: 'сохранить изменения',
+        submit_login: 'войти'
     };
 };
 
@@ -73,7 +75,7 @@ const hebrewLabels = () => {
         password: 'סיסמה',
         name: 'שם',
         agenda2: 'סדר יום',
-        checkbox: 'צק בוקס',
+        login_checkbox_text: 'צק בוקס',
         day: 'יום',
         days: 'ימים',
         month: 'חודש',
@@ -90,6 +92,8 @@ const hebrewLabels = () => {
         till:'עד',
         child_history: 'היסטוריה',
         general_server_error:'אופס, יש שגיאה בשרותים, אנא נסו מאוחר יותר',
+        save_changes: 'לשמור שינויים',
+        submit_login: 'הכנס'
     };
 };
 
