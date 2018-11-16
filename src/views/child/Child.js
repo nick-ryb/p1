@@ -47,7 +47,7 @@ class ChildView extends Component {
                 "01/09/2018": {
                     "came_in": true
                 },
-                "22/10/2018": {
+                "15/11/2018": {
                     "came_in": true,
                     "activity": {
                         "sleep": [
@@ -124,9 +124,7 @@ class ChildView extends Component {
         const getFood = () => {
             if (!!food) {
                 return (
-                    <div
-                        key={'food_wrapper'}
-                        className={'activity'}>
+                    <div key={'getFoodWrap'} className={'activity'}>
                         <h3>{getLabel(lang, 'food')}</h3>
                         <div className={'sleepRange'}>
                             {food.map((f, i) => {
@@ -143,9 +141,7 @@ class ChildView extends Component {
         const getPoop = () => {
             if (!!poop) {
                 return (
-                    <div
-                        key={'poop_wrapper'}
-                        className={'activity'}>
+                    <div key={'getPoopWrap'} className={'activity'}>
                         <h3>{getLabel(lang, 'poop')}</h3>
                         <div className={'sleepRange'}>
                             {poop.map((f, i) => {
@@ -162,15 +158,13 @@ class ChildView extends Component {
         const getSleep = () => {
             if (!!sleep) {
                 return (
-                    <div
-                        key={'sleep_wrapper'}
-                        className={'activity'}>
+                    <div key={'getSleepWrap'} className={'activity'}>
                         <h3>{getLabel(lang, 'sleep')}</h3>
                         <div className={'sleepRangesList'}>
                             {sleep.map((f, i) => {
                                 return (
                                     <div
-                                        key={i}
+                                        key={`sleepRange${i}wrap`}
                                         className={'sleepRange'}>
                                         <span key={`sleep${i}from`}>{`${getLabel(lang, 'from')} ${f[0]} `}</span>
                                         <span key={`sleep${i}till`}>{` ${getLabel(lang, 'till')} ${f[1]}`}</span>
@@ -261,18 +255,20 @@ class ChildView extends Component {
 
     render() {
         return (
-            <GlobalLanguage.Consumer>
-                {lang => (
-                    <div className={'child_current_view'}>
-                        {this._renderNotesForChild(lang)}
-                        {this._renderChildActivityView(lang)}
-                        {this._renderChildHistoryButton(lang)}
-                        {/*{this._renderChildPersonalInfo(lang)}*/}
-                        <DocumentTitle
-                            title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Child')}`}/>
-                    </div>
-                )}
-            </GlobalLanguage.Consumer>
+            <div className={'child_current_view'}>
+                <GlobalLanguage.Consumer>
+                    {lang => (
+                        <div>
+                            {this._renderNotesForChild(lang)}
+                            {this._renderChildActivityView(lang)}
+                            {this._renderChildHistoryButton(lang)}
+                            {/*{this._renderChildPersonalInfo(lang)}*/}
+                            <DocumentTitle
+                                title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Child')}`}/>
+                        </div>
+                    )}
+                </GlobalLanguage.Consumer>
+            </div>
         )
     }
 }

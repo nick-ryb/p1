@@ -20,11 +20,11 @@ const Home = () =>
     <GlobalLanguage.Consumer>
         {lang => {
             return [
-                <div>
+                <div key={'HomePage'}>
                     <h2>{getLabel(lang, 'HomePage')}</h2>
                     <Link to="/Login">{getLabel(lang, 'Login')}</Link>
                 </div>,
-                <DocumentTitle title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'HomePage')}`}/>
+                <DocumentTitle key={'HomePageDocumentTitle'} title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'HomePage')}`}/>
             ]
         }}
     </GlobalLanguage.Consumer>

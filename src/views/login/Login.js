@@ -77,7 +77,7 @@ class LoginView extends Component {
         return (
             <GlobalLanguage.Consumer>
                 {lang => [
-                    <div className='formContainer'>
+                    <div key={'LoginView'} className='formContainer'>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Field required>
                                 <label>{getLabel(lang, 'id')}</label>
@@ -107,7 +107,7 @@ class LoginView extends Component {
                             <Button primary type='submit'>{getLabel(lang, 'submit_login')}</Button>
                         </Form>
                     </div>,
-                    <DocumentTitle title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Login')}`}/>
+                    <DocumentTitle key={'LoginDocumentTitle'} title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Login')}`}/>
                 ]}
             </GlobalLanguage.Consumer>
         );

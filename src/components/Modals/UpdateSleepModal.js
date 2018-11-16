@@ -1,26 +1,59 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Moment from 'moment'
+import Formsy from 'formsy-react';
+import MyInput from '../common/MyInput';
 import 'react-widgets/dist/css/react-widgets.css';
 import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 
 import ModalWrapper from './ModalWrapper';
-import getLabel from "../../labels/labels";
 import _ from "lodash";
-import {GlobalLanguage} from "../../App";
 
-Moment.locale('en')
-momentLocalizer()
+Moment.locale('en');
+momentLocalizer();
 
-const UpdateSleepModal = props => {
-    console.log('child', props.child);
+class UpdateSleepModal extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+
+        console.log('props', props);
+
+        this.disableButton = this.disableButton.bind(this);
+        this.enableButton = this.enableButton.bind(this);
+        this.state = {canSubmit: false};
+
+    }
 
     // const signIn = provider => {
     //     props.hideModal();
     //     props.signIn(provider);
     // };
 
-    const renderInputs = (keys) => {
+    componentWillMount() {
+        const data = this.props.childActivityObj;
+        this.setState({
+            data
+        });
+    }
+
+    disableButton() {
+        this.setState({canSubmit: false});
+    }
+
+    enableButton() {
+        this.setState({canSubmit: true});
+    }
+
+    submit(model) {
+        fetch('http://example.com/', {
+            method: 'post',
+            body: JSON.stringify(model)
+        });
+    }
+
+    renderInputs = (keys) => {
         const asd = [];
         const formatter = momentLocalizer();
         const formattedTime = (time) => {
@@ -31,93 +64,125 @@ const UpdateSleepModal = props => {
             const date = Moment(d + ' ' + time).format();
 
             return Moment(date).toDate();
-        }
+        };
         _.forEach(keys, (value, key) => {
             console.log(value);
             asd.push(
                 <div>
-                    <GlobalLanguage.Consumer>
-                        {lang => (
-                            <label>
-                                {keys.length > 1 ? getLabel(lang, key ? 'till' : 'from') : key}
-                                <DateTimePicker
-                                    timeFormat={formatter}
-                                    date={false}
-                                    step={5}
-                                    defaultValue={value ? formattedTime(value) : new Date()}
-                                    onToggle={(isOpen) => {
-                                        if (isOpen)
-                                            document.body.classList.add("pickerOpen");
-                                        else
-                                            document.body.className = document.body.className.replace("pickerOpen", "");
-                                    }}/>
-                                {/*<input type="text" name="name" value={value} />*/}
-                            </label>
-                        )}
-                    </GlobalLanguage.Consumer>
+                    <label>
+                        {key}
+                        <DateTimePicker
+                            timeFormat={formatter}
+                            date={false}
+                            step={5}
+                            defaultValue={value ? formattedTime(value) : new Date()}
+                            onToggle={(isOpen) => {
+                                if (isOpen)
+                                    document.body.classList.add("pickerOpen");
+                                else
+                                    document.body.className = document.body.className.replace("pickerOpen", "");
+                            }}/>
+                        {/*<input type="text" name="name" value={value} />*/}
+                    </label>
+
                 </div>
             )
-        })
+        });
         return asd
     };
 
-    return (
-        <GlobalLanguage.Consumer>
-            {lang => (
-                <ModalWrapper
-                    title={`Sleep Update for ${props.child.first_name}`}
-                    width={400}
-                    showOk={false}
-                    {...props}
+    addNewInput = () => {
+        this.setState({isAddActivity: true});
+    };
+
+    handleInputChange = (event) => {
+        console.log(event);//{}
+        // const target = event.target;
+        // const value = target.value;
+        // const name = target.name;
+        //
+        // this.setState({
+        //     [name]: value
+        // });
+    };
+
+    childActivityForm = () => {
+
+        let formInputs = [];
+
+        const data = this.props.childActivityObj;
+        let i = 0;
+        if (data.length > 0) {
+            for (i; i < data.length; i++) {
+                for (let j = 0; j < data[i].length; j++) {
+                    formInputs.push(
+                        <MyInput
+                            key={`input_${i}_${j}`}
+                            type={'time'}
+                            name={data[i][j]}
+                            value={data[i][j]}
+                            validations={{
+                                matchRegexp: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/
+                            }}
+                            validationError="This is not a valid time"
+                            label={data[i][j]}
+                            required
+                        />
+                    );
+                }
+            }
+        }
+
+        if (this.state.isAddActivity) {
+            formInputs.push(
+                <input
+                    key={`input${i}`}
+                    value={this.state[`input${i}`]}
+                    onChange={this.handleInputChange}
+                />
+            );
+        }
+
+        //button to add new input
+        formInputs.push(<button key={'add_new_input'} onClick={(e) => {
+            e.preventDefault();
+            this.addNewInput()
+        }}>ADD NEW INPUT</button>);
+
+        //button to save
+        formInputs.push(<button key={'submit_form'} onClick={() => console.log('save clicked')}>SAVE FORM</button>);
+
+        return formInputs;
+    };
+
+    render() {
+
+        return (
+
+            <ModalWrapper
+                {...this.props}
+                title={`Sleep Update for ${this.props.child.first_name}`}
+                width={400}
+                showOk={false}
+            >
+                {/*<form>*/}
+
+                {/*</form>*/}
+                <Formsy ref='form'
+                        onValidSubmit={this.submit}
+                        onInvalidSubmit={(e) => {
+                            console.log(e);
+                        }}
+                        onValid={this.enableButton}
+                        onInvalid={this.disableButton}
+                        onChange={this.handleInputChange}
                 >
-                    <p>update child sleep here</p>
-
-                    <form action="">
-                        {props.childActivityObj.map((f, index) => {
-
-                            console.log('sleep f', f);
-                            return (
-                                <div key={`sleep${index}wrap`}>
-                                    {renderInputs(f)}
-
-
-                                </div>
-                            )
-                            //
-                            //
-                            // const keys = Object.keys(f);
-                            // if (keys.length > 1) {
-                            //     return (
-                            //         <div key={`sleep${index}wrap`}>
-                            //             {
-                            //                 keys.map((key, i) => {
-                            //                     const objKey = f[key];
-                            //                     return (
-                            //                         <span
-                            //                             key={`sleep${index}${i}`}>{`${key} ${objKey}  `}</span>)
-                            //                 })
-                            //             }
-                            //         </div>
-                            //     )
-                            // } else if (keys.length === 1) {
-                            //     return <p key={`sleep${index}`}>{`${keys[0]} ${f[keys[0]]}`}</p>
-                            // } else if (keys.length === 0) {
-                            //     return <p key={`sleep${index}`}>{'sdsd'}</p>
-                            // }
-                        })}
-
-                        <div>
-
-
-                        </div>
-                    </form>
-                    <button onClick={() => console.log('save clicked')}>{getLabel(lang,'save_changes')}</button>
-
-
-                </ModalWrapper>
-            )}
-        </GlobalLanguage.Consumer>
-    );
-};
+                    {this.childActivityForm()}
+                    <button type="submit" disabled={!this.state.canSubmit}>Submit</button>
+                </Formsy>
+            </ModalWrapper>
+        );
+    }
+}
 
 export default UpdateSleepModal;
