@@ -17,7 +17,7 @@ class ChildrenView extends Component {
         this.state = {
             childActivityTitle: '',
             childObj: {},
-            childActivityObj: {},
+            childActivityObj: [],
             currentModal: null
         };
         this.children = [
@@ -318,7 +318,7 @@ class ChildrenView extends Component {
                     "01/09/2018": {
                         "came_in": true
                     },
-                    "20/10/2018": {
+                    "15/11/2018": {
                         "came_in": true,
                         "activity": {
                             "sleep": [
@@ -332,17 +332,20 @@ class ChildrenView extends Component {
                                 ]
                             ],
                             "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
+                                [
+                                    "09:10",
+                                    "Молочная Каша"
+                                ],
+                                [
+                                    "19:45",
+                                    "Молочная Каша"
+                                ],
                             ],
                             "poop": [
-                                {
-                                    "11:42": true
-                                }
+                                [
+                                    "11:42",
+                                    true
+                                ]
                             ]
                         }
                     },
@@ -383,16 +386,6 @@ class ChildrenView extends Component {
                 }
             }
         ];
-        //"sleep": [
-        //                             [
-        //                                 "08:00",
-        //                                 "09:00"
-        //                             ],
-        //                             [
-        //                                 "13:15",
-        //                                 "14:45"
-        //                             ]
-        //                         ]
         this.today = moment(new Date()).format('DD/MM/YYYY');
     }
 
@@ -435,9 +428,6 @@ class ChildrenView extends Component {
 
     _childActivityToday = (child, index, lang) => {
         const childTodayActivity = child.history[this.today];
-        // if (!childTodayActivity || !childTodayActivity.activity)
-        //     return null;
-
 
         const getTemplateForActivity = (title, children) => {
             return (
@@ -460,7 +450,7 @@ class ChildrenView extends Component {
                              console.log(title);
                              console.log(childTodayActivity);
                              console.log(child);
-                             this.onClick(child, title, childTodayActivity.activity[title]);
+                             this.onClick(child, title, childTodayActivity ? childTodayActivity.activity[title] : null);
                          }}>
                         <Icon
                             name='pencil'
@@ -476,8 +466,12 @@ class ChildrenView extends Component {
                 () => {
                     if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.food) {
                         return childTodayActivity.activity.food.map((f, i) => {
-                            const keys = Object.keys(f);
-                            return (<span key={`food${index}${i}`}>{`${keys[0]} ${f[keys[0]]}`}</span>)
+                            return (
+                                <div key={`food${index}${i}wrap`}>
+                                    <span key={`food${index}${i}from`}>{`${f[0]} `}</span>
+                                    <span key={`food${index}${i}till`}>{` ${f[1]}`}</span>
+                                </div>
+                            )
                         })
                     } else {
                         return null;
@@ -489,34 +483,26 @@ class ChildrenView extends Component {
                 () => {
                     if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.poop) {
                         return childTodayActivity.activity.poop.map((f, i) => {
-                            const keys = Object.keys(f);
-                            return (<p key={`poop${index}${i}`}>{`${keys[0]}`}</p>)
+                            return (
+                                <div key={`poop${index}${i}wrap`}>
+                                    <span key={`poop${index}${i}when`}>{` ${f[1]}`}</span>
+                                </div>
+                            )
                         })
                     } else {
                         return null;
                     }
                 });
-            //
-            //     poop.map((f, i) => {
-            //     const keys = Object.keys(f);
-            //     if (!!childTodayActivity.activity && !!childTodayActivity.activity.poop) {
-            //         return (<p key={`poop${index}${i}`}>{`${keys[0]}`}</p>)
-            //     } else {
-            //         return null;
-            //     }
-            // }))
-
         };
         const getSleep = () => {
             return getTemplateForActivity('sleep',
                 () => {
-
                     if (!!childTodayActivity && !!childTodayActivity.activity && !!childTodayActivity.activity.sleep) {
                         return childTodayActivity.activity.sleep.map((f, i) => {
                             return (
                                 <div key={`sleep${index}${i}wrap`}>
                                     <span key={`sleep${index}${i}from`}>{`${getLabel(lang, 'from')} ${f[0]} `}</span>
-                                    <span key={`sleep${index}${i}from`}>{` ${getLabel(lang, 'till')} ${f[1]}`}</span>
+                                    <span key={`sleep${index}${i}till`}>{` ${getLabel(lang, 'till')} ${f[1]}`}</span>
 
                                 </div>
                             )
@@ -666,7 +652,7 @@ class ChildrenView extends Component {
     onClick = (child, title, activityObj) => {
         this.setState({
             childObj: child,
-            childActivityObj: activityObj,
+            childActivityObj: activityObj || this.state.childActivityObj,
             childActivityTitle: title,
             currentModal: 'UPDATE_SLEEP'
         }, () => {
@@ -681,7 +667,6 @@ class ChildrenView extends Component {
     renderModal = () => {
         if (this.state.currentModal) {
             document.body.style.overflow = "hidden";
-            console.log('hidden1');
 
             return (
                 <CommonModal
@@ -712,7 +697,6 @@ class ChildrenView extends Component {
             );
         }
         else {
-            console.log('initial2');
             document.body.style.overflow = "initial";
             return null;
         }
@@ -727,6 +711,7 @@ class ChildrenView extends Component {
                         <DocumentTitle key={"ChildrenDocumentTitle"}
                                        title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
                         <ReactCSSTransitionGroup
+                            key={'childrenListAnimationGroup'}
                             transitionName="example"
                             transitionEnterTimeout={500}
                             transitionLeaveTimeout={300}>
@@ -744,24 +729,4 @@ ChildrenView.defaultProps = {};
 
 export default ChildrenView;
 
-const getName = (person) => person.name;
-const uppercase = (string) => string.toUpperCase();
-const get6Characters = (string) => string.substring(0, 6);
-const reverse = (string) => string
-    .split('')
-    .reverse()
-    .join('');
 
-const pipe = (...functions) => (value) => {
-    return functions
-        .reduce((currentValue, currentFunction) => {
-            return currentFunction(currentValue);
-        }, value)
-};
-
-console.log(pipe(
-    getName,
-    uppercase,
-    get6Characters,
-    reverse
-)({name: 'Buckethead'}))
