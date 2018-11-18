@@ -4,9 +4,9 @@ import * as moment from 'moment';
 
 import './Children.css';
 import LabelByLang from "../../components/common/LabelByLang";
-import * as Globals from "../../GlobalConfig";
+import * as GlobalsConfig from "../../GlobalConfig";
 import DocumentTitle from "react-document-title";
-import {GlobalLanguage} from "../../App";
+import {GlobalParams} from "../../App";
 import getLabel from "../../labels/labels";
 import CommonModal from "../../components/common/CommonModal";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -318,7 +318,7 @@ class ChildrenView extends Component {
                     "01/09/2018": {
                         "came_in": true
                     },
-                    "15/11/2018": {
+                    "18/11/2018": {
                         "came_in": true,
                         "activity": {
                             "sleep": [
@@ -678,7 +678,7 @@ class ChildrenView extends Component {
                     }}
                     currentModal={this.state.currentModal}
                     hideModal={() => {
-                        console.log('initial1');
+                        console.log('hideModal');
                         document.body.style.overflow = "initial";
                         this.setState({currentModal: null})
                     }}
@@ -705,21 +705,24 @@ class ChildrenView extends Component {
     render() {
         return (
             <div className={'childrenListWrapper'}>
-                <GlobalLanguage.Consumer>
-                    {lang => [
-                        this._renderChildrenList(lang),
-                        <DocumentTitle key={"ChildrenDocumentTitle"}
-                                       title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
-                        <ReactCSSTransitionGroup
-                            key={'childrenListAnimationGroup'}
-                            transitionName="example"
-                            transitionEnterTimeout={500}
-                            transitionLeaveTimeout={300}>
-                            {this.renderModal()}
-                        </ReactCSSTransitionGroup>
+                <GlobalParams.Consumer>
+                    {GParams => {
+                        const {lang} = GParams;
+                        return [
+                            this._renderChildrenList(lang),
+                            <DocumentTitle key={"ChildrenDocumentTitle"}
+                                           title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
+                            <ReactCSSTransitionGroup
+                                key={'childrenListAnimationGroup'}
+                                transitionName="example"
+                                transitionEnterTimeout={500}
+                                transitionLeaveTimeout={300}>
+                                {this.renderModal()}
+                            </ReactCSSTransitionGroup>
 
-                    ]}
-                </GlobalLanguage.Consumer>
+                        ]
+                    }}
+                </GlobalParams.Consumer>
             </div>
         );
     }

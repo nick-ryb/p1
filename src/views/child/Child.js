@@ -3,8 +3,8 @@ import * as moment from "moment";
 import DocumentTitle from "react-document-title";
 import {Link} from "react-router-dom";
 import './Child.css';
-import {GlobalLanguage} from "../../App";
-import * as Globals from "../../GlobalConfig";
+import {GlobalParams} from "../../App";
+import * as GlobalsConfig from "../../GlobalConfig";
 import getLabel from "../../labels/labels";
 
 class ChildView extends Component {
@@ -47,7 +47,7 @@ class ChildView extends Component {
                 "01/09/2018": {
                     "came_in": true
                 },
-                "15/11/2018": {
+                "18/11/2018": {
                     "came_in": true,
                     "activity": {
                         "sleep": [
@@ -256,18 +256,21 @@ class ChildView extends Component {
     render() {
         return (
             <div className={'child_current_view'}>
-                <GlobalLanguage.Consumer>
-                    {lang => (
-                        <div>
-                            {this._renderNotesForChild(lang)}
-                            {this._renderChildActivityView(lang)}
-                            {this._renderChildHistoryButton(lang)}
-                            {/*{this._renderChildPersonalInfo(lang)}*/}
-                            <DocumentTitle
-                                title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Child')}`}/>
-                        </div>
-                    )}
-                </GlobalLanguage.Consumer>
+                <GlobalParams.Consumer>
+                    {GParams => {
+                        const { lang } = GParams;
+                        return (
+                            <div>
+                                {this._renderNotesForChild(lang)}
+                                {this._renderChildActivityView(lang)}
+                                {this._renderChildHistoryButton(lang)}
+                                {/*{this._renderChildPersonalInfo(lang)}*/}
+                                <DocumentTitle
+                                    title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'Child')}`}/>
+                            </div>
+                        )
+                    }}
+                </GlobalParams.Consumer>
             </div>
         )
     }

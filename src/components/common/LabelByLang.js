@@ -1,16 +1,17 @@
 import React, {Component} from "react";
 import getLabel from "../../labels/labels";
-import {GlobalLanguage} from "../../App";
+import {GlobalParams} from "../../App";
 
 class LabelByLang extends Component {
     render() {
         const string = this.props.string;
         return (
-            <GlobalLanguage.Consumer>
-                {lang => {
+            <GlobalParams.Consumer>
+                {GParams => {
+                    const { lang } = GParams;
                     console.log('lang, string, getLabel()',lang,string,getLabel(lang, string));
                     return getLabel(lang, string).toString()}}
-            </GlobalLanguage.Consumer>
+            </GlobalParams.Consumer>
         );
     }
 }

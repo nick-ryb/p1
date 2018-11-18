@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {GlobalLanguage} from "../../App";
+import {GlobalParams} from "../../App";
 import DocumentTitle from "react-document-title";
-import * as Globals from "../../GlobalConfig";
+import * as GlobalsConfig from "../../GlobalConfig";
 import getLabel from "../../labels/labels";
 import {Axis, Bar, Chart, Cursor, Series, Tooltip} from "react-charts";
 
@@ -35,14 +35,16 @@ constructor(props){
     render() {
         return (
             <div className={'child_current_view'}>
-                <GlobalLanguage.Consumer>
-                    {lang => [
+                <GlobalParams.Consumer>
+                    {GParams => {
+                        const { lang } = GParams;
+                        return[
                         this._renderChildActivityHistory(lang),
                         // {this._renderChildPersonalInfo(lang)}
                         <DocumentTitle
-                            title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'child_history')}`}/>
-                    ]}
-                </GlobalLanguage.Consumer>
+                            title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'child_history')}`}/>
+                    ]}}
+                </GlobalParams.Consumer>
             </div>
         )
     }

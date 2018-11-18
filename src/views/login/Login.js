@@ -6,8 +6,8 @@ import getLabel from '../../labels/labels';
 
 import './Login.css';
 import LabelByLang from "../../components/common/LabelByLang";
-import {GlobalLanguage} from "../../App";
-import * as Globals from "../../GlobalConfig";
+import {GlobalParams} from "../../App";
+import * as GlobalsConfig from "../../GlobalConfig";
 
 class LoginView extends Component {
 
@@ -75,8 +75,10 @@ class LoginView extends Component {
 
     render() {
         return (
-            <GlobalLanguage.Consumer>
-                {lang => [
+            <GlobalParams.Consumer>
+                {GParams => {
+                    const { lang } = GParams;
+                    return[
                     <div key={'LoginView'} className='formContainer'>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Field required>
@@ -107,9 +109,9 @@ class LoginView extends Component {
                             <Button primary type='submit'>{getLabel(lang, 'submit_login')}</Button>
                         </Form>
                     </div>,
-                    <DocumentTitle key={'LoginDocumentTitle'} title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'Login')}`}/>
-                ]}
-            </GlobalLanguage.Consumer>
+                    <DocumentTitle key={'LoginDocumentTitle'} title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'Login')}`}/>
+                ]}}
+            </GlobalParams.Consumer>
         );
     }
 }

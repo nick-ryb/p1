@@ -8,6 +8,7 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 
 import ModalWrapper from './ModalWrapper';
 import _ from "lodash";
+import {GlobalParams} from "../../App";
 
 Moment.locale('en');
 momentLocalizer();
@@ -106,16 +107,17 @@ class UpdateSleepModal extends Component {
         // });
     };
 
-    childActivityForm = () => {
+    childActivityForm = (isMobile) => {
 
         let formInputs = [];
-
+debugger
         const data = this.props.childActivityObj;
         let i = 0;
         if (data.length > 0) {
             for (i; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
                     formInputs.push(
+                        isMobile ?
                         <MyInput
                             key={`input_${i}_${j}`}
                             type={'time'}
@@ -128,6 +130,10 @@ class UpdateSleepModal extends Component {
                             label={data[i][j]}
                             required
                         />
+                        :
+                                    <div>
+                                        <p>orbit</p>
+                                    </div>
                     );
                 }
             }
@@ -158,29 +164,37 @@ class UpdateSleepModal extends Component {
     render() {
 
         return (
+            <GlobalParams.Consumer>
+                {GParams => {
+                    const {isMobile} = GParams;
+                    
+                    return (
 
-            <ModalWrapper
-                {...this.props}
-                title={`Sleep Update for ${this.props.child.first_name}`}
-                width={400}
-                showOk={false}
-            >
-                {/*<form>*/}
+                        <ModalWrapper
+                            {...this.props}
+                            title={`Sleep Update for ${this.props.child.first_name}`}
+                            width={400}
+                            showOk={false}
+                        >
+                            {/*<form>*/}
 
-                {/*</form>*/}
-                <Formsy ref='form'
-                        onValidSubmit={this.submit}
-                        onInvalidSubmit={(e) => {
-                            console.log(e);
-                        }}
-                        onValid={this.enableButton}
-                        onInvalid={this.disableButton}
-                        onChange={this.handleInputChange}
-                >
-                    {this.childActivityForm()}
-                    <button type="submit" disabled={!this.state.canSubmit}>Submit</button>
-                </Formsy>
-            </ModalWrapper>
+                            {/*</form>*/}
+                            <Formsy ref='form'
+                                    onValidSubmit={this.submit}
+                                    onInvalidSubmit={(e) => {
+                                        console.log(e);
+                                    }}
+                                    onValid={this.enableButton}
+                                    onInvalid={this.disableButton}
+                                    onChange={this.handleInputChange}
+                            >
+                                {this.childActivityForm(isMobile)}
+                                <button type="submit" disabled={!this.state.canSubmit}>Submit</button>
+                            </Formsy>
+                        </ModalWrapper>
+                    );
+                }}
+            </GlobalParams.Consumer>
         );
     }
 }

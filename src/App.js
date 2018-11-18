@@ -9,25 +9,27 @@ import LoginView from './views/login/Login';
 import ChildrenView from './views/children/Children';
 import LangChanger from "./components/langChanger/langChanger";
 import getLabel from "./labels/labels";
-import * as Globals from "./GlobalConfig";
+import * as GlobalsConfig from "./GlobalConfig";
 import DocumentTitle from "react-document-title";
 import ChildView from "./views/child/Child";
 import HistoryView from "./views/history/History";
 
-export const GlobalLanguage = React.createContext();
+export const GlobalParams = React.createContext();
 
 const Home = () =>
-    <GlobalLanguage.Consumer>
-        {lang => {
+    <GlobalParams.Consumer>
+        {GParams => {
+            const {lang} = GParams;
             return [
                 <div key={'HomePage'}>
                     <h2>{getLabel(lang, 'HomePage')}</h2>
                     <Link to="/Login">{getLabel(lang, 'Login')}</Link>
                 </div>,
-                <DocumentTitle key={'HomePageDocumentTitle'} title={`${Globals[lang + "GanName"]} | ${getLabel(lang, 'HomePage')}`}/>
+                <DocumentTitle key={'HomePageDocumentTitle'}
+                               title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'HomePage')}`}/>
             ]
         }}
-    </GlobalLanguage.Consumer>
+    </GlobalParams.Consumer>
 
 
 const AppContainer = (props) => {
@@ -35,23 +37,26 @@ const AppContainer = (props) => {
     return (
         <div className='appContainer'>
 
-            <GlobalLanguage.Consumer>
-                {lang => {
+            <GlobalParams.Consumer>
+                {GParams => {
+                    const {lang} = GParams;
                     return lang === 'heb' && <style type='text/css'>{`*{direction:rtl}`}</style>
                 }}
-            </GlobalLanguage.Consumer>
-            <GlobalLanguage.Consumer>
-                {lang => {
+            </GlobalParams.Consumer>
+            <GlobalParams.Consumer>
+                {GParams => {
+                    const {lang} = GParams;
                     // this.setState({lang});
                     return <LangChanger lang={lang} changeLang={props['changeLang']}/>
                 }}
-            </GlobalLanguage.Consumer>
+            </GlobalParams.Consumer>
 
             <Router>
                 <div className=''>
-                    <GlobalLanguage.Consumer>
-                        {lang =>
-                            <ul>
+                    <GlobalParams.Consumer>
+                        {GParams => {
+                            const { lang } = GParams;
+                            return <ul>
                                 <li><Link to="/">{getLabel(lang, 'HomePage')}</Link></li>
                                 <li><Link to="/Login">{getLabel(lang, 'Login')}</Link></li>
                                 <li><Link to="/Children">{getLabel(lang, 'Children')}</Link></li>
@@ -59,7 +64,8 @@ const AppContainer = (props) => {
                                 <li><Link to="/Child/History">{getLabel(lang, 'child_history')}</Link></li>
                             </ul>
                         }
-                    </GlobalLanguage.Consumer>
+                        }
+                    </GlobalParams.Consumer>
 
                     <hr/>
 
@@ -96,13 +102,13 @@ class App extends Component {
 
     render() {
         return (
-            <GlobalLanguage.Provider value={this.state.lang}>
+            <GlobalParams.Provider value={{lang: this.state.lang, isMobile: true, ...GlobalsConfig}}>
                 <AppContainer
                     changeLang={this._changeLang.bind(this)}
                     modal={this.modal}
                 />
 
-            </GlobalLanguage.Provider>
+            </GlobalParams.Provider>
         );
     }
 }

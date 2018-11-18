@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // const {PropTypes} = React;
 import '../common/CommonModal.css';
 import {Icon} from "semantic-ui-react";
-import {GlobalLanguage} from "../../App";
+import {GlobalParams} from "../../App";
 
 
 const ModalWrapper = props => {
@@ -29,31 +29,36 @@ const ModalWrapper = props => {
     const mobileClass = false ? 'mobile' : '';
 
     return (
-        <GlobalLanguage.Consumer>
-            {lang => (
-                <div className={'custom-overlay'} onClick={handleBackgroundClick}>
-                    <div className={`custom-modal ${mobileClass}`}>
-                        <header className={'custom-modal-header'}>
-                            <h3>{props.title}</h3>
+        <GlobalParams.Consumer>
+            {GParams => {
+                const { lang } = GParams;
+                return (
+                    <div className={'custom-overlay'} onClick={handleBackgroundClick}>
+                        <div className={`custom-modal ${mobileClass}`}>
+                            <header className={'custom-modal-header'}>
+                                <h3>{props.title}</h3>
 
-                            <div onClick={props.hideModal} className={`custom-closeButton ${lang === 'heb' && 'rtl'}`}>
-                                <Icon
-                                    className={'custom-closeButton-icon'}
-                                    name='close'
-                                />
+                                <div onClick={props.hideModal}
+                                     className={`custom-closeButton ${lang === 'heb' && 'rtl'}`}>
+                                    <Icon
+                                        className={'custom-closeButton-icon'}
+                                        name='close'
+                                    />
+                                </div>
+                            </header>
+                            <div className={'custom-modal-body'}>
+                                <div className={'custom-modal-body-content'}>
+                                    {props.children}
+                                </div>
                             </div>
-                        </header>
-                        <div className={'custom-modal-body'}>
-                            <div className={'custom-modal-body-content'}>
-                                {props.children}
-                            </div>
+                            {okButton}
                         </div>
-                        {okButton}
-                    </div>
 
-                </div>
-            )}
-        </GlobalLanguage.Consumer>
+                    </div>
+                )
+            }
+            }
+        </GlobalParams.Consumer>
     );
 };
 

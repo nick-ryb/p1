@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Flag} from "semantic-ui-react";
 import _ from "lodash";
 import './LangChanger.css';
-import {GlobalLanguage} from "../../App";
+import {GlobalParams} from "../../App";
 
 class LangChanger extends Component {
     constructor(props) {
@@ -30,8 +30,10 @@ class LangChanger extends Component {
 
     render() {
         return (
-            <GlobalLanguage.Consumer>
-                {lang => {
+            <GlobalParams.Consumer>
+                {GParams => {
+                    const { lang } = GParams;
+
                     const languages = this._getLanguagesObj();
 
                     //move active language to be the first language
@@ -63,7 +65,7 @@ class LangChanger extends Component {
                     );
 
                 }}
-            </GlobalLanguage.Consumer>
+            </GlobalParams.Consumer>
         )
     }
 }
