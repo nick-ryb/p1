@@ -1,21 +1,19 @@
-import React, {Component} from "react";
-import {Flag} from "semantic-ui-react";
+import React, {Component, useContext} from "react";
+import {Flag, Dropdown} from "semantic-ui-react";
 import _ from "lodash";
 import './LangChanger.css';
 import {GlobalParams} from "../../App";
 
-class LangChanger extends Component {
-    constructor(props) {
-        super();
-    }
+// class LangChanger extends Component {
+const LangChanger = props => {
 
-    _changeLang = (e) => {
-        if (this.props.lang !== e) {
-            this.props.changeLang && this.props.changeLang(e);
+    const _changeLang = (e) => {
+        if (props.lang !== e.value) {
+            props.changeLang && props.changeLang(e);
         }
     };
 
-    _getLanguagesObj = () => {
+    const _getLanguagesObj = () => {
         // return [
         //     {key: 'rus', value: 'rus', flag: 'ru', text: 'Russian'},
         //     {key: 'eng', value: 'eng', flag: 'us', text: 'English'},
@@ -24,50 +22,63 @@ class LangChanger extends Component {
         return [
             {value: 'eng', label: 'English', flag: 'us'},
             {value: 'heb', label: 'עברית', flag: 'il'},
-            {value: 'rus', label: 'ruskii', flag: 'ru'},
+            {value: 'rus', label: 'Руский', flag: 'ru'},
         ]
     };
 
-    render() {
-        return (
-            <GlobalParams.Consumer>
-                {GParams => {
-                    const { lang } = GParams;
+    const {lang} = useContext(GlobalParams);
 
-                    const languages = this._getLanguagesObj();
+    const languages = _getLanguagesObj();
 
-                    //move active language to be the first language
-                    const activeLang = _.remove(languages, function(n) {
-                        return n.value === lang;
-                    });
-                    languages.unshift(activeLang[0]);
-
-                    let flags = [];
-
-                    _.forEach(languages, (obj) => {
-                        flags.push(
-                            <Flag
-                                key={obj.value}
-                                name={obj.flag}
-                                onClick={() => {
-                                    this._changeLang(obj.value);
-                                }}
-                                title={obj.label}
-                                style={{cursor: 'pointer'}}
-                            />
-                        );
-                    });
-
-                    return (
-                        <div className={'language_flags'}>
-                            {flags}
-                        </div>
-                    );
-
-                }}
-            </GlobalParams.Consumer>
-        )
+    if (!props.inMenu) {
+        //move active language to be the first language
+        const activeLang = _.remove(languages, function (n) {
+            return n.value === lang;
+        });
+        languages.unshift(activeLang[0]);
     }
+
+    let flags = [];
+    let flagsForMenu = [];
+
+    _.forEach(languages, (obj) => {
+        flags.push(
+            <Flag
+                key={obj.value}
+                name={obj.flag}
+                onClick={() => {
+                    _changeLang(obj);
+                }}
+                title={obj.label}
+                style={{cursor: 'pointer'}}
+            />
+        );
+        flagsForMenu.push(
+            <Dropdown.Item
+                active={lang === obj.value}
+                className={'menu_language'}
+                onClick={() => {
+                    _changeLang(obj);
+                }}>
+                <Flag
+                    key={obj.value}
+                    name={obj.flag}
+                    title={obj.label}
+                    style={{cursor: 'pointer', display: 'inline-block'}}
+                />
+                <p style={{display: 'inline-block'}}>{obj.label}</p>
+            </Dropdown.Item>
+        );
+    });
+
+    if (props.inMenu)
+        return (flagsForMenu);
+
+    return (
+        <div className={'language_flags'}>
+            {flags}
+        </div>
+    );
 }
 
 export default LangChanger;

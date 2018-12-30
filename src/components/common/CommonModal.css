@@ -48,8 +48,11 @@
     overflow-y: auto;
 }
 
-.pickerOpen .custom-modal-body{
-    overflow: visible;
+.pickerOpen .custom-modal-body,
+.pickerOpen .sweet-alert,
+.pickerOpen .sweet-alert
+{
+    overflow: visible!important;
 }
 
 .custom-modal-body-content {

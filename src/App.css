@@ -23,8 +23,20 @@
     font-size: large;
 }
 
+.routerContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
 .appContainer {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.85em;
+    padding-bottom: 2.85em;
+    overflow: auto;
+    position: relative;
 }
 
 .fade-enter {
@@ -47,10 +59,20 @@ button:not(.disabled){
     cursor: pointer;
 }
 
+.sweet-alert{
+    max-height: 80vh;
+    overflow: auto!important;
+}
+
 .ui.modal {
     margin-top: 0 !important;
 }
 
+.menu > .item > a{
+    color: inherit;
+    display: flex;
+    flex: 1;
+}
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);

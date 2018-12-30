@@ -4,7 +4,6 @@ import DocumentTitle from "react-document-title";
 import {Link} from "react-router-dom";
 import './Child.css';
 import {GlobalParams} from "../../App";
-import * as GlobalsConfig from "../../GlobalConfig";
 import getLabel from "../../labels/labels";
 
 class ChildView extends Component {
@@ -47,7 +46,7 @@ class ChildView extends Component {
                 "01/09/2018": {
                     "came_in": true
                 },
-                "18/11/2018": {
+                "30/12/2018": {
                     "came_in": true,
                     "activity": {
                         "sleep": [
@@ -266,7 +265,7 @@ class ChildView extends Component {
                                 {this._renderChildHistoryButton(lang)}
                                 {/*{this._renderChildPersonalInfo(lang)}*/}
                                 <DocumentTitle
-                                    title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'Child')}`}/>
+                                    title={`${GParams[lang + "GanName"]} | ${getLabel(lang, 'Child')}`}/>
                             </div>
                         )
                     }}

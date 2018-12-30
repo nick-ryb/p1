@@ -1,24 +1,45 @@
-.language_flags{
+.language_flags {
     display: inline-block;
 }
-.language_flags:hover > i.flag:not(:first-of-type){
+
+.language_flags:hover > i.flag:not(:first-of-type) {
     transform: translateY(0);
 }
 
-i.flag:not(.icon){
+i.flag:not(.icon) {
     margin-bottom: 0.5em;
 }
 
-.language_flags > i.flag:first-of-type{
+.language_flags > i.flag:first-of-type {
     z-index: 2;
 }
 
-.language_flags > i.flag:not(:first-of-type){
+.language_flags > i.flag:not(:first-of-type) {
     transition: all 0.6s;
     transform: translateY(-1000%);
     z-index: 1;
 }
 
-.language_flags > i.flag:not(:first-of-type):hover{
+.language_flags > i.flag:not(:first-of-type):hover {
     box-shadow: 0 0 5px 1px #000;
+}
+.menu_language{
+    overflow: hidden;
+}
+.menu_language > i.flag {
+    vertical-align: middle;
+    margin: 0;
+}
+
+.menu_language:hover > i.flag {
+}
+
+.menu_language > p {
+    vertical-align: middle;
+    transform: translateX(300%);
+    transition: all 0.3s;
+}
+
+.menu_language:hover > p {
+    transform: translateX(0);
 }

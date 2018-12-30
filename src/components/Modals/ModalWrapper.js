@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 // const {PropTypes} = React;
 import '../common/CommonModal.css';
@@ -28,37 +28,30 @@ const ModalWrapper = props => {
 
     const mobileClass = false ? 'mobile' : '';
 
+    const {lang} = useContext(GlobalParams);
+
     return (
-        <GlobalParams.Consumer>
-            {GParams => {
-                const { lang } = GParams;
-                return (
-                    <div className={'custom-overlay'} onClick={handleBackgroundClick}>
-                        <div className={`custom-modal ${mobileClass}`}>
-                            <header className={'custom-modal-header'}>
-                                <h3>{props.title}</h3>
+        <div className={'custom-overlay'} onClick={handleBackgroundClick}>
+            <div className={`custom-modal ${mobileClass}`}>
+                <header className={'custom-modal-header'}>
+                    <h3>{props.title}</h3>
 
-                                <div onClick={props.hideModal}
-                                     className={`custom-closeButton ${lang === 'heb' && 'rtl'}`}>
-                                    <Icon
-                                        className={'custom-closeButton-icon'}
-                                        name='close'
-                                    />
-                                </div>
-                            </header>
-                            <div className={'custom-modal-body'}>
-                                <div className={'custom-modal-body-content'}>
-                                    {props.children}
-                                </div>
-                            </div>
-                            {okButton}
-                        </div>
-
+                    <div onClick={props.hideModal}
+                         className={`custom-closeButton ${lang === 'heb' && 'rtl'}`}>
+                        <Icon
+                            className={'custom-closeButton-icon'}
+                            name='close'
+                        />
                     </div>
-                )
-            }
-            }
-        </GlobalParams.Consumer>
+                </header>
+                <div className={'custom-modal-body'}>
+                    <div className={'custom-modal-body-content'}>
+                        {props.children}
+                    </div>
+                </div>
+                {okButton}
+            </div>
+        </div>
     );
 };
 

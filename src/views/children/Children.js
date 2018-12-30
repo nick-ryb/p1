@@ -1,402 +1,445 @@
 import React, {Component} from "react";
 import {Button, Card, Icon, Image} from "semantic-ui-react";
-import * as moment from 'moment';
-
+import Moment from 'moment';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import _ from "lodash";
 import './Children.css';
 import LabelByLang from "../../components/common/LabelByLang";
-import * as GlobalsConfig from "../../GlobalConfig";
 import DocumentTitle from "react-document-title";
 import {GlobalParams} from "../../App";
 import getLabel from "../../labels/labels";
+import FormsyInput from "../../components/common/FormsyInput";
+import Formsy from "formsy-react";
+import momentLocalizer from "react-widgets-moment";
+import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import CommonModal from "../../components/common/CommonModal";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import LoaderCustom from "../../components/common/loader/Loader";
 
 class ChildrenView extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             childActivityTitle: '',
-            childObj: {},
-            childActivityObj: [],
-            currentModal: null
+            popupData: {},
+            currentModal: null,
+            childrenData: null,
+            showModal: false
         };
-        this.children = [
-            {
-                "_id": {
-                    "$oid": "5585fe6e435e91feee7f4fee"
-                },
-                "tz": 338686876,
-                "gender": "girl",
-                "first_name": "Эмма",
-                "second_name": "Рыбакова",
-                "birth_day": "12/06/2013",
-                "address": {
-                    "city": "lod",
-                    "street": "friman",
-                    "house": "12",
-                    "apartment": "21"
-                },
-                "kindergarten": 2,
-                "group": 0,
-                "parents": "[]",
-                "agenda": [
-                    {
-                        'name': 'babies',
-                        'schedule': [
-                            [
-                                {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
-                                {"8:30 - 11:00": "Сон - שינה"},
-                                {"11:30 - 12:00": "Прогулка + Игры - טיול ומשחק"},
-                                {"12:00 - 12:30": "Обед - ארוחת צהריים"},
-                                {"12:30 - 14:30": "Сон - שינה"},
-                                {"15:00": "Еда - אוכל"},
-                                {"16:00 - 16:30": "Фрукт/Ски - פרי או סקי"}
-                            ],
-                            [
-                                {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
-                                {"8:30 - 11:00": "Прогулка + Игры - טיול ומשחק"},
-                                {"11:00 - 11:30": "Обед - ארוחת צהריים"},
-                                {"11:30 - 14:00": "Сон - שינה"},
-                                {"15:00": "Еда - אוכל"},
-                                {"16:00 - 16:30": "Фрукт/Ски - פרי או סקי"}
-                            ]
-                        ]
-                    },
-                    {
-                        'name': 'todlers',
-                        'schedule': [
-                            [
-                                {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
-                                {"8:30 - 09:30": "Мифгаш бокер и кружки - מפגש בוקר והפעלות"},
-                                {"09:30 - 10:15": "Прогулка + Игры - טיול ומשחק"},
-                                {"10:30 - 11:30": "Обед и подготовка к сну - ארוחת צהריים והכנה לשינה"},
-                                {"12:00 - 14:00": "Сон - שינה"},
-                                {"14:00 - 14:30": "Подем - השכמה"},
-                                {"15:00": "Прогулка + Игры - טיול ומשחק"},
-                                {"16:00 - 16:30": "Игры в групе и чтение книг - משחקים בקבוצה וקריאת ספרים"}
-                            ]
-                        ]
-                    }
 
-                ],
-                "history": {
-                    "21/06/2015": {
-                        "came_in": false
-                    },
-                    "22/06/2015": {
-                        "came_in": false
-                    },
-                    "23/06/2015": {
-                        "came_in": false
-                    },
-                    "24/06/2015": {
-                        "came_in": false
-                    },
-                    "28/08/2018": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
-                            ],
-                            "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
-                            ],
-                            "poop": [
-                                {
-                                    "11:42": true
-                                }
-                            ]
-                        }
-                    },
-                    "30/06/2015": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
-                            ],
-                            "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
-                            ],
-                            "poop": [
-                                {
-                                    "11:42": true
-                                }
-                            ]
-                        }
-                    },
-                    "05/07/2015": {
-                        "came_in": true
-                    },
-                    "27/07/2015": {
-                        "came_in": true
-                    },
-                    "22/11/2015": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
-                            ],
-                            "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
-                            ],
-                            "poop": [
-                                {
-                                    "11:42": true
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "_id": {
-                    "$oid": "5585fe6e435e91feee7f4fee"
-                },
-                "tz": 338686875,
-                "gender": "boy",
-                "first_name": "Yoni",
-                "second_name": "Rybakov",
-                "birth_day": "25/03/2017",
-                "address": {
-                    "city": "",
-                    "street": "",
-                    "house": "NaN",
-                    "apartment": "NaN"
-                },
-                "kindergarten": 2,
-                "group": 0,
-                "parents": "[]",
-                "history": {
-                    "21/06/2015": {
-                        "came_in": false
-                    },
-                    "22/06/2015": {
-                        "came_in": false
-                    },
-                    "23/06/2015": {
-                        "came_in": false
-                    },
-                    "24/06/2015": {
-                        "came_in": false
-                    },
-                    "25/06/2015": {
-                        "came_in": false
-                    },
-                    "30/06/2015": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
-                            ],
-                            "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
-                            ],
-                            "poop": [
-                                {
-                                    "11:42": true
-                                }
-                            ]
-                        }
-                    },
-                    "05/07/2015": {
-                        "came_in": true
-                    },
-                    "27/07/2015": {
-                        "came_in": true
-                    },
-                    "22/11/2015": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
-                            ],
-                            "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
-                            ],
-                            "poop": [
-                                {
-                                    "11:42": true
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "_id": {
-                    "$oid": "5585fe6e435e91feee7f4fee"
-                },
-                "tz": 338686872,
-                "gender": "girl",
-                "first_name": "Эмма",
-                "second_name": "Рыбакова",
-                "birth_day": "03/11/2013",
-                "address": {
-                    "city": "beer yaakov",
-                    "street": "haalonim",
-                    "house": "3",
-                    "apartment": "15"
-                },
-                "kindergarten": 2,
-                "group": 0,
-                "parents": "[]",
-                "personal_notes": ["personal_notes personal_notes personal_notes "],
-                "general_notes": ["general_notes general_notes general_notes "],
-                "history": {
-                    "21/06/2015": {
-                        "came_in": false
-                    },
-                    "22/06/2015": {
-                        "came_in": false
-                    },
-                    "23/06/2015": {
-                        "came_in": false
-                    },
-                    "24/06/2015": {
-                        "came_in": false
-                    },
-                    "01/09/2018": {
-                        "came_in": true
-                    },
-                    "18/11/2018": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                [
-                                    "08:00",
-                                    "09:00"
-                                ],
-                                [
-                                    "13:15",
-                                    "14:45"
-                                ]
-                            ],
-                            "food": [
-                                [
-                                    "09:10",
-                                    "Молочная Каша"
-                                ],
-                                [
-                                    "19:45",
-                                    "Молочная Каша"
-                                ],
-                            ],
-                            "poop": [
-                                [
-                                    "11:42",
-                                    true
-                                ]
-                            ]
-                        }
-                    },
-                    "05/07/2015": {
-                        "came_in": true
-                    },
-                    "27/07/2015": {
-                        "came_in": true
-                    },
-                    "22/11/2015": {
-                        "came_in": true,
-                        "activity": {
-                            "sleep": [
-                                {
-                                    "from": "08:00",
-                                    "till": "09:00"
-                                },
-                                {
-                                    "from": "13:15",
-                                    "till": "14:45"
-                                }
-                            ],
-                            "food": [
-                                {
-                                    "09:10": "Молочная Каша"
-                                },
-                                {
-                                    "19:45": "Молочная Каша"
-                                }
-                            ],
-                            "poop": [
-                                {
-                                    "11:42": true
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        ];
-        this.today = moment(new Date()).format('DD/MM/YYYY');
+        this.today = Moment(new Date()).format('DD/MM/YYYY');
     }
 
     componentDidMount() {
         console.log(this);
+        const self = this;
+        setTimeout(() => {
+            self.setState({
+                childrenData: [
+                    {
+                        "_id": {
+                            "$oid": "5585fe6e435e91feee7f4fee"
+                        },
+                        "tz": 338686876,
+                        "gender": "girl",
+                        "first_name": "Эмма",
+                        "second_name": "Рыбакова",
+                        "birth_day": "12/06/2013",
+                        "address": {
+                            "city": "lod",
+                            "street": "friman",
+                            "house": "12",
+                            "apartment": "21"
+                        },
+                        "kindergarten": 2,
+                        "group": 0,
+                        "parents": "[]",
+                        "agenda": [
+                            {
+                                'name': 'babies',
+                                'schedule': [
+                                    [
+                                        {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
+                                        {"8:30 - 11:00": "Сон - שינה"},
+                                        {"11:30 - 12:00": "Прогулка + Игры - טיול ומשחק"},
+                                        {"12:00 - 12:30": "Обед - ארוחת צהריים"},
+                                        {"12:30 - 14:30": "Сон - שינה"},
+                                        {"15:00": "Еда - אוכל"},
+                                        {"16:00 - 16:30": "Фрукт/Ски - פרי או סקי"}
+                                    ],
+                                    [
+                                        {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
+                                        {"8:30 - 11:00": "Прогулка + Игры - טיול ומשחק"},
+                                        {"11:00 - 11:30": "Обед - ארוחת צהריים"},
+                                        {"11:30 - 14:00": "Сон - שינה"},
+                                        {"15:00": "Еда - אוכל"},
+                                        {"16:00 - 16:30": "Фрукт/Ски - פרי או סקי"}
+                                    ]
+                                ]
+                            },
+                            {
+                                'name': 'todlers',
+                                'schedule': [
+                                    [
+                                        {"6:30 - 8:00": "Прием + Завтрак - הגעה וארוחת בוקר"},
+                                        {"8:30 - 09:30": "Мифгаш бокер и кружки - מפגש בוקר והפעלות"},
+                                        {"09:30 - 10:15": "Прогулка + Игры - טיול ומשחק"},
+                                        {"10:30 - 11:30": "Обед и подготовка к сну - ארוחת צהריים והכנה לשינה"},
+                                        {"12:00 - 14:00": "Сон - שינה"},
+                                        {"14:00 - 14:30": "Подем - השכמה"},
+                                        {"15:00": "Прогулка + Игры - טיול ומשחק"},
+                                        {"16:00 - 16:30": "Игры в групе и чтение книг - משחקים בקבוצה וקריאת ספרים"}
+                                    ]
+                                ]
+                            }
+
+                        ],
+                        "history": {
+                            "21/06/2015": {
+                                "came_in": false
+                            },
+                            "22/06/2015": {
+                                "came_in": false
+                            },
+                            "23/06/2015": {
+                                "came_in": false
+                            },
+                            "24/06/2015": {
+                                "came_in": false
+                            },
+                            "30/12/2018": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [],
+                                    "food": [],
+                                    "poop": []
+                                }
+                            },
+                            "28/08/2018": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [
+                                        {
+                                            "from": "08:00",
+                                            "till": "09:00"
+                                        },
+                                        {
+                                            "from": "13:15",
+                                            "till": "14:45"
+                                        }
+                                    ],
+                                    "food": [
+                                        {
+                                            "09:10": "Молочная Каша"
+                                        },
+                                        {
+                                            "19:45": "Молочная Каша"
+                                        }
+                                    ],
+                                    "poop": [
+                                        {
+                                            "11:42": true
+                                        }
+                                    ]
+                                }
+                            },
+                            "30/06/2015": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [
+                                        {
+                                            "from": "08:00",
+                                            "till": "09:00"
+                                        },
+                                        {
+                                            "from": "13:15",
+                                            "till": "14:45"
+                                        }
+                                    ],
+                                    "food": [
+                                        {
+                                            "09:10": "Молочная Каша"
+                                        },
+                                        {
+                                            "19:45": "Молочная Каша"
+                                        }
+                                    ],
+                                    "poop": [
+                                        {
+                                            "11:42": true
+                                        }
+                                    ]
+                                }
+                            },
+                            "05/07/2015": {
+                                "came_in": true
+                            },
+                            "27/07/2015": {
+                                "came_in": true
+                            },
+                            "22/11/2015": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [
+                                        {
+                                            "from": "08:00",
+                                            "till": "09:00"
+                                        },
+                                        {
+                                            "from": "13:15",
+                                            "till": "14:45"
+                                        }
+                                    ],
+                                    "food": [
+                                        {
+                                            "09:10": "Молочная Каша"
+                                        },
+                                        {
+                                            "19:45": "Молочная Каша"
+                                        }
+                                    ],
+                                    "poop": [
+                                        {
+                                            "11:42": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_id": {
+                            "$oid": "5585fe6e435e91feee7f4fee"
+                        },
+                        "tz": 338686875,
+                        "gender": "boy",
+                        "first_name": "Yoni",
+                        "second_name": "Rybakov",
+                        "birth_day": "18/05/1982",
+                        "address": {
+                            "city": "",
+                            "street": "",
+                            "house": "NaN",
+                            "apartment": "NaN"
+                        },
+                        "kindergarten": 2,
+                        "group": 0,
+                        "parents": "[]",
+                        "history": {
+                            "21/06/2015": {
+                                "came_in": false
+                            },
+                            "22/06/2015": {
+                                "came_in": false
+                            },
+                            "23/06/2015": {
+                                "came_in": false
+                            },
+                            "24/06/2015": {
+                                "came_in": false
+                            },
+                            "25/06/2015": {
+                                "came_in": false
+                            },
+                            "30/06/2015": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [
+                                        {
+                                            "from": "08:00",
+                                            "till": "09:00"
+                                        },
+                                        {
+                                            "from": "13:15",
+                                            "till": "14:45"
+                                        }
+                                    ],
+                                    "food": [
+                                        {
+                                            "09:10": "Молочная Каша"
+                                        },
+                                        {
+                                            "19:45": "Молочная Каша"
+                                        }
+                                    ],
+                                    "poop": [
+                                        {
+                                            "11:42": true
+                                        }
+                                    ]
+                                }
+                            },
+                            "30/12/2018": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [
+                                        [
+                                            "08:00",
+                                            "09:00"
+                                        ]
+                                    ],
+                                    "food": [
+                                        [
+                                            "19:45",
+                                            "Молочная Каша"
+                                        ],
+                                    ],
+                                    "poop": [
+                                        [
+                                            "11:42",
+                                            true
+                                        ]
+                                    ]
+                                }
+                            },
+                            "05/07/2015": {
+                                "came_in": true
+                            },
+                            "27/07/2015": {
+                                "came_in": true
+                            },
+                            "22/11/2015": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [
+                                        {
+                                            "from": "08:00",
+                                            "till": "09:00"
+                                        },
+                                        {
+                                            "from": "13:15",
+                                            "till": "14:45"
+                                        }
+                                    ],
+                                    "food": [
+                                        {
+                                            "09:10": "Молочная Каша"
+                                        },
+                                        {
+                                            "19:45": "Молочная Каша"
+                                        }
+                                    ],
+                                    "poop": [
+                                        {
+                                            "11:42": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_id": {
+                            "$oid": "5585fe6e435e91feee7f4fee"
+                        },
+                        "tz": 338686872,
+                        "gender": "girl",
+                        "first_name": "Эмма",
+                        "second_name": "Рыбакова",
+                        "birth_day": "03/11/2013",
+                        "address": {
+                            "city": "beer yaakov",
+                            "street": "haalonim",
+                            "house": "3",
+                            "apartment": "15"
+                        },
+                        "kindergarten": 2,
+                        "group": 0,
+                        "parents": "[]",
+                        "personal_notes": ["personal_notes personal_notes personal_notes "],
+                        "general_notes": ["general_notes general_notes general_notes "],
+                        "history": {
+                            "21/06/2015": {
+                                "came_in": false
+                            },
+                            "22/06/2015": {
+                                "came_in": false
+                            },
+                            "23/06/2015": {
+                                "came_in": false
+                            },
+                            "24/06/2015": {
+                                "came_in": false
+                            },
+                            "01/09/2018": {
+                                "came_in": true
+                            },
+                            "30/12/2018": {
+                                "came_in": false,
+                                "activity": {
+                                    "sleep": [
+                                        [
+                                            "08:00",
+                                            "09:00"
+                                        ],
+                                        [
+                                            "13:15",
+                                            "14:45"
+                                        ]
+                                    ],
+                                    "food": [
+                                        [
+                                            "09:10",
+                                            "Молочная Каша"
+                                        ],
+                                        [
+                                            "19:45",
+                                            "Молочная Каша"
+                                        ],
+                                    ],
+                                    "poop": [
+                                        [
+                                            "11:42",
+                                            true
+                                        ]
+                                    ]
+                                }
+                            },
+                            "05/07/2015": {
+                                "came_in": true
+                            },
+                            "27/07/2015": {
+                                "came_in": true
+                            },
+                            "22/11/2015": {
+                                "came_in": true,
+                                "activity": {
+                                    "sleep": [
+                                        {
+                                            "from": "08:00",
+                                            "till": "09:00"
+                                        },
+                                        {
+                                            "from": "13:15",
+                                            "till": "14:45"
+                                        }
+                                    ],
+                                    "food": [
+                                        {
+                                            "09:10": "Молочная Каша"
+                                        },
+                                        {
+                                            "19:45": "Молочная Каша"
+                                        }
+                                    ],
+                                    "poop": [
+                                        {
+                                            "11:42": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ]
+            });
+        }, 1000)
+
     }
 
     _childAge = (birthDay, lang) => {
         if (birthDay && birthDay !== "") {
-            let today = moment(new Date(), 'DD/MM/YYYY');
-            let bDay = moment(birthDay, 'DD/MM/YYYY');
+            let today = Moment(new Date(), 'DD/MM/YYYY');
+            let bDay = Moment(birthDay, 'DD/MM/YYYY');
             const intervals = ['years', 'months'];
             let out = [];
 
@@ -426,18 +469,19 @@ class ChildrenView extends Component {
         return currentDayInfo && currentDayInfo.came_in;
     };
 
-    _childActivityToday = (child, index, lang) => {
+    _childActivityToday = (child, index, lang, openModal) => {
         const childTodayActivity = child.history[this.today];
 
         const getTemplateForActivity = (title, children) => {
+
             return (
                 <div key={`${title}@${child.second_name}`} className={`activity_wrap ${title}_activity`}>
                     <div className={'activity_content'}>
-                        <h4 className={'activityTitle'}
+                        <p className={'activityTitle'}
                             style={{textOrientation: lang !== 'heb' ? 'upright' : 'unset'}}
                         >
                             {getLabel(lang, title)}
-                        </h4>
+                        </p>
                         <div className={'activityValues'}>
                             {children()}
                         </div>
@@ -445,12 +489,40 @@ class ChildrenView extends Component {
                     </div>
                     <div className={'activity_actions'}
                          onClick={(e) => {
-                             e.stopPropagation();
-                             console.log(e.target);
-                             console.log(title);
-                             console.log(childTodayActivity);
-                             console.log(child);
-                             this.onClick(child, title, childTodayActivity ? childTodayActivity.activity[title] : null);
+                             // e.stopPropagation();
+                             // console.log(e.target);
+                             // console.log(title);
+                             // console.log(childTodayActivity);
+                             // console.log(child);
+                             // const data = {
+                             //     childObj: child,
+                             //     childActivityObj: childTodayActivity ? childTodayActivity.activity[title] : [],
+                             //     childActivityTitle: title,
+                             //     childIndex: index,
+                             //     onClose: (newData) => {
+                             //         console.log('newData', newData);
+                             //         if (!_.isEqual(newData, childTodayActivity.activity[title])) {
+                             //             console.log('this', this.state);
+                             //             console.log('childTodayActivity.activity[title]', childTodayActivity.activity[title]);
+                             //             const childIndex = _.findIndex(this.state.childrenData, (o) => {
+                             //                 return child.tz === o.tz;
+                             //             });
+                             //             console.log('childIndex', index);
+                             //             let childNewData = this.state.childrenData[index];
+                             //             childNewData.history[this.today].activity[title] = newData;
+                             //
+                             //             let newChildrenData = this.state.childrenData;
+                             //             newChildrenData[index] = childNewData;
+                             //             this.setState({
+                             //                 childrenData: newChildrenData
+                             //             });
+                             //         }
+                             //
+                             //     },
+                             //     currentModal: 'UPDATE_SLEEP'
+                             // };
+                             // openModal(data)
+                             this.toggleAlert(true, child, title, index);
                          }}>
                         <Icon
                             name='pencil'
@@ -569,60 +641,68 @@ class ChildrenView extends Component {
             'grey',
         ];
         return (
+
             <Card.Group key={"ChildrenList"} itemsPerRow={3} centered={true}
                         style={{justifyContent: 'center', maxWidth: '1000px'}}>
-                {this.children.map((child, index) => {
+                {this.state.childrenData.map((child, index) => {
                     const isBoy = child.gender === 'boy';
                     const colorIndex = index < colors.length ? index : index - colors.length;
                     const imageSrc = isBoy ? 'https://react.semantic-ui.com/images/avatar/large/steve.jpg' : 'https://react.semantic-ui.com/images/avatar/large/molly.png';
                     return (
+                        <GlobalParams.Consumer>
+                            {GParams => {
+                                const {lang, openModal} = GParams;
 
-                        <Card
-                            key={`child_${index}`}
-                            color={colors[colorIndex]}
-                        >
+                                return <Card
+                                    key={`child_${index}`}
+                                    color={colors[colorIndex]}
+                                >
 
-                            <Card.Content>
-                                <Image size='huge' floated='right' avatar src={imageSrc}/>
-                                <Card.Header onClick={() => {
-                                    this.props.history.push('/child', {'childTz': child.tz})
-                                }}>
-                                    <span className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
+                                    <Card.Content>
 
-                                    <Icon className={'header_name_more_details icon link'} name="info circle"
-                                          title={'click the name for more info'}/>
-                                </Card.Header>
-                                <Card.Meta>{this._childAge(child.birth_day, lang)}</Card.Meta>
-                                {child.personal_notes && <Card.Description>
-                                    {getLabel(lang, 'attention')}: <strong>{child.personal_notes[0]}</strong>
-                                </Card.Description>}
-                            </Card.Content>
-                            <Card.Content extra>
-                                <div className={'activities'}>
-                                    {this._childActivityToday(child, index, lang)}
-                                </div>
-                            </Card.Content>
-                            <Card.Content extra>
-                                <div className='ui two buttons'>
-                                    <Button
-                                        positive={this._isChildCameToday(child.history)}
-                                        onClick={() => {
-                                            console.log('came child:', child)
-                                        }}
-                                    >
-                                        {getLabel(lang, 'came')}
-                                    </Button>
-                                    <Button
-                                        negative={!this._isChildCameToday(child.history)}
-                                        onClick={() => {
-                                            console.log('missing child:', child)
-                                        }}
-                                    >
-                                        {getLabel(lang, 'missing')}
-                                    </Button>
-                                </div>
-                            </Card.Content>
-                        </Card>
+                                        <Image size='huge' floated='right' avatar src={imageSrc}/>
+                                        <Card.Header onClick={() => {
+                                            this.props.history.push('/child', {'childTz': child.tz})
+                                        }}>
+                                            <span
+                                                className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
+
+                                            <Icon className={'header_name_more_details icon link'} name="info circle"
+                                                  title={'click the name for more info'}/>
+                                        </Card.Header>
+                                        <Card.Meta>{this._childAge(child.birth_day, lang)}</Card.Meta>
+                                        {child.personal_notes && <Card.Description>
+                                            {getLabel(lang, 'attention')}: <strong>{child.personal_notes[0]}</strong>
+                                        </Card.Description>}
+                                    </Card.Content>
+                                    <Card.Content extra>
+                                        <div className={'activities'}>
+                                            {this._childActivityToday(child, index, lang, openModal)}
+                                        </div>
+                                    </Card.Content>
+                                    <Card.Content extra>
+                                        <div className='ui two buttons'>
+                                            <Button
+                                                positive={this._isChildCameToday(child.history)}
+                                                onClick={() => {
+                                                    console.log('came child:', child)
+                                                }}
+                                            >
+                                                {getLabel(lang, 'came')}
+                                            </Button>
+                                            <Button
+                                                negative={!this._isChildCameToday(child.history)}
+                                                onClick={() => {
+                                                    console.log('missing child:', child)
+                                                }}
+                                            >
+                                                {getLabel(lang, 'missing')}
+                                            </Button>
+                                        </div>
+                                    </Card.Content>
+                                </Card>
+                            }}
+                        </GlobalParams.Consumer>
                     )
                 })
                 }
@@ -631,7 +711,7 @@ class ChildrenView extends Component {
     };
 
     _renderChildrenCurrentActivity = (lang) => {
-        return this.children.map((child, index) => {
+        return this.state.childrenData.map((child, index) => {
             const isBoy = child.gender === 'boy';
             return (
                 <div key={child.tz}>
@@ -649,82 +729,259 @@ class ChildrenView extends Component {
         });
     };
 
-    onClick = (child, title, activityObj) => {
-        this.setState({
-            childObj: child,
-            childActivityObj: activityObj || this.state.childActivityObj,
-            childActivityTitle: title,
-            currentModal: 'UPDATE_SLEEP'
-        }, () => {
-            // this.modal.onOpenModal() // do stuff
-        });
+    toggleAlert = (isShow, child, title, index) => {
+        if (!!child) {
+            this.setState({
+                showModal: isShow,
+                popupData: {
+                    title,
+                    child,
+                    childIndex: index
+                }
+            })
+
+        } else {
+            this.setState({
+                showModal: isShow,
+            })
+        }
     };
 
-    get ddf() {
-        return this.ttt;
-    }
+    handleInputChange = (event) => {
+        console.log(event);//{}
+        // const target = event.target;
+        // const value = target.value;
+        // const name = target.name;
+        //{sleep_input_0_0: "08:01", sleep_input_0_1: "09:00", sleep_input_1_0: "13:15", sleep_input_1_1: "14:45"}
+        // let newData = [];
+        //
+        // _.forEach(event, (val, key) => {
+        //     console.log('newData', newData);
+        //
+        //     const keyArr = key.split('_');
+        //     console.log(keyArr[2]);
+        //     console.log(!!newData[keyArr[2]]);
+        //
+        //     if (!!newData[keyArr[2]]) {
+        //         newData[keyArr[2]].push(val)
+        //     } else {
+        //         newData.push([val])
+        //
+        //     }
+        //
+        // });
+        // console.log('newData', newData);
+        // this.setState({
+        //     data: newData
+        // });
+    };
 
-    renderModal = () => {
-        if (this.state.currentModal) {
-            document.body.style.overflow = "hidden";
+    renderInput = (data, i, j) => {
 
-            return (
-                <CommonModal
-                    key={'ChildrenActivityEditPopup'}
-                    child={this.state.childObj}
-                    childActivityObj={this.state.childActivityObj}
-                    onRef={(ref) => {
-                        this.modal = ref
-                    }}
-                    currentModal={this.state.currentModal}
-                    hideModal={() => {
-                        console.log('hideModal');
-                        document.body.style.overflow = "initial";
-                        this.setState({currentModal: null})
-                    }}
-                    onOpen={() => {
-                    }}
-                    onClose={() => {
-                    }}
-                    children={
-                        <div>
-                            <h1>{this.state.childObj.first_name}</h1>
-                            <p>{this.state.childActivityTitle}</p>
+        console.log('i: ', i, 'j: ', j);
+        console.log('data', data);
 
-                        </div>
-                    }
+        const currTitle = this.state.popupData.title;
+
+        const activityInputs = [];
+        // for (let f = 0; f < data.length; f++) {
+
+        let label = j === 0 ? `${currTitle} cycle ${i + 1} - from` : `${currTitle} cycle ${i + 1} - till`;
+        const name = `${currTitle}_input_${i}_${j}`;
+
+        const timeRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
+        const validation = data.indexOf(':') > -1 ? {
+            matchRegexp: timeRegex
+        } : 'isWords';
+
+        return (
+            <div style={{flexDirection: 'row', alignItems: 'center', display: 'flex'}}>
+                <FormsyInput
+                    name={name}
+                    type={data.indexOf(':') > -1 ? 'time' : "text"}
+
+                    value={data}
+                    validations={validation}
+                    validationError={data.indexOf(':') > -1 ? "This is not a valid time" : 'This is not a valid text'}
+                    label={label}
+                    required
+                    onChange={(e) => {
+                        console.log(e);
+                        // this.handleInputChange(Moment(e).format('HH:mm'))
+                        this.handleInputChange(e)
+                    }}
                 />
+                <p onClick={() => {
+                    this.deleteInput(i);
+                }}
+                >DELETE</p>
+            </div>
+        )
+        // }
+
+        // return activityInputs;
+    };
+
+    _renderChildActivity = (activities, i) => {
+
+        let formInputs = [];
+        for (let j = 0; j < activities.length; j++) {
+            formInputs.push(
+                this.renderInput(activities[j], i, j)
             );
         }
-        else {
-            document.body.style.overflow = "initial";
-            return null;
-        }
-    };
-
-    render() {
         return (
-            <div className={'childrenListWrapper'}>
-                <GlobalParams.Consumer>
-                    {GParams => {
-                        const {lang} = GParams;
-                        return [
-                            this._renderChildrenList(lang),
-                            <DocumentTitle key={"ChildrenDocumentTitle"}
-                                           title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>,
-                            <ReactCSSTransitionGroup
-                                key={'childrenListAnimationGroup'}
-                                transitionName="example"
-                                transitionEnterTimeout={500}
-                                transitionLeaveTimeout={300}>
-                                {this.renderModal()}
-                            </ReactCSSTransitionGroup>
-
-                        ]
-                    }}
-                </GlobalParams.Consumer>
+            <div className={'popupActivityWrap'}>
+                {formInputs}
             </div>
         );
+    };
+
+    childActivityForm = (childTodayData) => {
+        const childTodayActivity = childTodayData;
+        console.log('childTodayActivity', childTodayActivity);
+        if (!childTodayActivity) return null;
+        // const activityKeysArr = Object.keys(childTodayActivity);
+        // console.log('activityKeysArr', activityKeysArr);
+        // if (!activityKeysArr) return null;
+
+        let formInputs = [];
+        // let i = 0;
+        // let j = 0;
+
+        if (childTodayActivity.length > 0) {
+            for (let i = 0; i < childTodayActivity.length; i++) {
+                formInputs.push(
+                    this._renderChildActivity(childTodayActivity[i], i)
+                );
+            }
+        }
+
+        return formInputs;
+    };
+
+    renderFormData = (child, title) => {
+        if (child && child.history && child.history[this.today] && child.history[this.today].activity[title])
+            return this.childActivityForm(child.history[this.today].activity[title]);
+        else
+            return <p>Error: no data for child</p>;
+    };
+
+    updateChildInfo = (newData) => {
+        const {popupData} = this.state;
+        const {child, title} = popupData;
+
+        this.setState((prevState) => {
+            console.log('oldState', prevState);
+            let oldState = prevState.popupData.child;
+            let oldChildrenActivity = prevState.childrenData;
+            let oldChildActivity = oldChildrenActivity[Number(prevState.popupData.childIndex)];
+            // console.log('oldChildActivity',oldChildActivity);
+            let newState = [];
+
+            _.forEach(newData, (val, key) => {
+                console.log('newData', newData);
+
+                const keyArr = key.split('_');
+
+                const i = keyArr[2];
+                const j = keyArr[3];
+
+                //  if (oldChildActivity.history[this.today].activity[title].length === 0)
+                //     oldChildActivity.history[this.today].activity[title][Number(i)] = [];
+                //
+                // console.log('oldChildActivity.history[this.today].activity[title][Number(i)]',oldChildActivity.history[this.today].activity[title][Number(i)]);
+
+
+                if (newState[Number(i)] === undefined)
+                    newState[Number(i)] = [];
+
+                // if (keyArr[0] === 'sleep') {
+                newState[Number(i)].push(val)
+                // }
+                // console.log('oldChildActivity', oldChildActivity);
+
+            });
+
+            oldChildActivity.history[this.today].activity[title] = newState;
+            //{sleep_input_0_0: "08:00", sleep_input_0_1: "09:00", sleep_input_1_0: "13:15", sleep_input_1_1: "14:45"}
+
+            console.log('newState: ', oldChildrenActivity);
+            return {childrenData: oldChildrenActivity};
+        })
+
+    };
+
+    renderModal = () => {
+        const {popupData, showModal, childrenData} = this.state;
+        const {title, child} = popupData;
+
+        if (_.isEmpty(popupData))
+            return null;
+
+        console.log('renderModal');
+        return (
+            <CommonModal
+                show={showModal}
+                title={`Update ${title} data for ${child.first_name}`}
+                onConfirm={() => {
+                    this.toggleAlert(false)
+                }}
+                onCancel={() => {
+                    this.toggleAlert(false)
+                }}
+                showConfirm
+            >
+                <Formsy
+                    onValidSubmit={(model) => {
+                        console.log('Formsy onValidSubmit', model);
+                        this.updateChildInfo(model);
+                    }}
+                    onInvalidSubmit={(model) => {
+                        console.log('Formsy onInvalidSubmit', model);
+                        this.updateChildInfo(model);
+                    }}
+                    onValid={(model) => {
+                        console.log('Formsy onValid', model);
+                    }}
+                    onInvalid={(model) => {
+                        console.log('Formsy onInvalid', model);
+                    }}
+                    onChange={(model) => {
+                        console.log('Formsy onChange', model);
+                    }}
+                >
+                    {this.renderFormData(child, title)}
+                    <button type="submit" disabled={false}>Submit</button>
+                </Formsy>
+            </CommonModal>
+        );
+    };
+
+
+    render() {
+        if (this.state.childrenData) {
+
+            return (
+                <div className={'childrenListWrapper'}>
+                    <GlobalParams.Consumer>
+                        {GParams => {
+                            const {lang, isMobile} = GParams;
+                            return [
+                                this._renderChildrenList(lang),
+                                this.renderModal(lang),
+                                <DocumentTitle
+                                    key={"ChildrenDocumentTitle"}
+                                    title={`${GParams[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>
+                            ]
+                        }}
+                    </GlobalParams.Consumer>
+                </div>
+            );
+        } else {
+            return <LoaderCustom/>
+        }
     }
 }
 

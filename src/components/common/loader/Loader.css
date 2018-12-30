@@ -1,0 +1,13 @@
+.loaderWrapper {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex:1;
+}
+
+.loaderContent {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+}

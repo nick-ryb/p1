@@ -1,7 +1,11 @@
 
 const englishLabels = () => {
     return {
+        loading : 'loading',
+        please_wait : 'please wait',
         sadik: "Kinder Garden",
+        ok: "ok",
+        cancel: "cancel",
         Login: "Login",
         Children: "Children",
         Child: "Child",
@@ -32,38 +36,46 @@ const englishLabels = () => {
 
 const russianLabels = () => {
     return {
-        sadik: "Sadik",
-        Login: "Vxod",
-        Children: "Deti",
-        Child: "Rebionok",
-        HomePage: "Domashniaya stranica",
-        id: 'teudat zehut',
-        password: 'parol',
-        name: 'imya',
+        loading : 'загружаеться',
+        please_wait : 'пожайлуста подождите',
+        sadik: "садик",
+        ok: "ок",
+        cancel: "отменить",
+        Login: "вход",
+        Children: "дети",
+        Child: "ребенок",
+        HomePage: "домашния страница",
+        id: 'теудат зеут',
+        password: 'пароль',
+        name: 'имя',
         agenda2: 'Распорядок дня',
         checkbox: 'rus checkbox',
-        day: 'den',
-        days: 'dni',
-        month: 'mesyac',
-        months: 'mesyacov',
-        year: 'god',
-        years: 'goda',
-        came: 'prishel',
-        missing: 'otsutsvuet',
-        food:'eda',
-        sleep:'son',
-        poop:'stul',
-        attention:'vnimanie',
-        from:'s',
-        till:'do',
-        child_history:'statistika',
-        general_server_error:'oshibka v servere, poprobuite pozhe',
+        day: 'день',
+        days: 'дни',
+        month: 'месяц',
+        months: 'месяцов',
+        year: 'год',
+        years: 'года',
+        came: 'пришел',
+        missing: 'отсутствует',
+        food:'еда',
+        sleep:'сон',
+        poop:'стул',
+        attention:'внимание',
+        from:'с',
+        till:'до',
+        child_history:'статистика',
+        general_server_error:'ошибка в сервере, попробуйте позже',
     };
 };
 
 const hebrewLabels = () => {
     return {
+        loading : 'טעינה',
+        please_wait : 'בבקשה להמתין',
         sadik: "גן",
+        ok: "אישור",
+        cancel: "ביטול",
         Login: "כניסה",
         Children: "ילדים",
         Child: "ילד",
@@ -107,9 +119,10 @@ const getLabel = (lang, label) => {
             break;
         case 'rus':
             string = russianLabels()[label] || noString;
+
             break;
         default : {
-            string = 'NO "' + lang + '" FOUND'
+            string = '!!!NO "' + lang + '" FOUND!!!'
         }
     }
     return string;

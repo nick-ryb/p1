@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Input, Icon, Button, Checkbox, Form} from "semantic-ui-react";
+// import {Input, Icon, Button, Checkbox, Form} from "semantic-ui-react";
+import {Button, Form, Grid, Header, Image, Message, Segment, Icon} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import DocumentTitle from 'react-document-title';
 import getLabel from '../../labels/labels';
@@ -7,7 +8,6 @@ import getLabel from '../../labels/labels';
 import './Login.css';
 import LabelByLang from "../../components/common/LabelByLang";
 import {GlobalParams} from "../../App";
-import * as GlobalsConfig from "../../GlobalConfig";
 
 class LoginView extends Component {
 
@@ -27,11 +27,18 @@ class LoginView extends Component {
         });
     };
 
-    handleSubmit = () => {
+    handleSubmit = (e) => {
+        console.log('e', this.state);
+
+        const { name, email } = this.state;
+
+        this.setState({ submittedName: name, submittedEmail: email })
+
         this._resetForm();
     };
 
     _resetForm = () => {
+        alert('3')
         this.setState({id: '', pass: ''})
     };
 
@@ -73,46 +80,89 @@ class LoginView extends Component {
         );
     };
 
-    render() {
-        return (
-            <GlobalParams.Consumer>
-                {GParams => {
-                    const { lang } = GParams;
-                    return[
-                    <div key={'LoginView'} className='formContainer'>
-                        <Form onSubmit={this.handleSubmit}>
-                            <Form.Field required>
-                                <label>{getLabel(lang, 'id')}</label>
-                                <Input
-                                    name='id'
-                                    label={getLabel(lang, 'id')} labelPosition='left'
-                                    // icon={this._feedbackIcon()} iconPosition='right'
-                                    value={this.state.id}
-                                    placeholder='User ID Here...'
-                                    onChange={this.handleInputChange}
-                                />
-                            </Form.Field>
-                            <Form.Field required>
-                                <label>{getLabel(lang, 'password')}</label>
-                                <Input
+    handleChange = (e, { name, value }) => this.setState({ [name]: value })
+
+    _renderLoginForm = () => {
+        const { id, pass } = this.state
+
+       return (
+            <div className='login-form'>
+                <Grid textAlign='center' style={{height: '100%'}} verticalAlign='middle'>
+                    <Grid.Column style={{maxWidth: 450}}>
+                        <Header as='h2' color='teal' textAlign='center'>
+                            {/*<Image src='/logo.png' />*/}
+                            <Icon name='dropdown'/>
+                            Log-in to your account
+                        </Header>
+                        <Form size='large' onSubmit={this.handleSubmit}>
+                            <Segment stacked>
+                                <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address'
+                                            onChange={this.handleChange} name={'id'} value={id}/>
+                                <Form.Input
+                                    fluid
+                                    icon='lock'
+                                    iconPosition='left'
+                                    placeholder='Password'
+                                    type='password'
                                     name='pass'
-                                    label={getLabel(lang, 'password')} labelPosition='left'
-                                    // icon={this._feedbackIcon()} iconPosition='right'
-                                    value={this.state.pass}
-                                    placeholder='Password Here...'
-                                    onChange={this.handleInputChange}
+                                    value={pass}
+                                    onChange={this.handleChange}
                                 />
-                            </Form.Field>
-                            <Form.Field>
-                                <Checkbox label={getLabel(lang, 'login_checkbox_text')}/>
-                            </Form.Field>
-                            <Button primary type='submit'>{getLabel(lang, 'submit_login')}</Button>
+
+                                <Button color='teal' fluid size='large'>
+                                    Login
+                                </Button>
+                            </Segment>
                         </Form>
-                    </div>,
-                    <DocumentTitle key={'LoginDocumentTitle'} title={`${GlobalsConfig[lang + "GanName"]} | ${getLabel(lang, 'Login')}`}/>
-                ]}}
-            </GlobalParams.Consumer>
-        );
+                        <Message>
+                            New to us? <a href='#'>Sign Up</a>
+                        </Message>
+                    </Grid.Column>
+                </Grid>
+            </div>
+        )
+    }
+    render() {
+        return this._renderLoginForm();
+        // return (
+        //     <GlobalParams.Consumer>
+        //         {GParams => {
+        //             const { lang } = GParams;
+        //             return[
+        //             <div key={'LoginView'} className='formContainer'>
+        //                 <Form onSubmit={this.handleSubmit}>
+        //                     <Form.Field required>
+        //                         <label>{getLabel(lang, 'id')}</label>
+        //                         <Input
+        //                             name='id'
+        //                             label={getLabel(lang, 'id')} labelPosition='left'
+        //                             // icon={this._feedbackIcon()} iconPosition='right'
+        //                             value={this.state.id}
+        //                             placeholder='User ID Here...'
+        //                             onChange={this.handleInputChange}
+        //                         />
+        //                     </Form.Field>
+        //                     <Form.Field required>
+        //                         <label>{getLabel(lang, 'password')}</label>
+        //                         <Input
+        //                             name='pass'
+        //                             label={getLabel(lang, 'password')} labelPosition='left'
+        //                             // icon={this._feedbackIcon()} iconPosition='right'
+        //                             value={this.state.pass}
+        //                             placeholder='Password Here...'
+        //                             onChange={this.handleInputChange}
+        //                         />
+        //                     </Form.Field>
+        //                     <Form.Field>
+        //                         <Checkbox label={getLabel(lang, 'login_checkbox_text')}/>
+        //                     </Form.Field>
+        //                     <Button primary type='submit'>{getLabel(lang, 'submit_login')}</Button>
+        //                 </Form>
+        //             </div>,
+        //             <DocumentTitle key={'LoginDocumentTitle'} title={`${GParams[lang + "GanName"]} | ${getLabel(lang, 'Login')}`}/>
+        //         ]}}
+        //     </GlobalParams.Consumer>
+        // );
     }
 }
 

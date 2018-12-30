@@ -20,6 +20,14 @@
     visibility: visible;
 }
 
+.ui.card .meta, .ui.cards>.card .meta{
+    color: rgba(0,0,0,0.8);
+}
+
+.ui.card>.content p, .ui.cards>.card>.content p{
+    margin: 0;
+}
+
 .header_name_more_details {
     visibility: hidden;
     font-size: 10px;
@@ -63,10 +71,28 @@
     background-color: #ffffff14;
 }
 
+.example-enter {
+    opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+    opacity: 1;
+}
+
+.example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}
+
 .childrenListWrapper{
-    display: flex;
-    flex: 1;
-    justify-content: center;
+    /*display: flex;*/
+    /*flex: 1;*/
+    /*justify-content: center;*/
 }
 
 .activity_wrap {
@@ -130,6 +156,11 @@
 .activity_wrap:hover > .activity_content {
     transform: translateX(-36px);
     border-radius: 5px 0 0 5px;
+}
+
+.popupActivityWrap{
+    background: #f1f1f1;
+    margin-bottom: 30px;
 }
 
 .agenda {

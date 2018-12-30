@@ -1,67 +1,131 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import SweetAlert from "react-bootstrap-sweetalert";
+import {GlobalParams} from '../../App'
+import getLabel from "../../labels/labels";
 import './CommonModal.css';
-
-import UpdateSleepModal from '../Modals/UpdateSleepModal';
-
-// class CommonModal extends Component {
-//     state = {
-//         open: false,
-//     };
-//
-//     componentDidMount() {
-//         this.props.onRef(this)
-//     }
-//
-//     componentWillUnmount() {
-//         this.props.onRef(undefined)
-//     }
-//
-//     onOpenModal = () => {
-//         this.setState({open: true},() => {
-//             this.props.onOpen && this.props.onOpen();
-//         });
-//     };
-//
-//     onCloseModal = () => {
-//         this.setState({open: false}, () => {
-//             this.props.onClose && this.props.onClose();
-//         });
-//     };
-//
-//     render() {
-//         const {open} = this.state;
-//
-//         return (
-//             <Modal
-//                 open={open}
-//                 onClose={this.onCloseModal}
-//                 center
-//
-//                 classNames={{overlay: 'custom-overlay', modal: 'custom-modal', closeButton: 'custom-closeButton'}}
-//             >
-//                 {this.props.children}
-//             </Modal>
-//         )
-//     }
-// }
 
 const CommonModal = props => {
 
-    if (!props.currentModal) {
+    const {lang} = useContext(GlobalParams);
+    const {
+        showConfirm = false,
+        showCancel = false,
+        confirmBtnText = getLabel(lang, 'ok'),
+        confirmBtnBsStyle = 'primary',
+        confirmBtnCssClass = '',
+        confirmBtnStyle = {},
+        cancelBtnText = getLabel(lang, 'cancel'),
+        cancelBtnBsStyle = 'link',
+        cancelBtnCssClass = '',
+        cancelBtnStyle = {},
+        customIcon,
+        placeholder,
+        focusConfirmBtn = true,
+        required = true,
+        validationMsg = 'Please enter a response!',
+        validationRegex = /^.+$/,
+        defaultValue,
+        inputType = 'text',
+        style = {},
+        customClass,
+        allowEscape,
+        closeOnClickOutside = true,
+        hideOverlay = false,
+        disabled = false,
+        timeout = 0,
+        type = 'default',
+        show = true,
+        btnSize = 'lg',
+        title,
+        onConfirm,
+        onCancel,
+        beforeMount,
+        afterMount,
+        beforeUpdate,
+        afterUpdate,
+        beforeUnmount,
+        children = null
+    } = props;
+
+    console.log('props for commonModal', props);
+    if (!show) {
         document.body.style.overflow = "initial";
-        console.log('initial3');
         return null;
     }
 
-    // console.log('hidden2');
-    // document.body.style.overflow = "hidden";
+    console.log('showConfirm',showConfirm);
+    console.log('showCancel',showCancel);
 
-    switch (props.currentModal) {
-        case 'UPDATE_SLEEP':
-            return <UpdateSleepModal {...props} />;
+    const defaultProps = {
+        showConfirm,
+        showCancel,
+        confirmBtnText,
+        confirmBtnBsStyle,
+        confirmBtnCssClass,
+        confirmBtnStyle,
+        cancelBtnText,
+        cancelBtnBsStyle,
+        cancelBtnCssClass,
+        cancelBtnStyle,
+        customIcon,
+        placeholder,
+        focusConfirmBtn,
+        required,
+        validationMsg,
+        validationRegex,
+        defaultValue,
+        inputType,
+        style,
+        customClass,
+        allowEscape,
+        closeOnClickOutside,
+        hideOverlay,
+        disabled,
+        timeout,
+        type,
+        show,
+        btnSize,
+        title,
+        children,
+        onConfirm: (e) => {
+            console.log('onConfirm', e);
+            onConfirm && onConfirm();
+        },
+        onCancel: (e) => {
+            console.log('onCancel', e);
+            onCancel && onCancel();
+        },
 
-        default:
-            return null;
+        beforeMount: (e) => {
+            beforeMount && beforeMount(e);
+        },
+        afterMount: (e) => {
+            afterMount && afterMount(e);
+        },
+        beforeUpdate: (e) => {
+            beforeUpdate && beforeUpdate(e);
+        },
+        afterUpdate: (e) => {
+            afterUpdate && afterUpdate(e);
+        },
+        beforeUnmount: (e) => {
+            beforeUnmount && beforeUnmount(e);
+        },
+    };
+
+    if (show) {
+        document.body.style.overflow = "hidden";
+
+        return (
+            <SweetAlert
+                {...defaultProps}
+            >
+                <div>
+                    {children}
+                </div>
+            </SweetAlert>
+        )
+
     }
 };
 
