@@ -105,7 +105,6 @@ const hebrewLabels = () => {
 };
 
 const getLabel = (lang, label) => {
-    // console.log('getLabel lang: ', lang, ' label: ', label);
     const noString = 'label: "' + label + '" not found in ' + lang;
     let string = '';
     switch (lang) {

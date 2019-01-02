@@ -1,13 +1,8 @@
 import React, {Component} from "react";
-// import {Input, Icon, Button, Checkbox, Form} from "semantic-ui-react";
-import {Button, Form, Grid, Header, Image, Message, Segment, Icon} from 'semantic-ui-react'
+import {Button, Form, Grid, Header, Message, Segment, Icon} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
-import DocumentTitle from 'react-document-title';
-import getLabel from '../../labels/labels';
-
 import './Login.css';
 import LabelByLang from "../../components/common/LabelByLang";
-import {GlobalParams} from "../../App";
 
 class LoginView extends Component {
 
@@ -115,7 +110,7 @@ class LoginView extends Component {
                             </Segment>
                         </Form>
                         <Message>
-                            New to us? <a href='#'>Sign Up</a>
+                            New to us? Sign Up
                         </Message>
                     </Grid.Column>
                 </Grid>

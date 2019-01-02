@@ -1,4 +1,4 @@
-import React, {Component, useContext} from "react";
+import React, {useContext} from "react";
 import {Flag, Dropdown} from "semantic-ui-react";
 import _ from "lodash";
 import './LangChanger.css';
@@ -14,11 +14,6 @@ const LangChanger = props => {
     };
 
     const _getLanguagesObj = () => {
-        // return [
-        //     {key: 'rus', value: 'rus', flag: 'ru', text: 'Russian'},
-        //     {key: 'eng', value: 'eng', flag: 'us', text: 'English'},
-        //     {key: 'heb', value: 'heb', flag: 'il', text: 'Hebrew'},
-        // ];
         return [
             {value: 'eng', label: 'English', flag: 'us'},
             {value: 'heb', label: 'עברית', flag: 'il'},
@@ -55,6 +50,7 @@ const LangChanger = props => {
         );
         flagsForMenu.push(
             <Dropdown.Item
+                key={obj.value}
                 active={lang === obj.value}
                 className={'menu_language'}
                 onClick={() => {

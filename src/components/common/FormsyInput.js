@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {withFormsy} from 'formsy-react';
 import "./FormsyInput.css"
 import Moment from "moment";
@@ -80,7 +80,7 @@ class FormsyInput extends React.Component {
 
     };
     _renderMobileInput = () => {
-        const {label, getValue, value, getErrorMessage, isRequired, type, name} = this.props;
+        const {label, getValue, getErrorMessage, isRequired, type} = this.props;
 
         if(type === 'time'){
             return this._renderTimeInput();
@@ -103,7 +103,7 @@ class FormsyInput extends React.Component {
     };
 
     _renderTimeInput= () => {
-        const {label, getValue, value, getErrorMessage, isRequired, type, name} = this.props;
+        const {label, value, getErrorMessage, isRequired, name} = this.props;
         return (
             <div className={'inputWrap'}>
                 <p>

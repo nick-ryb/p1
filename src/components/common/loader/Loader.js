@@ -1,5 +1,5 @@
-import React, {Component, useContext} from 'react';
-import {Dimmer, Icon, Loader} from 'semantic-ui-react'
+import React, {useContext} from 'react';
+import {Dimmer, Loader} from 'semantic-ui-react'
 import {GlobalParams} from '../../../App'
 import getLabel from "../../../labels/labels";
 import './Loader.css';

@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import {Button, Card, Icon, Image} from "semantic-ui-react";
+import {Button, Card, Icon} from "semantic-ui-react";
 import Moment from 'moment';
-import SweetAlert from 'react-bootstrap-sweetalert';
 import _ from "lodash";
 import './Children.css';
 import LabelByLang from "../../components/common/LabelByLang";
@@ -10,10 +9,9 @@ import {GlobalParams} from "../../App";
 import getLabel from "../../labels/labels";
 import FormsyInput from "../../components/common/FormsyInput";
 import Formsy from "formsy-react";
-import momentLocalizer from "react-widgets-moment";
-import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import CommonModal from "../../components/common/CommonModal";
 import LoaderCustom from "../../components/common/loader/Loader";
+import ImageWithPlaceholder from "../../components/common/ImageWithPlaceholder";
 
 class ChildrenView extends Component {
     constructor(props) {
@@ -649,18 +647,18 @@ class ChildrenView extends Component {
                     const colorIndex = index < colors.length ? index : index - colors.length;
                     const imageSrc = isBoy ? 'https://react.semantic-ui.com/images/avatar/large/steve.jpg' : 'https://react.semantic-ui.com/images/avatar/large/molly.png';
                     return (
-                        <GlobalParams.Consumer>
+                        <GlobalParams.Consumer key={`child_${index}`}>
                             {GParams => {
                                 const {lang, openModal} = GParams;
 
                                 return <Card
-                                    key={`child_${index}`}
+
                                     color={colors[colorIndex]}
                                 >
 
                                     <Card.Content>
 
-                                        <Image size='huge' floated='right' avatar src={imageSrc}/>
+                                        <ImageWithPlaceholder size='huge' floated='right' avatar src={imageSrc}/>
                                         <Card.Header onClick={() => {
                                             this.props.history.push('/child', {'childTz': child.tz})
                                         }}>
@@ -783,7 +781,7 @@ class ChildrenView extends Component {
 
         const currTitle = this.state.popupData.title;
 
-        const activityInputs = [];
+        // const activityInputs = [];
         // for (let f = 0; f < data.length; f++) {
 
         let label = j === 0 ? `${currTitle} cycle ${i + 1} - from` : `${currTitle} cycle ${i + 1} - till`;
@@ -870,11 +868,11 @@ class ChildrenView extends Component {
 
     updateChildInfo = (newData) => {
         const {popupData} = this.state;
-        const {child, title} = popupData;
+        const {title} = popupData;
 
         this.setState((prevState) => {
             console.log('oldState', prevState);
-            let oldState = prevState.popupData.child;
+            // let oldState = prevState.popupData.child;
             let oldChildrenActivity = prevState.childrenData;
             let oldChildActivity = oldChildrenActivity[Number(prevState.popupData.childIndex)];
             // console.log('oldChildActivity',oldChildActivity);
@@ -886,7 +884,7 @@ class ChildrenView extends Component {
                 const keyArr = key.split('_');
 
                 const i = keyArr[2];
-                const j = keyArr[3];
+                // const j = keyArr[3];
 
                 //  if (oldChildActivity.history[this.today].activity[title].length === 0)
                 //     oldChildActivity.history[this.today].activity[title][Number(i)] = [];
@@ -914,7 +912,7 @@ class ChildrenView extends Component {
     };
 
     renderModal = () => {
-        const {popupData, showModal, childrenData} = this.state;
+        const {popupData, showModal} = this.state;
         const {title, child} = popupData;
 
         if (_.isEmpty(popupData))
@@ -967,7 +965,7 @@ class ChildrenView extends Component {
                 <div className={'childrenListWrapper'}>
                     <GlobalParams.Consumer>
                         {GParams => {
-                            const {lang, isMobile} = GParams;
+                            const {lang} = GParams;
                             return [
                                 this._renderChildrenList(lang),
                                 this.renderModal(lang),
