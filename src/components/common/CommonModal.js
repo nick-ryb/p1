@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import SweetAlert from "react-bootstrap-sweetalert";
 import {GlobalParams} from '../../App'
-import getLabel from "../../labels/labels";
+import {getLabel} from "../../labels/labels";
 import './CommonModal.css';
 
 const CommonModal = props => {
@@ -129,4 +129,4 @@ const CommonModal = props => {
     }
 };
 
-export default CommonModal
+export {CommonModal}

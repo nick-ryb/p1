@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Button, Form, Grid, Header, Message, Segment, Icon} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import './Login.css';
-import LabelByLang from "../../components/common/LabelByLang";
+import {LabelByLang} from "../../components/common";
 
 class LoginView extends Component {
 

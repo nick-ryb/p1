@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {GlobalParams} from "../../App";
 import DocumentTitle from "react-document-title";
-import getLabel from "../../labels/labels";
+import {getLabel} from "../../labels/labels";
 import * as GlobalsConfig from "../../GlobalConfig";
 
 const HistoryView = props => {

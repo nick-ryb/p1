@@ -1,17 +1,32 @@
 import React, {Component} from "react";
-import {Button, Card, Icon} from "semantic-ui-react";
+import {Button, Card, Icon, Popup} from "semantic-ui-react";
 import Moment from 'moment';
+import Formsy from "formsy-react";
+import DocumentTitle from "react-document-title";
 import _ from "lodash";
 import './Children.css';
-import LabelByLang from "../../components/common/LabelByLang";
-import DocumentTitle from "react-document-title";
+import {LabelByLang, CommonModal, LoaderCustom, ImageWithPlaceholder} from "../../components/common";
 import {GlobalParams} from "../../App";
-import getLabel from "../../labels/labels";
+import {getLabel} from "../../labels/labels";
 import FormsyInput from "../../components/common/FormsyInput";
-import Formsy from "formsy-react";
-import CommonModal from "../../components/common/CommonModal";
-import LoaderCustom from "../../components/common/loader/Loader";
-import ImageWithPlaceholder from "../../components/common/ImageWithPlaceholder";
+// import CommonModal from "../../components/common/CommonModal";
+// import LoaderCustom from "../../components/common/loader/Loader";
+// import ImageWithPlaceholder from "../../components/common/ImageWithPlaceholder";
+
+const colors = [
+    'red',
+    'orange',
+    'yellow',
+    'olive',
+    'green',
+    'teal',
+    'blue',
+    'violet',
+    'purple',
+    'pink',
+    'brown',
+    'grey',
+];
 
 class ChildrenView extends Component {
     constructor(props) {
@@ -104,7 +119,7 @@ class ChildrenView extends Component {
                             "24/06/2015": {
                                 "came_in": false
                             },
-                            "30/12/2018": {
+                            "28/01/2019": {
                                 "came_in": true,
                                 "activity": {
                                     "sleep": [],
@@ -266,7 +281,7 @@ class ChildrenView extends Component {
                                     ]
                                 }
                             },
-                            "30/12/2018": {
+                            "28/01/2019": {
                                 "came_in": true,
                                 "activity": {
                                     "sleep": [
@@ -361,7 +376,7 @@ class ChildrenView extends Component {
                             "01/09/2018": {
                                 "came_in": true
                             },
-                            "30/12/2018": {
+                            "28/01/2019": {
                                 "came_in": false,
                                 "activity": {
                                     "sleep": [
@@ -447,7 +462,6 @@ class ChildrenView extends Component {
                 out.push(diff);
             });
 
-
             // console.log(out);
             // age = age.toString().split('.');
             // const years = age[0];
@@ -467,6 +481,11 @@ class ChildrenView extends Component {
         return currentDayInfo && currentDayInfo.came_in;
     };
 
+    _updateChildCameToday = (info, isCame) => {
+        const currentDayInfo = info[this.today];
+        return currentDayInfo && currentDayInfo.came_in;
+    };
+
     _childActivityToday = (child, index, lang, openModal) => {
         const childTodayActivity = child.history[this.today];
 
@@ -476,7 +495,7 @@ class ChildrenView extends Component {
                 <div key={`${title}@${child.second_name}`} className={`activity_wrap ${title}_activity`}>
                     <div className={'activity_content'}>
                         <p className={'activityTitle'}
-                            style={{textOrientation: lang !== 'heb' ? 'upright' : 'unset'}}
+                           style={{textOrientation: lang !== 'heb' ? 'upright' : 'unset'}}
                         >
                             {getLabel(lang, title)}
                         </p>
@@ -485,47 +504,48 @@ class ChildrenView extends Component {
                         </div>
 
                     </div>
-                    <div className={'activity_actions'}
-                         onClick={(e) => {
-                             // e.stopPropagation();
-                             // console.log(e.target);
-                             // console.log(title);
-                             // console.log(childTodayActivity);
-                             // console.log(child);
-                             // const data = {
-                             //     childObj: child,
-                             //     childActivityObj: childTodayActivity ? childTodayActivity.activity[title] : [],
-                             //     childActivityTitle: title,
-                             //     childIndex: index,
-                             //     onClose: (newData) => {
-                             //         console.log('newData', newData);
-                             //         if (!_.isEqual(newData, childTodayActivity.activity[title])) {
-                             //             console.log('this', this.state);
-                             //             console.log('childTodayActivity.activity[title]', childTodayActivity.activity[title]);
-                             //             const childIndex = _.findIndex(this.state.childrenData, (o) => {
-                             //                 return child.tz === o.tz;
-                             //             });
-                             //             console.log('childIndex', index);
-                             //             let childNewData = this.state.childrenData[index];
-                             //             childNewData.history[this.today].activity[title] = newData;
-                             //
-                             //             let newChildrenData = this.state.childrenData;
-                             //             newChildrenData[index] = childNewData;
-                             //             this.setState({
-                             //                 childrenData: newChildrenData
-                             //             });
-                             //         }
-                             //
-                             //     },
-                             //     currentModal: 'UPDATE_SLEEP'
-                             // };
-                             // openModal(data)
-                             this.toggleAlert(true, child, title, index);
-                         }}>
+                    <Popup trigger={<div className={'activity_actions'}
+                                         onClick={(e) => {
+                                             // e.stopPropagation();
+                                             // console.log(e.target);
+                                             // console.log(title);
+                                             // console.log(childTodayActivity);
+                                             // console.log(child);
+                                             // const data = {
+                                             //     childObj: child,
+                                             //     childActivityObj: childTodayActivity ? childTodayActivity.activity[title] : [],
+                                             //     childActivityTitle: title,
+                                             //     childIndex: index,
+                                             //     onClose: (newData) => {
+                                             //         console.log('newData', newData);
+                                             //         if (!_.isEqual(newData, childTodayActivity.activity[title])) {
+                                             //             console.log('this', this.state);
+                                             //             console.log('childTodayActivity.activity[title]', childTodayActivity.activity[title]);
+                                             //             const childIndex = _.findIndex(this.state.childrenData, (o) => {
+                                             //                 return child.tz === o.tz;
+                                             //             });
+                                             //             console.log('childIndex', index);
+                                             //             let childNewData = this.state.childrenData[index];
+                                             //             childNewData.history[this.today].activity[title] = newData;
+                                             //
+                                             //             let newChildrenData = this.state.childrenData;
+                                             //             newChildrenData[index] = childNewData;
+                                             //             this.setState({
+                                             //                 childrenData: newChildrenData
+                                             //             });
+                                             //         }
+                                             //
+                                             //     },
+                                             //     currentModal: 'UPDATE_SLEEP'
+                                             // };
+                                             // openModal(data)
+                                             this.toggleAlert(true, child, title, index);
+                                         }}>
                         <Icon
                             name='pencil'
                         />
-                    </div>
+                    </div>} content={`Edit ${getLabel(lang, title)} activity `}/>
+
                 </div>
             )
         };
@@ -623,90 +643,6 @@ class ChildrenView extends Component {
         return list;
     };
 
-    _renderChildrenList = (lang) => {
-        const colors = [
-            'red',
-            'orange',
-            'yellow',
-            'olive',
-            'green',
-            'teal',
-            'blue',
-            'violet',
-            'purple',
-            'pink',
-            'brown',
-            'grey',
-        ];
-        return (
-
-            <Card.Group key={"ChildrenList"} itemsPerRow={3} centered={true}
-                        style={{justifyContent: 'center', maxWidth: '1000px'}}>
-                {this.state.childrenData.map((child, index) => {
-                    const isBoy = child.gender === 'boy';
-                    const colorIndex = index < colors.length ? index : index - colors.length;
-                    const imageSrc = isBoy ? 'https://react.semantic-ui.com/images/avatar/large/steve.jpg' : 'https://react.semantic-ui.com/images/avatar/large/molly.png';
-                    return (
-                        <GlobalParams.Consumer key={`child_${index}`}>
-                            {GParams => {
-                                const {lang, openModal} = GParams;
-
-                                return <Card
-
-                                    color={colors[colorIndex]}
-                                >
-
-                                    <Card.Content>
-
-                                        <ImageWithPlaceholder size='huge' floated='right' avatar src={imageSrc}/>
-                                        <Card.Header onClick={() => {
-                                            this.props.history.push('/child', {'childTz': child.tz})
-                                        }}>
-                                            <span
-                                                className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
-
-                                            <Icon className={'header_name_more_details icon link'} name="info circle"
-                                                  title={'click the name for more info'}/>
-                                        </Card.Header>
-                                        <Card.Meta>{this._childAge(child.birth_day, lang)}</Card.Meta>
-                                        {child.personal_notes && <Card.Description>
-                                            {getLabel(lang, 'attention')}: <strong>{child.personal_notes[0]}</strong>
-                                        </Card.Description>}
-                                    </Card.Content>
-                                    <Card.Content extra>
-                                        <div className={'activities'}>
-                                            {this._childActivityToday(child, index, lang, openModal)}
-                                        </div>
-                                    </Card.Content>
-                                    <Card.Content extra>
-                                        <div className='ui two buttons'>
-                                            <Button
-                                                positive={this._isChildCameToday(child.history)}
-                                                onClick={() => {
-                                                    console.log('came child:', child)
-                                                }}
-                                            >
-                                                {getLabel(lang, 'came')}
-                                            </Button>
-                                            <Button
-                                                negative={!this._isChildCameToday(child.history)}
-                                                onClick={() => {
-                                                    console.log('missing child:', child)
-                                                }}
-                                            >
-                                                {getLabel(lang, 'missing')}
-                                            </Button>
-                                        </div>
-                                    </Card.Content>
-                                </Card>
-                            }}
-                        </GlobalParams.Consumer>
-                    )
-                })
-                }
-            </Card.Group>
-        );
-    };
 
     _renderChildrenCurrentActivity = (lang) => {
         return this.state.childrenData.map((child, index) => {
@@ -809,16 +745,19 @@ class ChildrenView extends Component {
                         // this.handleInputChange(Moment(e).format('HH:mm'))
                         this.handleInputChange(e)
                     }}
+                    onDelete={() => {
+                        this.deleteInput(data)
+                    }}
                 />
-                <p onClick={() => {
-                    this.deleteInput(i);
-                }}
-                >DELETE</p>
+
             </div>
         )
         // }
 
         // return activityInputs;
+    };
+    deleteInput = (input) => {
+
     };
 
     _renderChildActivity = (activities, i) => {
@@ -957,6 +896,83 @@ class ChildrenView extends Component {
         );
     };
 
+    _renderChildCard = (child, index, lang, openModal) => {
+
+        const isBoy = child.gender === 'boy';
+        const colorIndex = index < colors.length ? index : index - colors.length;
+        const imageSrc = isBoy ? 'https://react.semantic-ui.com/images/avatar/large/steve.jpg' : 'https://react.semantic-ui.com/images/avatar/large/molly.png';
+
+        return (
+            <Card
+                key={`childCard${index}`}
+                color={colors[colorIndex]}
+            >
+                <Card.Content>
+                    <ImageWithPlaceholder size='huge' floated='right' avatar src={imageSrc}/>
+                    <Card.Header onClick={() => {
+                        console.log('this.props', this.props);
+                        this.props.history.push('/child', {'childTz': child.tz})
+                    }}>
+                                            <span
+                                                className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
+
+                        <Icon className={'header_name_more_details icon link'} name="info circle"
+                              title={'click the name for more info'}/>
+                    </Card.Header>
+                    <Card.Meta>{this._childAge(child.birth_day, lang)}</Card.Meta>
+                    {child.personal_notes && <Card.Description>
+                        {getLabel(lang, 'attention')}: <strong>{child.personal_notes[0]}</strong>
+                    </Card.Description>}
+
+                </Card.Content>
+                <Card.Content extra>
+                    <div className={'activities'}>
+                        {this._childActivityToday(child, index, lang, openModal)}
+                    </div>
+                </Card.Content>
+                <Card.Content extra>
+                    <div className='ui two buttons'>
+                        <Button
+                            positive={this._isChildCameToday(child.history)}
+                            onClick={() => {
+                                console.log('came child:', child)
+                                this._updateChildCameToday(child, true)
+                            }}
+                        >
+                            {getLabel(lang, 'came')}
+                        </Button>
+                        <Button
+                            negative={!this._isChildCameToday(child.history)}
+                            onClick={() => {
+                                console.log('missing child:', child)
+                                this._updateChildCameToday(child, false)
+                            }}
+                        >
+                            {getLabel(lang, 'missing')}
+                        </Button>
+                    </div>
+                </Card.Content>
+            </Card>
+        )
+    };
+
+    _renderChildrenCards = (GParams) => {
+
+        const {lang, openModal} = GParams;
+
+        return (
+            <Card.Group
+                key={"ChildrenList"}
+                itemsPerRow={3}
+                centered={true}
+                style={{justifyContent: 'center', maxWidth: '1000px'}}>
+
+                {this.state.childrenData.map((child, index) => {
+                    return this._renderChildCard(child, index, lang, openModal)
+                })}
+            </Card.Group>
+        );
+    };
 
     render() {
         if (this.state.childrenData) {
@@ -967,8 +983,8 @@ class ChildrenView extends Component {
                         {GParams => {
                             const {lang} = GParams;
                             return [
-                                this._renderChildrenList(lang),
-                                this.renderModal(lang),
+                                this._renderChildrenCards(GParams),
+                                this.renderModal(GParams),
                                 <DocumentTitle
                                     key={"ChildrenDocumentTitle"}
                                     title={`${GParams[lang + "GanName"]} | ${getLabel(lang, 'Children')}`}/>

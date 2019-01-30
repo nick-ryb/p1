@@ -42,4 +42,4 @@ class ImageWithPlaceholder extends React.Component {
     }
 }
 
-export default ImageWithPlaceholder;
+export {ImageWithPlaceholder};

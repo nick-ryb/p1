@@ -101,7 +101,6 @@
     border-radius: 5px;
     box-shadow: 0 0 2px 0 #ccc;
     overflow: hidden;
-    cursor: pointer;
 }
 
 .activityTitle {
@@ -136,26 +135,29 @@
     padding-right: 10px;
     border-radius: 0 5px 5px 0;
     background-color: #000000b3;
-    transform: translateX(110%);
+    transform: translateX(10%);
+    opacity: 0.2;
     transition: all .6s;
     color: #fff;
     align-items: center;
     justify-content: center;
     display: flex;
     -webkit-font-smoothing: antialiased;
+    cursor: pointer;
 }
 
 .activity_actions > i {
     margin: 0;
 }
 
-.activity_wrap:hover > .activity_actions {
+.activity_actions:hover {
     transform: translateX(0);
+    opacity: 1;
 }
 
 .activity_wrap:hover > .activity_content {
-    transform: translateX(-36px);
-    border-radius: 5px 0 0 5px;
+    /*transform: translateX(-36px);*/
+    /*border-radius: 5px 0 0 5px;*/
 }
 
 .popupActivityWrap{

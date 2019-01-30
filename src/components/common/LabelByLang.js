@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import getLabel from "../../labels/labels";
+import {getLabel} from "../../labels/labels";
 import {GlobalParams} from "../../App";
 
 class LabelByLang extends React.Component {
@@ -13,4 +13,4 @@ class LabelByLang extends React.Component {
 
 LabelByLang.defaultProps = {};
 
-export default LabelByLang;
+export {LabelByLang};

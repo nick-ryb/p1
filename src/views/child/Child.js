@@ -4,11 +4,11 @@ import DocumentTitle from "react-document-title";
 import {Link} from "react-router-dom";
 import './Child.css';
 import {GlobalParams} from "../../App";
-import getLabel from "../../labels/labels";
+import {getLabel} from "../../labels/labels";
 
 class ChildView extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.child = {
             "_id": {
@@ -46,7 +46,7 @@ class ChildView extends Component {
                 "01/09/2018": {
                     "came_in": true
                 },
-                "30/12/2018": {
+                "28/01/2019": {
                     "came_in": true,
                     "activity": {
                         "sleep": [

@@ -36,10 +36,12 @@ i.flag:not(.icon) {
 
 .menu_language > p {
     vertical-align: middle;
-    transform: translateX(300%);
+    transform: translateX(-10%);
+    opacity: 0.5;
     transition: all 0.3s;
 }
 
 .menu_language:hover > p {
     transform: translateX(0);
+    opacity: 1;
 }

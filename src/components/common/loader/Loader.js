@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Dimmer, Loader} from 'semantic-ui-react'
 import {GlobalParams} from '../../../App'
-import getLabel from "../../../labels/labels";
+import {getLabel} from "../../../labels/labels";
 import './Loader.css';
 
 const LoaderCustom = () => {
@@ -20,4 +20,4 @@ const LoaderCustom = () => {
     // );
 }
 
-export default LoaderCustom;
+export {LoaderCustom};

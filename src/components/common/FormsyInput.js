@@ -98,6 +98,10 @@ class FormsyInput extends React.Component {
                     value={getValue() || ''}
                 />
                 <span>{getErrorMessage()}</span>
+                <p onClick={() => {
+                    this.props.onDelete();
+                }}
+                >DELETE</p>
             </div>
         )
     };
