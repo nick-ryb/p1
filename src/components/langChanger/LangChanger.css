@@ -29,19 +29,24 @@ i.flag:not(.icon) {
 .menu_language > i.flag {
     vertical-align: middle;
     margin: 0;
+    transform: translateX(0);
+    opacity: 0.5;
+    transition: all 0.3s;
 }
 
 .menu_language:hover > i.flag {
+    transform: translateX(5%);
+    opacity: 1;
 }
 
 .menu_language > p {
     vertical-align: middle;
-    transform: translateX(-10%);
+    transform: translateX(0);
     opacity: 0.5;
     transition: all 0.3s;
 }
 
 .menu_language:hover > p {
-    transform: translateX(0);
+    transform: translateX(10%);
     opacity: 1;
 }

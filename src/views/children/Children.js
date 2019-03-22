@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Button, Card, Icon, Popup} from "semantic-ui-react";
 import Moment from 'moment';
 import Formsy from "formsy-react";
+import {Link} from "react-router-dom";
 import DocumentTitle from "react-document-title";
 import _ from "lodash";
 import './Children.css';
@@ -119,7 +120,7 @@ class ChildrenView extends Component {
                             "24/06/2015": {
                                 "came_in": false
                             },
-                            "28/01/2019": {
+                            "10/03/2019": {
                                 "came_in": true,
                                 "activity": {
                                     "sleep": [],
@@ -281,7 +282,7 @@ class ChildrenView extends Component {
                                     ]
                                 }
                             },
-                            "28/01/2019": {
+                            "10/03/2019": {
                                 "came_in": true,
                                 "activity": {
                                     "sleep": [
@@ -376,7 +377,7 @@ class ChildrenView extends Component {
                             "01/09/2018": {
                                 "came_in": true
                             },
-                            "28/01/2019": {
+                            "10/03/2019": {
                                 "came_in": false,
                                 "activity": {
                                     "sleep": [
@@ -481,12 +482,12 @@ class ChildrenView extends Component {
         return currentDayInfo && currentDayInfo.came_in;
     };
 
-    _updateChildCameToday = (info, isCame) => {
+    _updateChildCameToday = (info) => {
         const currentDayInfo = info[this.today];
         return currentDayInfo && currentDayInfo.came_in;
     };
 
-    _childActivityToday = (child, index, lang, openModal) => {
+    _childActivityToday = (child, index, lang) => {
         const childTodayActivity = child.history[this.today];
 
         const getTemplateForActivity = (title, children) => {
@@ -504,47 +505,51 @@ class ChildrenView extends Component {
                         </div>
 
                     </div>
-                    <Popup trigger={<div className={'activity_actions'}
-                                         onClick={(e) => {
-                                             // e.stopPropagation();
-                                             // console.log(e.target);
-                                             // console.log(title);
-                                             // console.log(childTodayActivity);
-                                             // console.log(child);
-                                             // const data = {
-                                             //     childObj: child,
-                                             //     childActivityObj: childTodayActivity ? childTodayActivity.activity[title] : [],
-                                             //     childActivityTitle: title,
-                                             //     childIndex: index,
-                                             //     onClose: (newData) => {
-                                             //         console.log('newData', newData);
-                                             //         if (!_.isEqual(newData, childTodayActivity.activity[title])) {
-                                             //             console.log('this', this.state);
-                                             //             console.log('childTodayActivity.activity[title]', childTodayActivity.activity[title]);
-                                             //             const childIndex = _.findIndex(this.state.childrenData, (o) => {
-                                             //                 return child.tz === o.tz;
-                                             //             });
-                                             //             console.log('childIndex', index);
-                                             //             let childNewData = this.state.childrenData[index];
-                                             //             childNewData.history[this.today].activity[title] = newData;
-                                             //
-                                             //             let newChildrenData = this.state.childrenData;
-                                             //             newChildrenData[index] = childNewData;
-                                             //             this.setState({
-                                             //                 childrenData: newChildrenData
-                                             //             });
-                                             //         }
-                                             //
-                                             //     },
-                                             //     currentModal: 'UPDATE_SLEEP'
-                                             // };
-                                             // openModal(data)
-                                             this.toggleAlert(true, child, title, index);
-                                         }}>
-                        <Icon
-                            name='pencil'
-                        />
-                    </div>} content={`Edit ${getLabel(lang, title)} activity `}/>
+                    <Popup
+                        trigger={<div className={'activity_actions'}
+                                      onClick={(e) => {
+                                          // e.stopPropagation();
+                                          // console.log(e.target);
+                                          // console.log(title);
+                                          // console.log(childTodayActivity);
+                                          // console.log(child);
+                                          // const data = {
+                                          //     childObj: child,
+                                          //     childActivityObj: childTodayActivity ? childTodayActivity.activity[title] : [],
+                                          //     childActivityTitle: title,
+                                          //     childIndex: index,
+                                          //     onClose: (newData) => {
+                                          //         console.log('newData', newData);
+                                          //         if (!_.isEqual(newData, childTodayActivity.activity[title])) {
+                                          //             console.log('this', this.state);
+                                          //             console.log('childTodayActivity.activity[title]', childTodayActivity.activity[title]);
+                                          //             const childIndex = _.findIndex(this.state.childrenData, (o) => {
+                                          //                 return child.tz === o.tz;
+                                          //             });
+                                          //             console.log('childIndex', index);
+                                          //             let childNewData = this.state.childrenData[index];
+                                          //             childNewData.history[this.today].activity[title] = newData;
+                                          //
+                                          //             let newChildrenData = this.state.childrenData;
+                                          //             newChildrenData[index] = childNewData;
+                                          //             this.setState({
+                                          //                 childrenData: newChildrenData
+                                          //             });
+                                          //         }
+                                          //
+                                          //     },
+                                          //     currentModal: 'UPDATE_SLEEP'
+                                          // };
+                                          // openModal(data)
+                                          this.toggleAlert(true, child, title, index);
+                                      }}>
+                            <Icon
+                                name='pencil'
+                            />
+                        </div>}
+                        content={`Edit ${getLabel(lang, title)} activity `}
+                        header={'ererre'}
+                    />
 
                 </div>
             )
@@ -575,7 +580,10 @@ class ChildrenView extends Component {
                         return childTodayActivity.activity.poop.map((f, i) => {
                             return (
                                 <div key={`poop${index}${i}wrap`}>
-                                    <span key={`poop${index}${i}when`}>{` ${f[1]}`}</span>
+                                    {f[1] ? <Icon name={'checkmark'} color={'green'}
+                                                  style={{marginRight: 4, marginLeft: 4}}/> : null}
+                                    {f[0] ? <span key={`poop${index}${i}when`}>{` ${f[0]}`}</span> : null}
+
                                 </div>
                             )
                         })
@@ -642,7 +650,6 @@ class ChildrenView extends Component {
 
         return list;
     };
-
 
     _renderChildrenCurrentActivity = (lang) => {
         return this.state.childrenData.map((child, index) => {
@@ -806,6 +813,9 @@ class ChildrenView extends Component {
     };
 
     updateChildInfo = (newData) => {
+        console.log('newData', newData);
+        if (_.isEmpty(newData))
+            return
         const {popupData} = this.state;
         const {title} = popupData;
 
@@ -909,12 +919,21 @@ class ChildrenView extends Component {
             >
                 <Card.Content>
                     <ImageWithPlaceholder size='huge' floated='right' avatar src={imageSrc}/>
-                    <Card.Header onClick={() => {
-                        console.log('this.props', this.props);
-                        this.props.history.push('/child', {'childTz': child.tz})
-                    }}>
-                                            <span
-                                                className={'header_name'}>{`${child.second_name} ${child.first_name}`}</span>
+                    <Card.Header>
+
+                        <Link
+                            to={{
+                                pathname: "/Child",
+                                search: "?sort=name",
+                                hash: "#the-hash",
+                                state: {fromDashboard: true}
+                            }}
+                        >
+                            <span
+                                className={'header_name'}>{`${child.second_name} ${child.first_name}`}
+                            </span>
+                        </Link>
+
 
                         <Icon className={'header_name_more_details icon link'} name="info circle"
                               title={'click the name for more info'}/>
@@ -935,7 +954,7 @@ class ChildrenView extends Component {
                         <Button
                             positive={this._isChildCameToday(child.history)}
                             onClick={() => {
-                                console.log('came child:', child)
+                                console.log('came child:', child);
                                 this._updateChildCameToday(child, true)
                             }}
                         >
@@ -944,7 +963,7 @@ class ChildrenView extends Component {
                         <Button
                             negative={!this._isChildCameToday(child.history)}
                             onClick={() => {
-                                console.log('missing child:', child)
+                                console.log('missing child:', child);
                                 this._updateChildCameToday(child, false)
                             }}
                         >
@@ -965,7 +984,8 @@ class ChildrenView extends Component {
                 key={"ChildrenList"}
                 itemsPerRow={3}
                 centered={true}
-                style={{justifyContent: 'center', maxWidth: '1000px'}}>
+                style={{justifyContent: 'center', maxWidth: '1000px'}}
+            >
 
                 {this.state.childrenData.map((child, index) => {
                     return this._renderChildCard(child, index, lang, openModal)
@@ -976,7 +996,6 @@ class ChildrenView extends Component {
 
     render() {
         if (this.state.childrenData) {
-
             return (
                 <div className={'childrenListWrapper'}>
                     <GlobalParams.Consumer>
@@ -1002,5 +1021,3 @@ class ChildrenView extends Component {
 ChildrenView.defaultProps = {};
 
 export default ChildrenView;
-
-

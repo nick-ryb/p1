@@ -48,7 +48,7 @@ const routes = [
     {
         path: "/Child",
         sidebar: () => <div>ChildView!</div>,
-        main: () => <ChildView/>
+        main: ChildView
     },
     {
         path: "/Child/History",
@@ -73,16 +73,16 @@ class App extends Component {
         };
     }
 
+    componentDidMount() {
+        // console.log(process.env.NODE_ENV);
+    }
+
     _changeLang = (langObj) => {
         this.setState({lang: langObj.value, langObj}, () => {
             localStorage.setItem('lang', langObj.value);
             localStorage.setItem('langObj', JSON.stringify(langObj));
         })
     };
-
-    componentDidMount() {
-        // console.log(process.env.NODE_ENV);
-    }
 
     openModal = (modalObj) => {
         // childObj: child,
@@ -95,21 +95,21 @@ class App extends Component {
         })
     };
 
-
     renderModal = () => {
         const {isModalOpen, modalObj} = this.state;
+        const {childObj, childActivityObj, currentModal, onOpen, onClose} = modalObj;
         if (isModalOpen) {
             document.body.style.overflow = "hidden";
 
             return (
                 <CommonModal
                     key={'ChildrenActivityEditPopup'}
-                    child={modalObj.childObj}
-                    childActivityObj={modalObj.childActivityObj}
+                    child={childObj}
+                    childActivityObj={childActivityObj}
                     onRef={(ref) => {
                         this.modal = ref
                     }}
-                    currentModal={modalObj.currentModal}
+                    currentModal={currentModal}
                     hideModal={() => {
                         console.log('hideModal');
                         document.body.style.overflow = "initial";
@@ -117,11 +117,11 @@ class App extends Component {
                     }}
                     onOpen={(data) => {
                         console.log('onOpen:', data);
-                        modalObj.onOpen && modalObj.onOpen(data);
+                        onOpen && onOpen(data);
                     }}
                     onClose={(data) => {
                         console.log('onClose:', data);
-                        modalObj.onClose && modalObj.onClose(data);
+                        onClose && onClose(data);
                     }}
                 />
             );
@@ -130,7 +130,6 @@ class App extends Component {
             return null;
         }
     };
-
 
     render() {
         return (
@@ -183,7 +182,7 @@ export const Home = () => {
     ]
 };
 
-export const AppContainer = (props) => {
+export const AppContainer = () => {
     const {lang} = useContext(GlobalParams);
 
     return (
@@ -191,6 +190,13 @@ export const AppContainer = (props) => {
             {lang === 'heb' && <style
                 type='text/css'>{`.appContainer, .appContainer *{direction:rtl}body{font-family: 'Alef', sans-serif;}`}</style>}
 
+                <Link
+                    ttt={'ooo'}
+                    to={{
+                        popo:'qew',
+                        pathname: "/Child",
+                        state: {fromDashboard: true}
+                    }}>{getLabel(lang, 'Child')}</Link>
             <div className='appContainer'>
                 <div style={{flex: 1, display: 'flex', justifyContent: 'center'}}>
                     {routes.map((route, index) => (
@@ -214,8 +220,8 @@ export const MenuContainer = (props) => {
     return (
         <div>
             <Container>
-                <Menu attached='top' size={'mini'} activeIndex={2}>
-                    <Dropdown item icon='bars' simple closeOnChange activeIndex={2} closeOnBlur>
+                <Menu attached='top' size={'mini'}>
+                    <Dropdown item icon='bars' simple closeOnChange closeOnBlur>
                         <Dropdown.Menu>
                             <Dropdown.Item>
                                 <Icon name='dropdown'/>
@@ -242,7 +248,11 @@ export const MenuContainer = (props) => {
                                         <Link to="/Children">{getLabel(lang, 'Children')}</Link>
                                     </Dropdown.Item>
                                     <Dropdown.Item>
-                                        <Link to="/Child">{getLabel(lang, 'Child')}</Link>
+                                        <Link
+                                            to={{
+                                                pathname: "/Child",
+                                                state: {fromDashboard: true}
+                                            }}>{getLabel(lang, 'Child')}</Link>
                                     </Dropdown.Item>
                                     <Dropdown.Item>
                                         <Link to="/Child/History">{getLabel(lang, 'child_history')}</Link>
