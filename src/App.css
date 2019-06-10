@@ -1,105 +1,103 @@
-
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 .App-logo {
-    animation: App-logo-spin infinite 5s linear;
-    height: 80px;
+  animation: App-logo-spin infinite 5s linear;
+  height: 80px;
 }
 
 .App-header {
-    background-color: #222;
-    height: 150px;
-    padding: 20px;
-    color: white;
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
 }
 
 .App-title {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .App-intro {
-    font-size: large;
+  font-size: large;
 }
 
 .routerContainer {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 .appContainer {
-    /*flex: 1;*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*margin-top: 2.85em;*/
-    /*padding-bottom: 2.85em;*/
-    /*overflow: auto;*/
-    /*position: relative;*/
+  /*flex: 1;*/
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*margin-top: 2.85em;*/
+  /*padding-bottom: 2.85em;*/
+  /*overflow: auto;*/
+  /*position: relative;*/
 }
 
 .fade-enter {
-    opacity: 0;
-    z-index: 1;
+  opacity: 0;
+  z-index: 1;
 }
 
 .fade-enter.fade-enter-active {
-    opacity: 1;
-    transition: opacity 250ms ease-in;
+  opacity: 1;
+  transition: opacity 250ms ease-in;
 }
 
 p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-button:not(':disabled'),
-button:not(.disabled){
-    cursor: pointer;
+button:not(":disabled"),
+button:not(.disabled) {
+  cursor: pointer;
 }
 
-.sweet-alert{
-    max-height: 80vh;
-    overflow: auto!important;
+.sweet-alert {
+  max-height: 80vh;
+  overflow: auto !important;
 }
 
 .ui.modal {
-    margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
-.menu > .item > a{
-    color: inherit;
-    display: flex;
-    flex: 1;
+.menu > .item > a {
+  color: inherit;
+  display: flex;
+  flex: 1;
 }
 @keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
 
 /*!* initially label is below input *!*/
 /*label {*/
-    /*display: inline-block;*/
-    /*position:absolute;*/
-    /*left: 15px;*/
-    /*top: 16px;*/
-    /*transition: all 150ms ease-in;*/
-    /*color: #676767;*/
+/*display: inline-block;*/
+/*position:absolute;*/
+/*left: 15px;*/
+/*top: 16px;*/
+/*transition: all 150ms ease-in;*/
+/*color: #676767;*/
 /*}*/
 /*!* when the label is activated, it jumps up (using translateY) *!*/
 /*!* you could add animation here as well *!*/
 /*label.field-active {*/
-    /*transform: translateY(-25px);*/
-    /*font-size: .9em;*/
-    /*color: #000;*/
-    /*text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff;*/
+/*transform: translateY(-25px);*/
+/*font-size: .9em;*/
+/*color: #000;*/
+/*text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff;*/
 /*}*/
 /*.floating-label {*/
-    /*-webkit-appearance: none !important;*/
+/*-webkit-appearance: none !important;*/
 /*}*/

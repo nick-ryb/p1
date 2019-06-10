@@ -1,7 +1,7 @@
 {
   "loading": "loading",
   "please_wait": "please wait",
-  "sadik": "Kinder Garden",
+  "kinder_garden": "Kinder Garden",
   "ok": "ok",
   "cancel": "cancel",
   "Login": "Login",
@@ -11,7 +11,7 @@
   "id": "id",
   "password": "password",
   "name": "name",
-  "agenda2": "agenda",
+  "agenda": "agenda",
   "checkbox": "Checkbox",
   "day": "day",
   "days": "days",

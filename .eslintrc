@@ -1,3 +1,52 @@
 {
-"extends": "react-app"
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb",
+        "prettier",
+        "prettier/react"
+    ],
+    "globals": {
+        "__DEV__": false
+    },
+    "env": {
+        "es6": true
+    },
+    "rules": {
+        "quotes": 0,
+        "no-plusplus": 0,
+        "no-use-before-define": 0,
+        "no-useless-escape": 0,
+        "import/no-unresolved": 0,
+        "react/sort-comp": 0,
+        "react/destructuring-assignment": 0,
+        "react/prop-types": 0,
+        "no-underscore-dangle": 1,
+        "prefer-destructuring": 1,
+        "import/prefer-default-export": 1,
+        "prefer-template": 1,
+        "no-unused-expressions": 1,
+        "camelcase": 1,
+        "class-methods-use-this": 1,
+        "radix": 1,
+        "no-debugger": 2,
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": true
+            }
+        ],
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ],
+        "prettier/prettier": 0
+    },
+    "plugins": [
+        "prettier"
+    ]
 }

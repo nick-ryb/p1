@@ -32,13 +32,7 @@ const colors = [
 class ChildrenView extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            childActivityTitle: '',
-            popupData: {},
-            currentModal: null,
-            childrenData: null,
-            showModal: false
-        };
+        this.state = { childActivityTitle: "", popupData: {}, currentModal: null, childrenData: null, showModal: false };
 
         this.today = Moment(new Date()).format('DD/MM/YYYY');
     }
@@ -622,9 +616,9 @@ class ChildrenView extends Component {
         if (!agenda)
             return null;
 
-        // const {agenda2} = getLabel(this.props.lang);
+        // const {agenda} = getLabel(this.props.lang);
 
-        let list = [<h1><LabelByLang string={`agenda2`}/></h1>];
+        let list = [<h1><LabelByLang string={`agenda`}/></h1>];
 
         //TODO if agenda is different for the groups
 

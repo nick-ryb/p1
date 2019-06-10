@@ -1,7 +1,7 @@
 {
   "loading": "טעינה",
   "please_wait": "בבקשה להמתין",
-  "sadik": "גן",
+  "kinder_garden": "גן",
   "ok": "אישור",
   "cancel": "ביטול",
   "Login": "כניסה",
@@ -11,7 +11,7 @@
   "id": "ת\"ז",
   "password": "סיסמה",
   "name": "שם",
-  "agenda2": "סדר יום",
+  "agenda": "סדר יום",
   "checkbox": "צ'ק בוקס",
   "day": "יום",
   "days": "ימים",
